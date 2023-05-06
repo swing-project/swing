@@ -1,0 +1,477 @@
+.window {
+	position: absolute;
+	z-index: 5;
+	
+	border-radius: 8px 8px 0 0;
+	background: white;
+	color: black;
+
+	outline: 2px solid #2e2e2e;
+
+	resize: both;
+	overflow: hidden;
+
+	min-height: 150px;
+	min-width: 250px;
+
+	filter: drop-shadow(4px 10px 4px rgba(0, 0, 0, 25%));
+
+	animation: window-opacity 100ms;
+}
+
+.window.rigid {
+	resize: none;
+	min-height: auto;
+	min-width: auto;
+}
+
+.window[data-folded='true'] {
+	resize: horizontal;
+	min-height: auto !important;
+	height: fit-content !important;
+	border-radius: 8px;
+}
+
+@keyframes window-opacity {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+/* active windows */
+.window:active, .window:focus, .window.focus {
+	z-index: 7;
+}
+
+.window:active > .menubar, .window:focus > .menubar, .window.focus > .menubar {
+	z-index: 8;
+	color: white;
+}
+
+/* menubar */
+.window > .menubar {
+	z-index: 6;
+	
+	background: #2e2e2e;
+	color: rgba(255 255 255 / 80%);
+
+	width: 100%;
+
+	padding: 2px;
+}
+
+/*
+.window > .menubar > * {
+  float: left;
+}
+
+.window > .menubar > .window-controls {
+  width: 25%;
+}
+*/
+
+.window > .menubar > .window-controls {
+	position: absolute;
+	right: 0;
+	z-index: 9;
+
+	display: flex;
+	flex-direction: row;
+	gap: 4px;
+	padding-right: 2px;
+}
+
+.window > .menubar > .window-controls .window-control {
+  margin-top: 4px;
+  height: 12px;
+  width: 12px;
+  background: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.window > .menubar > .window-controls .window-control.close {
+	background: var(--accent);
+}
+
+.window > .menubar > .window-controls .window-control.close:hover {
+	background: hsl(var(--accent-darker));
+}
+
+.window > .menubar > .window-controls .window-control.minimize {
+/* 	background: yellow; */
+	background: #fdd800;
+}
+
+.window > .menubar > .window-controls .window-control.minimize:hover {
+	background: #e3c200;
+}
+
+.window > .menubar > .window-controls .window-control.maximize {
+/* 	background: greenyellow; */
+	background: #5ac05a;
+}
+
+.window > .menubar > .window-controls .window-control.maximize:hover {
+	background: #51ac51;
+}
+
+.window > .menubar > .title {
+/*   width: 60%; */
+	width: 100%;
+}
+
+.window > .menubar > .title span {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	font-weight: 700;
+}
+
+/*
+.window > .menubar::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+*/
+
+/* content */
+.window > .content {
+	overflow: auto;
+	height: 100%;
+/* }
+
+.window:not(.no-padding) > .content { */
+	padding: 4px;
+}
+
+.window:has(.options):not(.no-options-padding) > .content {
+	padding-bottom: 64px;
+}
+
+.window.no-padding > .content {
+	padding: 0 !important;
+}
+
+.window > .content * {
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.window > .content .accent:not(.override) {
+	color: var(--accent);
+}
+
+.window > .content .accent-bg:not(.override) {
+	background-color: var(--accent);
+}
+
+.window > .content .writing:not(.override) {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.window > .content .monospace:not(.override) {
+	font-family: var(--font-monospace);
+}
+
+.window > .content code.inline:not(.override) {
+	font-family: var(--font-monospace);
+	border: 1px solid black;
+	padding: 4px;
+	border-radius: 3px;
+}
+
+/* list */
+.window > .content .list > *:not(br):not(.override)::before {
+	content: '\2022  ';
+}
+
+/* keys (styles may or may not be taken from Stack Exchange) */
+kbd:not(.override) {
+	display: inline-block;
+	margin: 0 .1em;
+	padding: .1em .6em;
+	line-height: 1.4;
+	font-size: 11px;
+	color: hsl(210, 8%, 15%);
+	text-shadow: 0 1px 0 hsl(0, 0%, 100%);
+	background-color: hsl(210, 8%, 90%);
+	border: 1px solid hsl(210, 8%, 5%);
+	border-radius: 3px;
+	box-shadow: 0 1px 1px hsla(210, 8%, 5%, 0.15), inset 0 1px 0 0 hsl(0, 0%, 100%);
+	white-space: nowrap;
+}
+
+/* different kbd (style may or may not be taken from the haiku website this time)
+kbd {
+	border: 1px solid #c7c7c7;
+	border-bottom: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+	border-radius: 3px;
+	padding: 1px 15px 1px 15px;
+	background-color: #e8e8e8;
+	font-size: 0.9em;
+	margin: 0 3px 0 3px;
+}
+*/
+
+/* anchors */
+.window > .content a {
+  text-decoration: none;
+  border-bottom: 1.5px solid #d6d6d6;
+  color: black;
+  display: inline-flex;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  position: relative;
+}
+
+.window > .content a:hover {
+  text-decoration-color: black;
+  border-color: black;
+}
+
+.window > .content a > ion-icon {
+	margin-right: 4px;
+}
+
+/* form options */
+input {
+	accent-color: var(--accent);
+}
+
+.window > .content .text-box-column {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 2rem;
+	height: 1rem;
+}
+
+.switch > input[type='checkbox'] { 
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border: 1px solid rgba(0 0 0 / 25%);
+	box-shadow: inset 0 0 5px #ccc;
+	transition: 100ms;
+	border-radius: 1rem;
+}
+
+.slider::before {
+	content: '';
+	position: absolute;
+	height: calc(1rem - 8px);
+	width: calc(1rem - 8px);
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	box-shadow: 0 0 5px #555;
+	transition: 100ms;
+	border-radius: 50%;
+}
+
+.switch > input[type='checkbox']:checked + .slider {
+	background-color: var(--accent);
+	box-shadow: none;
+}
+
+.switch > input[type='checkbox']:focus + .slider {
+	box-shadow: 0 0 1px var(--accent);
+}
+
+.switch > input[type='checkbox']:checked + .slider::before {
+	transform: translateX(1rem);
+	box-shadow: none;
+}
+
+.window > .content input[type='text'] {
+	border-radius: 4px;
+	padding: 4px;
+	width: 100%;
+	border: 1px solid rgba(0 0 0 / 25%);
+	transition: 100ms ease-out;
+	outline: none;
+}
+
+.window > .content input[type='text']:focus {
+	box-shadow: inset 0 0 5px #ccc;
+}
+
+.window > .content input[type='text'].no-width-100 {
+	width: unset;
+}
+
+button,
+input[type='button'] {
+	border-radius: 4px;
+	background-color: white;
+	border: 1px solid rgba(0 0 0 / 25%);
+	padding: 4px;
+	transition: 100ms ease-out;
+	display: inline-flex;
+	flex-direction: row;
+	gap: 4px;
+	align-items: center;
+	justify-content: center;
+	/* background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.10)); */
+}
+
+button:hover,
+input[type='button']:hover {
+	background-color: rgba(255 255 255 / 75%);
+}
+
+button:active,
+input[type='button']:active {
+	box-shadow: inset 0 0 5px #ccc;
+}
+
+button.new {
+	all: initial;
+	font-family: var(--fontselection);
+	margin: 0;
+	box-sizing: border-box;
+	-webkit-user-select: none;
+	user-select: none;
+	font-size: 1rem;
+
+	border-radius: 4px;
+	background: white;
+	border: 1px solid rgba(0 0 0 / 25%);
+	border-bottom-width: 2px;
+	padding: 4px;
+	display: inline-flex;
+	flex-direction: row;
+	gap: 4px;
+	align-items: center;
+	justify-content: center;
+}
+
+button.new:hover {
+	border-color: var(--accent);
+}
+
+button.new:active {
+	border-color: var(--accent);
+	border-bottom-width: 1px;
+	background:
+		linear-gradient(rgba(255 255 255 / 75%), rgba(255 255 255 / 75%)) no-repeat,
+		linear-gradient(var(--accent), var(--accent)) no-repeat;
+}
+
+/*
+.window > .content .select-wrapper {
+	font-size: 13px;
+	padding: 10px 8px 10px 14px;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	overflow: hidden;
+	position: relative;
+}
+
+.window > .content .select-wrapper > .select {
+	width: 120%;
+	background: url('/img/arrow.png') no-repeat;
+	background-position: 80% center;
+}
+
+.window > .content .select-wrapper > .select > select {
+	background: transparent;
+	line-height: 1;
+	border: 0;
+	padding: 0;
+	border-radius: 0;
+	width: 120%;
+	position: relative;
+	z-index: 10;
+	font-size: 1em;
+}
+*/
+
+.window > .content select {
+	border-radius: 4px;
+	background-color: white;
+	border: 1px solid rgba(0 0 0 / 25%);
+	padding: 4px;
+	transition: 100ms ease-out;
+	display: inline-flex;
+	flex-direction: row;
+	gap: 4px;
+	align-items: center;
+	justify-content: center;
+}
+
+.window > .content select:hover {
+	background-color: rgba(255 255 255 / 75%);
+}
+
+.window > .content select:focus {
+	box-shadow: inset 0 0 5px #ccc;
+}
+
+/* special text options for content */
+.window > .content .selectable {
+	-webkit-user-select: auto;
+	user-select: auto;
+}
+
+.window > .content .selectable::selection {
+	color: white;
+	background-color: #2e2e2e;
+}
+
+.window > .content .scrollable {
+	overflow: scroll;
+	scrollbar-width: thin;
+}
+
+.window > .content .columns-2,
+.window > .content .columns-3 {
+	display: flex;
+}
+
+.window > .content .columns-2 > .column {
+	flex: 50%;
+}
+
+.window > .content .columns-3 > .column {
+	flex: 33.3%;
+}
+
+/* options */
+.window > .options {
+	position: absolute;
+	bottom: 0;
+	background-color: #f0f0f0;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: right;
+	padding: 4px;
+	gap: 4px;
+}
+
+.window > .options button,
+#dialog > .wrapper > .content > .button-options > button {
+	min-width: 4rem;
+	/* all other styling is applied with the content buttons */
+}

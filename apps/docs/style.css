@@ -1,0 +1,102 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    --accent-color: #ff7800;
+    --accent-light: #ffc999;
+    --font-family: FiraGO, 'Fira Sans', 'Noto Sans', sans-serif;
+    --font-mono: 'Fira Code', Menlo, Consolas, monospace;
+
+    font-family: var(--font-family);
+    padding: 0;
+    margin: 0;
+    padding-top: 8px;
+}
+
+.accent {
+    color: var(--accent-color);
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input + label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+input ~ .tab {
+    display: none;
+}
+
+#tab1 + label {
+    margin-left: 8px;
+}
+
+#tab1:checked ~ .tab.content1,
+#tab2:checked ~ .tab.content2,
+#tab3:checked ~ .tab.content3,
+#tab4:checked ~ .tab.content4,
+#tab5:checked ~ .tab.content5,
+#tab6:checked ~ .tab.content6,
+#tab7:checked ~ .tab.content7,
+#tab8:checked ~ .tab.content8,
+#tab9:checked ~ .tab.content9,
+#tab10:checked ~ .tab.content10,
+#tab11:checked ~ .tab.content11,
+#tab12:checked ~ .tab.content12 {
+    display: block;
+}
+
+input[type="radio"] + label {
+    border: 1px solid #999;
+    background: var(--accent-light);
+    padding: 4px 12px;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    top: 1px;
+}
+
+input[type="radio"]:checked + label {
+    background: white;
+    border-bottom: 1px solid transparent;
+}
+
+input[type="radio"] ~ .tab {
+    border-top: 1px solid #999;
+    padding: 12px;
+}
+
+code {
+    font-family: var(--font-mono);
+    font-size: 14;
+}
+
+pre.code {
+    border: 1px solid #333;
+    padding: 8px;
+    background-color: white;
+    color: black;
+    font-family: var(--font-mono);
+    font-size: 14;
+    border-radius: 4px;
+}
+
+pre.code::after {
+    content: '\00000a' attr(data-lang);
+    font-family: var(--font-family);
+    font-size: 10;
+    margin-left: 16px;
+    color: #333;
+}

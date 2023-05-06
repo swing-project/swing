@@ -1,0 +1,274 @@
+/* dock */
+#dock {
+	background: transparent;
+	color: white;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 30px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+
+	z-index: 9;
+	transition: 300ms;
+}
+
+#dock:hover {
+	background: #2e2e2e;
+}
+
+#dock:empty {
+	height: 0;
+}
+
+#dock .icon {
+	height: 100%;
+	width: 22px;
+	/* animation: appear 300ms; */
+}
+
+#dock .icon:hover {
+	transition: 300ms;
+	background: #222;
+}
+
+#dock .icon.focus {
+	color: var(--highlight);
+}
+
+#dock .icon.focus:hover {
+	color: var(--accent);
+}
+
+/* #dock .icon:active {
+	animation: disappear 300ms;
+}
+
+@keyframes appear {
+	from { height: 0; }
+	to   { height: 22px; }
+}
+
+@keyframes disappear {
+	from { height: 22px; }
+	to   { height: 0; }
+} */
+
+/* system menu */
+#system-menu {
+	background: transparent;
+	color: white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 22px;
+
+	padding: 8px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	z-index: 9;
+
+	transition: 300ms;
+}
+
+#system-menu:hover,
+#system-menu[popup-open='true'] {
+	background: #2e2e2e;
+}
+
+#system-menu > div {
+	display: flex;
+	gap: 8px;
+}
+
+#system-menu > div .tag {
+	border-radius: 8px;
+	font-weight: 700;
+	transition: 300ms;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+#system-menu > div .tag:hover {
+	background: rgba(255 255 255 / 25%);
+}
+
+/* notifications */
+#notification-area {
+	position: fixed;
+	z-index: 10;
+/* 	top: 22px; */
+/* 	bottom: 30px; */
+	bottom: 0;
+	width: 400px;
+	display: flex;
+	flex-direction: column-reverse;
+	gap: 8px;
+	color: white;
+	padding: 8px;
+}
+
+#notification-area > .desktop-notification {
+	width: 100%;
+	background: #2e2e2e;
+	border-radius: 8px;
+	padding: 8px;
+	filter: drop-shadow(4px 10px 4px rgba(0, 0, 0, 25%));
+}
+
+#notification-area > .desktop-notification:hover {
+	background: #222;
+}
+
+/* dialog */
+#dialog {
+	z-index: 11;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0 0 0 / 25%);
+	-webkit-backdrop-filter: blur(5px);
+	backdrop-filter: blur(5px);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#dialog > .wrapper {
+	height: 20%;
+	background-color: #2e2e2e;
+	color: white;
+}
+
+#dialog > .wrapper > .content {
+	height: 100%;
+	padding: 8px;
+	max-width: 40%;
+	margin: auto auto;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+#dialog > .wrapper > .content > .button-options {
+	position: absolute;
+	bottom: 16px;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: right;
+	gap: 4px;
+}
+
+/* app grid */
+@keyframes app-grid-opacity {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+#app-grid {
+	display: none;
+	flex-direction: column;
+	gap: 4px;
+	position: fixed;
+	top: 30px;
+	left: 8px;
+	height: 400px;
+	width: 500px;
+	background: white;
+	border-radius: 8px;
+	border: 2px solid #2e2e2e;
+	animation: app-grid-opacity 100ms;
+	padding: 8px;
+	z-index: 10;
+	filter: drop-shadow(4px 10px 4px rgba(0, 0, 0, 25%));
+}
+
+#app-grid::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 8px;
+  margin-left: -5px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent #2e2e2e transparent;
+}
+
+#app-grid > .search {
+	display: flex;
+	flex-direction: row;
+	gap: 4px;
+}
+
+#app-grid > .search > .search-input {
+	border-radius: 4px;
+	padding: 4px;
+	width: 100%;
+	border: 1px solid rgba(0 0 0 / 25%);
+	transition: 100ms ease-out;
+	outline: none;
+}
+
+#app-grid > .search > .search-input:focus {
+	box-shadow: inset 0 0 5px #ccc;
+}
+
+#app-grid > .search > button {
+	border-radius: 4px;
+	background-color: white;
+	border: 1px solid rgba(0 0 0 / 25%);
+	padding: 4px;
+	transition: 100ms ease-out;
+	/* background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.10)); */
+}
+
+#app-grid > .search > button:hover {
+	background-color: rgba(255 255 255 / 75%);
+}
+
+#app-grid > .search > button:active {
+	box-shadow: inset 0 0 5px #ccc;
+}
+
+#app-grid > .grid {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+}
+
+#app-grid > .grid > .icon {
+	border-radius: 8px;
+	aspect-ratio: 1 / 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	transition: 100ms ease-out;
+}
+
+#app-grid > .grid > .icon:hover {
+	background-color: rgba(0 0 0 / 25%);
+}
+
+#app-grid > .grid > .icon > ion-icon {
+	font-size: 2rem;
+}
+
+#app-grid > .grid > .icon > .label {
+	font-size: 0.75rem;
+	text-align: center;
+}

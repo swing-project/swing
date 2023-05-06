@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>humanOS</title>
+
+	<link href="/css/master.css" rel="stylesheet" />
+</head>
+
+<body onkeydown="characterControl(event)">
+	<div id="system-menu">
+		<div id="applications-newwindow">
+			<span class="tag" id="applications-newwindow__tag" onclick="openApps()">Applications</span>
+		</div>
+
+		<div id="datetime">
+			<span class="tag" id="datetime-label"></span>
+		</div>
+
+		<div id="options">
+			<span class="tag">
+				<ion-icon name="caret-down-outline"></ion-icon>
+			</span>
+		</div>
+	</div>
+
+	<div id="notification-area"></div>
+
+	<div id="dock"></div>
+	<!-- <div id="open-windows"></div> -->
+
+	<!-- <div id="overlay">
+		<p>Loading humanOS, just wait a moment...</p>
+	</div> -->
+
+	<div id="app-grid">
+		<div class="search">
+			<input type="text"
+				   class="search-input"
+				   title="Search input"
+				   placeholder="Search for anything..." />
+			
+			<button type="button">OK</button>
+		</div>
+
+		<div class="grid"></div>
+	</div>
+
+	<script src="/js/system.js"></script>
+
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"prettier.semi": false,
+		"prettier.tabWidth": 4,
+		"prettier.singleQuote": true
+	}
+}

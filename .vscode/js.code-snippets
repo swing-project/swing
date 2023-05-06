@@ -1,0 +1,17 @@
+{
+	"Settings list loop": {
+		"scope": "javascript,typescript",
+		"prefix": "stgloop",
+		"body": [
+			"for (const settingName in settingsList)",
+			"{",
+			"\tif (Object.hasOwnProperty.call(settingsList, settingName))",
+			"\t{",
+			"\t\tconst settingAttributes = settingsList[settingName]",
+			"\t\t$0",
+			"\t}",
+			"}"
+		],
+		"description": "Insert a for-in loop here for the array of settings"
+	}
+}
