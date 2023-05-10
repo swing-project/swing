@@ -60,7 +60,7 @@ body {
 	background-repeat: no-repeat;
 	width: 100%;
 	height: 100%;
-	font-size: 1rem;
+	font-size: 14px;
 }
 
 .tooltip {
@@ -327,6 +327,23 @@ iframe {
 }
 
 /* utility */
+:root {
+	/* spacers */
+	--spacer-0: 0px;
+	--spacer-1: 4px;
+	--spacer-2: 8px;
+	--spacer-3: 16px;
+	--spacer-4: 24px;
+	--spacer-5: 32px;
+	--spacer-6: 40px;
+
+	/* colours */
+	--color-black: hsl(0, 0%, 0%);
+	--color-default: hsl(0, 0%, 75%);
+	--color-muted: hsl(0, 0%, 85%);
+	--color-white: hsl(0, 0%, 100%);
+}
+
 .fs-8 {
 	font-size: 8px;
 }
@@ -359,36 +376,40 @@ iframe {
 	font-size: 4rem;
 }
 
-.flex {
+.d-block {
+	display: block;
+}
+
+.flex, .d-flex {
 	display: flex;
 }
 
-.inline-flex {
+.inline-flex, .d-inline-flex {
 	display: inline-flex;
 }
 
+.gap-0 {
+	gap: var(--spacer-0);
+}
+
+.gap-1 {
+	gap: var(--spacer-1);
+}
+
 .gap-2 {
-	gap: 2px;
+	gap: var(--spacer-2);
+}
+
+.gap-3 {
+	gap: var(--spacer-3);
 }
 
 .gap-4 {
-	gap: 4px;
+	gap: var(--spacer-4);
 }
 
-.gap-8 {
-	gap: 8px;
-}
-
-.gap-12 {
-	gap: 12px;
-}
-
-.gap-14 {
-	gap: 14px;
-}
-
-.gap-16 {
-	gap: 16px;
+.gap-5 {
+	gap: var(--spacer-5);
 }
 
 .flexdir-col {
@@ -447,24 +468,20 @@ iframe {
 	border-radius: 8px;
 }
 
-.fg-white {
-	color: white;
-}
-
-.fg-lightgrey {
-	color: lightgrey;
-}
-
-.fg-darkgrey {
-	color: darkgrey;
-}
-
-.fg-grey {
-	color: grey;
-}
-
 .fg-black {
-	color: black;
+	color: var(--color-black);
+}
+
+.fg-default {
+	color: var(--color-default);
+}
+
+.fg-muted {
+	color: var(--color-muted);
+}
+
+.fg-white {
+	color: var(--color-white);
 }
 
 .p-0 {
@@ -727,32 +744,14 @@ iframe {
 	position: sticky;
 }
 
+.border {
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--color-default);
+}
+
 .border-none {
 	border: none;
-}
-
-.border-black1 {
-	border: 1px solid black;
-}
-
-.border-black2 {
-	border: 2px solid black;
-}
-
-.border-w-1 {
-	border-width: 1px;
-}
-
-.border-w-2 {
-	border-width: 2px;
-}
-
-.border-w-3 {
-	border-width: 3px;
-}
-
-.border-w-4 {
-	border-width: 4px;
 }
 
 .border-s-sol {
@@ -771,18 +770,30 @@ iframe {
 	border-style: double;
 }
 
-.border-s-gro {
-	border-style: groove;
+.b-0 {
+	bottom: var(--spacer-0);
 }
 
-.border-s-rid {
-	border-style: ridge;
+.b-1 {
+	bottom: var(--spacer-1);
 }
 
-.border-s-ins {
-	border-style: inset;
+.b-2 {
+	bottom: var(--spacer-2);
 }
 
-.border-s-out {
-	border-style: outset;
+.b-3 {
+	bottom: var(--spacer-3);
+}
+
+.b-4 {
+	bottom: var(--spacer-4);
+}
+
+.b-5 {
+	bottom: var(--spacer-5);
+}
+
+.b-6 {
+	bottom: var(--spacer-6);
 }

@@ -3,8 +3,11 @@
 - Do random wallpaper on system creation, not just that one hardcoded one (code example 3)
 - Create a wallpaper switcher that uses the built-in Unsplash wallpapers
   - Since I'm not too good at making galleries like you'd expect here, do dropdowns where the value is the CSS `url()` value to the wallpaper (just like right now) and custom will just read from a text box instead (code example 1)
+- Figure out a way to completely capture user input until they press some button
+  - Until I figure that out, make sure to only use working shorcuts
+    - <https://www.w3schools.com/tags/ref_keyboardshortcuts.asp>
 - Create a system to read HTML contents from external sources to split up the process for larger applications.
-  This will be part of the API. (code example 2) This will also create the need for a way to access the client path, since just putting in a relative path will actually be relative to the humanOS path.
+  This will be part of the API. (code example 2) This will also create the need for a client path template, since just putting in a relative path will actually be relative to the humanOS path.
 - Finish creating a dialogue for every type of input, not just buttons.
   - [ ] File Upload
   - [ ] Text Input
@@ -14,6 +17,11 @@
 - In-built web browser (ionicon 'globe-outline')
 - Create a window playground
 - Create a way to pass in parameters on app open
+- Context system
+  - `%url%` template
+  - Create a way to style stuff inside of `#window > .content` (code example 4)
+  - Reduce template typing so that class names aren't too long (this is the problem with directly injecting html into the page)
+    - `object.content.replace(/id="--/g, 'id="' + windowId)` will probably do the trick, along with a handler for single-quotes
 - More versatile storage system with IndexedDB
   - <https://javascript.info/indexeddb>
   - <https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB>
@@ -22,13 +30,15 @@
   - <https://developer.mozilla.org/en-US/docs/Web/API/Element/contextmenu_event>
   - <https://www.jqueryscript.net/demo/Simple-jQuery-Right-Click-Context-Menu-Plugin/demo/>
 - Try best to remove "Apply" buttons wherever possible
-  - <https://stackoverflow.com/questions/6159837/how-to-call-a-javascript-function-onchange-of-a-select-tag>
-- Reduce template typing so that class names aren't too long (this is the problem with directly injecting html into the page)
-  - `object.content.replace(/class="--/g, 'class="' + windowId + '"')` will probably do the trick
+  - Use non-text input options as often as possible, like `onclick` on a checkbox or select menu will automatically apply the settings.
+    Only use text input options when necessary and include the necessary Apply buttons there, but these will be behind advanced options
+    - <https://stackoverflow.com/questions/6159837/how-to-call-a-javascript-function-onchange-of-a-select-tag>
 - Compact mode (reduces padding and gap size)
 - Tab control
-  - <https://jsfiddle.net/samrland/s17bv0t9/11/> (see implementation in `ivy:docs`)
+  - <https://jsfiddle.net/samrland/s17bv0t9/11/> (see implementation in docs)
   - <https://www.w3schools.com/howto/howto_js_tabs.asp>
+- Create a proper API rather than just stuffing inline HTML without even supporting JSX due to the front-end nature of humanOS
+  - The Be API is a good role-model here, not just because it's actually fun to use, but also because Haiku rules!
 
 ## Code Examples
 
@@ -92,6 +102,36 @@ const builtInWallpaperCollection = [
   "photo-1470137430626-983a37b8ea46.jpeg",
   "photo-1472396961693-142e6e269027.jpeg"
 ]
+```
+
+### Code Example 4
+
+
+```js
+const windowObject = {
+  content: `
+  <div class="wrapper">
+    <button type="button">Hey!</button>
+  </div>
+  `,
+  styles: [
+    {
+      selector: '.wrapper', // will be applied to `#window > .content .wrapper`
+      rules: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '4px'
+      }
+    },
+    {
+      selector: '.wrapper > button', // will be applied to `#window > .content .wrapper > button`
+      rules: {
+        color: 'var(--accent)'
+      }
+    }
+  ]
+}
 ```
 
 ## Reference

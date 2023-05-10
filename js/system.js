@@ -35,6 +35,61 @@ window.onload = function() {
 	}
 }
 
+// swing console
+const swingConsole = {
+	write: function (error, text) {
+		swingConsole.text.push({
+			isError: error,
+			text: text
+		})
+	},
+	text: []
+}
+
+const swingConsoleWindow = {
+	id: 'ivy|console',
+	title: 'Swing Console',
+	icon: 'terminal-outline',
+	size: {
+		preset: 'default'
+	},
+	disallowMultiple: true,
+	content: `
+	<div class="wrapper w-100-pc d-flex flexdir-col">
+		<div class="console">
+		</div>
+		<div class="input-wrapper w-100-pc d-flex flexdir-row gap-1 ai-center b-0">
+			<label for="%human%-input">Execute: </label>
+			<input type="text" id="%human%-input" />
+			<button type="button" id="%human%-button">OK</button>
+		</div>
+	</div>
+	`,
+	styles: [
+		{
+			selector: '.console',
+			styles: {
+
+			}
+		}
+	]
+}
+
+// fullscreen toggle
+function toggleFullscreen(elementObject)
+{
+    if (!document.fullscreenElement) {
+        elementObject.requestFullscreen()
+		// .catch((err) => {
+        //     alert(
+        //         `Error attempting to enable fullscreen mode: ${err.message} (${err.name})`
+        //     )
+        // })
+    } else {
+        document.exitFullscreen()
+    }
+}
+
 // List of setting names and default values
 const settingsList = {
 	'configured-apps': {
@@ -1136,14 +1191,14 @@ const settingsWindow = {
     icon: 'cog-outline',
 	noPadding: true,
     content: `
-	<!--<div id="%human%-sidebar" onclick="settingsShowSection('%human%', event)" class="flex flexdir-col gap-4">
+	<!--<div id="%human%-sidebar" onclick="settingsShowSection('%human%', event)" class="flex flexdir-col gap-1">
 
 	</div>-->
 	<div id="%human%-content" class="flex flexdir-col gap-16 m-auto mw-600 p-16 p-bot-64">
 		<div id="%human%-s-configured-apps">
-			<h2 class="flex flexdir-row gap-4 ai-center jc-center"><ion-icon name="apps-outline"></ion-icon> Configured Apps</h2>
+			<h2 class="flex flexdir-row gap-1 ai-center jc-center"><ion-icon name="apps-outline"></ion-icon> Configured Apps</h2>
 
-			<div class="flex flexdir-col gap-4">
+			<div class="flex flexdir-col gap-1">
 				<label for="%human%-configured-apps">
 					Write a list of URLs to load apps from.
 					<button class="tooltip-button"
@@ -1155,40 +1210,40 @@ const settingsWindow = {
 			</div>
 		</div>
 
-		<div id="%human%-s-display" class="flex flexdir-col gap-8">
- 			<h2 class="flex flexdir-row gap-4 ai-center jc-center"><ion-icon name="laptop-outline"></ion-icon> Display</h2>
+		<div id="%human%-s-display" class="flex flexdir-col gap-2">
+ 			<h2 class="flex flexdir-row gap-1 ai-center jc-center"><ion-icon name="laptop-outline"></ion-icon> Display</h2>
 
-			<div class="flex flexdir-col gap-4">
+			<div class="flex flexdir-col gap-1">
 				<h3 class="ta-center">Color</h3>
 
-				<div class="flex flexdir-col gap-4">
-					<div class="flex flexdir-row gap-8 ai-center">
+				<div class="flex flexdir-col gap-1">
+					<div class="flex flexdir-row gap-2 ai-center">
 						<label for="%human%-color-accent" class="flex-2 ta-right">Accent Color</label>
 						<input type="text" id="%human%-color-accent" class="monospace no-width-100 flex-4" />
 					</div>
-					<div class="flex flexdir-row gap-8 ai-center">
+					<div class="flex flexdir-row gap-2 ai-center">
 						<label for="%human%-color-accent-light" class="flex-2 ta-right">Highlight</label>
 						<input type="text" id="%human%-color-accent-light" class="monospace no-width-100 flex-4" />
 					</div>
 				</div>
 			</div>
 
-			<div class="flex flexdir-col gap-4">
+			<div class="flex flexdir-col gap-1">
 				<h3 class="ta-center">Fonts</h3>
 
-				<div class="flex flexdir-col gap-4">
-					<div class="flex flexdir-row gap-8 ai-center">
+				<div class="flex flexdir-col gap-1">
+					<div class="flex flexdir-row gap-2 ai-center">
 						<label for="%human-id%-input-font-selection" class="flex-2 ta-right">Sans Font Family</label>
 						<input type="text" id="%human-id%-input-font-selection" class="monospace no-width-100 flex-4"></input>
 					</div>
-					<div class="flex flexdir-row gap-8 ai-center">
+					<div class="flex flexdir-row gap-2 ai-center">
 						<label for="%human-id%-input-font-monospace" class="flex-2 ta-right">Monospace Font Family</label>
 						<input type="text" id="%human-id%-input-font-monospace" class="monospace no-width-100 flex-4"></input>
 					</div>
 				</div>
 			</div>
 
-			<div class="flex flexdir-col gap-4">
+			<div class="flex flexdir-col gap-1">
 				<h3 class="ta-center">Wallpaper</h3>
 
 				<label for="%human-id%-input-wallpaper-location">Wallpaper Location</label>
@@ -1196,8 +1251,8 @@ const settingsWindow = {
 			</div>
 		</div>
 
-		<div id="%human%-s-behavior" class="flex flexdir-col gap-8">
-			<h2 class="flex flexdir-row gap-4 ai-center jc-center"><ion-icon name="cog-outline"></ion-icon> Behavior</h2>
+		<div id="%human%-s-behavior" class="flex flexdir-col gap-2">
+			<h2 class="flex flexdir-row gap-1 ai-center jc-center"><ion-icon name="cog-outline"></ion-icon> Behavior</h2>
 
 			<div>
 				<label for="%human%-behavior-meta-key">Select special keys:</label>
@@ -1226,10 +1281,10 @@ const settingsWindow = {
 			</div>
 		</div>
 
-		<div id="%human%-s-advanced" class="flex flexdir-col gap-8">
-			<h2 class="flex flexdir-row gap-4 ai-center jc-center"><ion-icon name="build-outline"></ion-icon> Advanced</h2>
+		<div id="%human%-s-advanced" class="flex flexdir-col gap-2">
+			<h2 class="flex flexdir-row gap-1 ai-center jc-center"><ion-icon name="build-outline"></ion-icon> Advanced</h2>
 
-			<div class="flex flexdir-col gap-4">
+			<div class="flex flexdir-col gap-1">
 				<label for="%human%-custom-styles">Custom Styling (applied to body inline)</label>
 				<input type="text" id="%human%-custom-styles" class="monospace"></input>
 			</div>
@@ -1551,6 +1606,7 @@ const shownApps = [
     async () => await loadExternalObject('/apps/learnHuman.js'),
     async () => await loadExternalObject('/apps/notificationEngine.js'),
     async () => await runWindow,
+	async () => await swingConsoleWindow,
     async () => await bugman
 ] // the unnecessary use of await is because symmetry, typescript language server
 

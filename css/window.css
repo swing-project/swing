@@ -312,7 +312,7 @@ input {
 }
 
 .window > .content input[type='text']:focus {
-	box-shadow: inset 0 0 5px #ccc;
+	box-shadow: inset 0 0 5px rgba(0 0 0 / 15%);
 }
 
 .window > .content input[type='text'].no-width-100 {
@@ -337,11 +337,12 @@ input[type='button'] {
 button:hover,
 input[type='button']:hover {
 	background-color: rgba(255 255 255 / 75%);
+	border-color: var(--accent);
 }
 
 button:active,
 input[type='button']:active {
-	box-shadow: inset 0 0 5px #ccc;
+	box-shadow: inset 0 0 5px rgba(0 0 0 / 15%);
 }
 
 button.new {
@@ -429,14 +430,14 @@ button.new:active {
 }
 
 /* special text options for content */
-.window > .content .selectable {
+.window > .content .selectable * {
 	-webkit-user-select: auto;
 	user-select: auto;
 }
 
-.window > .content .selectable::selection {
+.window > .content .selectable *::selection {
 	color: white;
-	background-color: #2e2e2e;
+	background-color: var(--highlight);
 }
 
 .window > .content .scrollable {

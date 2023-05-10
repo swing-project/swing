@@ -37,7 +37,7 @@ export const client = {
         'preset': 'small'
     },
     'content': `
-    <div class="flex gap-4 flexdir-row">
+    <div class="flex gap-1 flexdir-row">
         <input type="text" id="%human%-search" inputmode="numeric" pattern="[0-9]*" placeholder="Bug ID" />
         <button id="%human%-search-button" type="button">Go</button>
     </div>
