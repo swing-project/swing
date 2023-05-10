@@ -215,6 +215,7 @@ async function repopulateAppGrid()
 
 		const icon = document.createElement('div')
 		icon.className = 'icon'
+		icon.title = element.id
 		icon.onclick = () => {
 			createWindow(element)
 			closeAppGrid()
