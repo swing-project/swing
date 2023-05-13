@@ -1231,18 +1231,18 @@ function settingsShowSection(cid, e) {
 }
 
 const settingsWindow = {
-    id: 'ivy:settings',
-    title: 'Settings',
-    size: {
-        minheight: '500px',
-        minwidth: '800px',
-        height: '500px',
-        width: '800px',
-    },
-    disallowMultiple: true,
-    icon: 'cog-outline',
+	id: 'ivy:settings',
+	title: 'Settings',
+	size: {
+		minheight: '500px',
+		minwidth: '800px',
+		height: '500px',
+		width: '800px',
+	},
+	disallowMultiple: true,
+	icon: 'cog-outline',
 	noPadding: true,
-    content: `
+	content: `
 	<!--<div id="%human%-sidebar" onclick="settingsShowSection('%human%', event)" class="flex flexdir-col gap-1">
 
 	</div>-->
@@ -1442,72 +1442,72 @@ const settingsWindow = {
 			]
 		}
 	],
-    options: [
-        {
-            name: 'Apply',
-            message: 'script',
-            messagescript: function (clientId, api) {
-                return function () {
-                    // localStorage.setItem('configured-apps',                      document.getElementById(`${clientId}-configured-apps`)             .value)
-                    // localStorage.setItem('custom-styles',                        document.getElementById(`${clientId}-custom-styles`)               .value)
-                    // localStorage.setItem('setting-color-accent',                 document.getElementById(`${clientId}-color-accent`)                .value)
-                    // localStorage.setItem('setting-font-selection',               document.getElementById(`${clientId}-input-font-selection`)        .value)
-                    // localStorage.setItem('setting-font-monospace',               document.getElementById(`${clientId}-input-font-monospace`)        .value)
-                    // localStorage.setItem('setting-wallpaper-location',           document.getElementById(`${clientId}-input-wallpaper-location`)    .value)
-                    // localStorage.setItem('setting-behavior-menu-applications',   document.getElementById(`${clientId}-behavior-menu-applications`)  .value)
-                    // localStorage.setItem('setting-behavior-startup-open-bugman', document.getElementById(`${clientId}-behavior-startup-open-bugman`).checked)
-                    // localStorage.setItem('setting-behavior-close-applist',       document.getElementById(`${clientId}-behavior-close-applist`)      .checked)
-                    for (const settingName in settingsList) {
-                        if (Object.hasOwnProperty.call(settingsList, settingName)) {
-                            const settingAttributes = settingsList[settingName]
-                            const settingInput = document.getElementById(`${clientId}-${settingAttributes.settingInput.name}`)
+	options: [
+		{
+			name: 'Apply',
+			message: 'script',
+			messagescript: function (clientId, api) {
+				return function () {
+					// localStorage.setItem('configured-apps',                      document.getElementById(`${clientId}-configured-apps`)             .value)
+					// localStorage.setItem('custom-styles',                        document.getElementById(`${clientId}-custom-styles`)               .value)
+					// localStorage.setItem('setting-color-accent',                 document.getElementById(`${clientId}-color-accent`)                .value)
+					// localStorage.setItem('setting-font-selection',               document.getElementById(`${clientId}-input-font-selection`)        .value)
+					// localStorage.setItem('setting-font-monospace',               document.getElementById(`${clientId}-input-font-monospace`)        .value)
+					// localStorage.setItem('setting-wallpaper-location',           document.getElementById(`${clientId}-input-wallpaper-location`)    .value)
+					// localStorage.setItem('setting-behavior-menu-applications',   document.getElementById(`${clientId}-behavior-menu-applications`)  .value)
+					// localStorage.setItem('setting-behavior-startup-open-bugman', document.getElementById(`${clientId}-behavior-startup-open-bugman`).checked)
+					// localStorage.setItem('setting-behavior-close-applist',       document.getElementById(`${clientId}-behavior-close-applist`)      .checked)
+					for (const settingName in settingsList) {
+						if (Object.hasOwnProperty.call(settingsList, settingName)) {
+							const settingAttributes = settingsList[settingName]
+							const settingInput = document.getElementById(`${clientId}-${settingAttributes.settingInput.name}`)
 
-                            if (settingAttributes.settingInput.type === 'checkbox') {
-                                localStorage.setItem(settingName, settingInput.checked)
-                            } else {
-                                localStorage.setItem(settingName, settingInput.value)
-                            }
-                        }
-                    }
-                    api.refresh();
-                    repopulateAppGrid();
-                }
-            }
-        }
-    ],
-    onload: function (clientId, _api) {
-        return function () {
-            // Array(document.querySelectorAll(`[id='${clientId}-content'] > [id^='${clientId}-s-']`)).forEach((element) => {
-            // 	element.style.display = 'block'
-            // })
+							if (settingAttributes.settingInput.type === 'checkbox') {
+								localStorage.setItem(settingName, settingInput.checked)
+							} else {
+								localStorage.setItem(settingName, settingInput.value)
+							}
+						}
+					}
+					api.refresh();
+					repopulateAppGrid();
+				}
+			}
+		}
+	],
+	onload: function (clientId, _api) {
+		return function () {
+			// Array(document.querySelectorAll(`[id='${clientId}-content'] > [id^='${clientId}-s-']`)).forEach((element) => {
+			// 	element.style.display = 'block'
+			// })
 
-            // document.getElementById(`${clientId}-configured-apps`)             .value   =  localStorage.getItem('configured-apps')
-            // document.getElementById(`${clientId}-custom-styles`)               .value   =  localStorage.getItem('custom-styles')
-            // document.getElementById(`${clientId}-color-accent`)                .value   =  localStorage.getItem('setting-color-accent')
-            // document.getElementById(`${clientId}-input-font-selection`)        .value   =  localStorage.getItem('setting-font-selection')
-            // document.getElementById(`${clientId}-input-font-monospace`)        .value   =  localStorage.getItem('setting-font-monospace')
-            // document.getElementById(`${clientId}-input-wallpaper-location`)    .value   =  localStorage.getItem('setting-wallpaper-location')
-            // document.getElementById(`${clientId}-behavior-menu-applications`)  .value   =  localStorage.getItem('setting-behavior-menu-applications')
-            // document.getElementById(`${clientId}-behavior-startup-open-bugman`).checked = (localStorage.getItem('setting-behavior-startup-open-bugman') === 'true')
-            // document.getElementById(`${clientId}-behavior-close-applist`)      .checked = (localStorage.getItem('setting-behavior-close-applist') === 'true')
-            for (const settingName in settingsList) {
-                if (Object.hasOwnProperty.call(settingsList, settingName)) {
-                    const settingAttributes = settingsList[settingName];
-                    const settingInput = document.getElementById(
-                        `${clientId}-${settingAttributes.settingInput.name}`
-                    );
-                    if (settingAttributes.settingInput.type === 'checkbox') {
-                        settingInput.checked =
+			// document.getElementById(`${clientId}-configured-apps`)             .value   =  localStorage.getItem('configured-apps')
+			// document.getElementById(`${clientId}-custom-styles`)               .value   =  localStorage.getItem('custom-styles')
+			// document.getElementById(`${clientId}-color-accent`)                .value   =  localStorage.getItem('setting-color-accent')
+			// document.getElementById(`${clientId}-input-font-selection`)        .value   =  localStorage.getItem('setting-font-selection')
+			// document.getElementById(`${clientId}-input-font-monospace`)        .value   =  localStorage.getItem('setting-font-monospace')
+			// document.getElementById(`${clientId}-input-wallpaper-location`)    .value   =  localStorage.getItem('setting-wallpaper-location')
+			// document.getElementById(`${clientId}-behavior-menu-applications`)  .value   =  localStorage.getItem('setting-behavior-menu-applications')
+			// document.getElementById(`${clientId}-behavior-startup-open-bugman`).checked = (localStorage.getItem('setting-behavior-startup-open-bugman') === 'true')
+			// document.getElementById(`${clientId}-behavior-close-applist`)      .checked = (localStorage.getItem('setting-behavior-close-applist') === 'true')
+			for (const settingName in settingsList) {
+				if (Object.hasOwnProperty.call(settingsList, settingName)) {
+					const settingAttributes = settingsList[settingName];
+					const settingInput = document.getElementById(
+						`${clientId}-${settingAttributes.settingInput.name}`
+						);
+					if (settingAttributes.settingInput.type === 'checkbox') {
+						settingInput.checked =
                             localStorage.getItem(settingName) == 'true';
-                    } else {
-                        settingInput.placeholder = settingAttributes.default;
-                        settingInput.value = localStorage.getItem(settingName);
-                    }
-                }
-            }
-        };
-    },
-};
+					} else {
+						settingInput.placeholder = settingAttributes.default;
+						settingInput.value = localStorage.getItem(settingName);
+					}
+				}
+			}
+		};
+		},
+}
 
 /*
 function appListOpen(windowId, external, titleOrObject) {
