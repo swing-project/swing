@@ -504,9 +504,9 @@ function createWindow(object)
 		setHeightWidth(windowObject, object.size.height, object.size.width)
 	}
 
-	// * menubar (title bar)
+	// * title bar
 	const menubarObject = document.createElement('div')
-	menubarObject.className = 'menubar'
+	menubarObject.className = 'titlebar'
 	menubarObject.ondblclick = () => toggleFoldWindow(windowId)
 
 	const menubarWindowControlsObject = document.createElement('div')
@@ -525,6 +525,47 @@ function createWindow(object)
 	menubarObject.append(menubarWindowControlsObject)
 	menubarObject.append(menubarTitleObject)
 
+	windowObject.appendChild(menubarObject)
+
+	// * menubar
+	if (object?.menubar !== undefined && object?.menubar !== null) {
+		const swingMenubar = document.createElement('div')
+		swingMenubar.className = 'menubar'
+
+		object.menubar.forEach(menu => {
+			const swingMenu = document.createElement('div')
+			swingMenu.className = 'menu'
+
+			const swingMenuTitle = document.createElement('span')
+			swingMenuTitle.className = 'menu-title'
+			swingMenuTitle.innerText = menu.name
+
+			const swingMenuContent = document.createElement('div')
+			swingMenuContent.className = 'menu-content'
+
+			menu.items.forEach(menuItem => {
+				const swingMenuItem = document.createElement('span')
+				switch (menuItem.name) {
+					case 'SWING_SEPERATOR':
+						swingMenuItem.className = 'seperator'
+						break
+					default:
+						swingMenuItem.innerText = menuItem.name
+						swingMenuItem.onclick = () => menuItem.command(windowId, api)
+						break
+				}
+				swingMenuContent.appendChild(swingMenuItem)
+			})
+
+			swingMenu.appendChild(swingMenuTitle)
+			swingMenu.appendChild(swingMenuContent)
+
+			swingMenubar.appendChild(swingMenu)
+		})
+
+		windowObject.appendChild(swingMenubar)
+	}
+
 	// * content
 	const contentObject = document.createElement('div')
 	contentObject.className = 'content'
@@ -540,7 +581,6 @@ function createWindow(object)
 		contentObject.style = object.contentStyling
 	}
 
-	windowObject.appendChild(menubarObject)
 	windowObject.appendChild(contentObject)
 
 	// * options
@@ -610,7 +650,7 @@ let positionX = 0, positionY = 0, clientXPosition = 0, clientYPosition = 0
 
 function makeDraggable(currentWindow)
 {
-	const currentWindowMenuBar = currentWindow.getElementsByClassName('menubar')[0]
+	const currentWindowMenuBar = currentWindow.getElementsByClassName('titlebar')[0]
 		
 	currentWindowMenuBar.onmousedown = e => {
 		e = e || window.event
@@ -1303,123 +1343,106 @@ const settingsWindow = {
 		</div>
 	</div>
  	`,
-    options: [
-        {
-            name: 'Reset',
-            message: 'script',
-            messagescript: function (clientId, api) {
-                return function () {
-                    api.create.dialog({
-                        callerId: clientId,
-                        type: 'button-options',
-                        title: 'Are you sure?',
-                        description: "You won't be able to undo this!",
-                        buttonOptions: [
-                            {
-                                name: 'Yes',
-                                script: function (_clientId) {
-                                    return function () {
-                                        resetSettings();
-                                        localStorage.setItem(
-                                            'not-first-time',
-                                            null
-                                        );
-                                        document
-                                            .getElementById('dialog')
-                                            .remove();
-                                        desktopNotification({
-                                            title: 'Restart System',
-                                            description:
-                                                'Refresh page to finish resetting.',
-                                            playSound: true,
-                                            action: () =>
-                                                window.location.reload(),
-                                        });
-                                    };
-                                },
-                            },
-                            {
-                                name: 'No',
-                                script: function (_clientId) {
-                                    return function () {
-                                        document
-                                            .getElementById('dialog')
-                                            .remove();
-                                    };
-                                },
-                            },
-                        ],
-                    });
-                };
-            },
-        },
-        {
-            name: 'Import',
-            message: 'script',
-            messagescript: function (clientId, api) {
-                return function () {
-                    api.create.window({
-                        id: `ivy:${clientId}-import-dialogue`,
-                        disallowMultiple: true,
-                        title: 'Import Settings',
-                        size: {
-                            preset: 'mini',
-                        },
-                        icon: 'cloud-upload-outline',
-                        content: `
+	menubar: [
+		{
+			name: 'File',
+			items: [
+				{ name: 'Import', command: function (clientId, api) {
+					api.create.window({
+						id: `ivy:${clientId}-import-dialogue`,
+						disallowMultiple: true,
+						title: 'Import Settings',
+						size: {
+							preset: 'mini',
+						},
+						icon: 'cloud-upload-outline',
+						content: `
 						<label for="%human-id%-input-file">Upload a human-settings.json file:</label>
 						<input type="file" id="%human-id%-input-file" />
 
 						<p>Note: This will override your current settings.</p>
 						`,
-                        options: [
-                            {
-                                name: 'Upload',
-                                message: 'script',
-                                messagescript: function (clientId, _api) {
-                                    return function () {
-                                        const files = document.getElementById(
-                                            `${clientId}-input-file`
-                                        ).files;
-                                        if (files.length > 0) {
-                                            importSettings(files[0]);
-                                            refresh();
-                                            removeWindow(clientId);
-                                            api.create.notification({
-                                                title: 'Restart System',
-                                                description:
-                                                    'Refresh page to load new settings.',
-                                                playSound: true,
-                                                action: () =>
-                                                    window.location.reload(),
-                                            });
-                                        } else {
-                                            api.create.notification({
-                                                title: 'Uploading file error',
-                                                description:
-                                                    'No file was selected.',
-                                                playSound: true,
-                                                action: () =>
-                                                    window.location.reload(),
-                                            });
-                                        }
-                                    };
-                                },
-                            },
-                        ],
-                    });
-                };
-            },
-        },
-        {
-            name: 'Export',
-            message: 'script',
-            messagescript: function (_clientId, _api) {
-                return function () {
-                    exportSettings();
-                };
-            },
-        },
+						options: [
+							{
+								name: 'Upload',
+								message: 'script',
+								messagescript: function (clientId, _api) {
+									return function () {
+										const files = document.getElementById(`${clientId}-input-file`).files;
+										if (files.length > 0) {
+											importSettings(files[0])
+											refresh()
+											removeWindow(clientId)
+											api.create.notification({
+												title: 'Restart System',
+												description: 'Refresh page to load new settings.',
+												playSound: true,
+												action: () => window.location.reload()
+											})
+										} else {
+											api.create.notification({
+												title: 'Uploading file error',
+												description: 'No file was selected.',
+												playSound: true,
+												action: () => window.location.reload()
+											})
+										}
+									}
+								}
+							}
+						]
+					})
+				}},
+				{ name: 'Export', command: function (clientId, api) {
+					exportSettings()
+				}},
+				{ name: 'SWING_SEPERATOR' },
+				{ name: 'Reset', command: function (clientId, api) {
+					api.create.dialog({
+						callerId: clientId,
+						type: 'button-options',
+						title: 'Are you sure?',
+						description: "You won't be able to undo this!",
+						buttonOptions: [
+							{
+								name: 'Yes',
+								script: function (_clientId) {
+									return function () {
+										resetSettings();
+										localStorage.setItem('not-first-time', null);
+										document.getElementById('dialog').remove();
+										desktopNotification({
+											title: 'Restart System',
+											description: 'Refresh page to finish resetting.',
+											playSound: true,
+											action: () => window.location.reload(),
+										})
+									}
+								}
+							},
+							{
+								name: 'No',
+								script: function (_clientId) {
+									return function () {
+										document.getElementById('dialog').remove();
+									}
+								}
+							}
+						]
+					})
+				}}
+			]
+		},
+		{
+			name: 'Help',
+			items: [
+				{ name: 'humanOS Docs', command: function (clientId, api) {
+					createExternalWindow('/apps/docs/main.js')
+				}}
+			]
+		}
+	],
+    options: [
         {
             name: 'Apply',
             message: 'script',
@@ -1435,37 +1458,22 @@ const settingsWindow = {
                     // localStorage.setItem('setting-behavior-startup-open-bugman', document.getElementById(`${clientId}-behavior-startup-open-bugman`).checked)
                     // localStorage.setItem('setting-behavior-close-applist',       document.getElementById(`${clientId}-behavior-close-applist`)      .checked)
                     for (const settingName in settingsList) {
-                        if (
-                            Object.hasOwnProperty.call(
-                                settingsList,
-                                settingName
-                            )
-                        ) {
-                            const settingAttributes = settingsList[settingName];
-                            const settingInput = document.getElementById(
-                                `${clientId}-${settingAttributes.settingInput.name}`
-                            );
-                            if (
-                                settingAttributes.settingInput.type ===
-                                'checkbox'
-                            ) {
-                                localStorage.setItem(
-                                    settingName,
-                                    settingInput.checked
-                                );
+                        if (Object.hasOwnProperty.call(settingsList, settingName)) {
+                            const settingAttributes = settingsList[settingName]
+                            const settingInput = document.getElementById(`${clientId}-${settingAttributes.settingInput.name}`)
+
+                            if (settingAttributes.settingInput.type === 'checkbox') {
+                                localStorage.setItem(settingName, settingInput.checked)
                             } else {
-                                localStorage.setItem(
-                                    settingName,
-                                    settingInput.value
-                                );
+                                localStorage.setItem(settingName, settingInput.value)
                             }
                         }
                     }
                     api.refresh();
                     repopulateAppGrid();
-                };
-            },
-        },
+                }
+            }
+        }
     ],
     onload: function (clientId, _api) {
         return function () {

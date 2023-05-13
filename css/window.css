@@ -42,13 +42,13 @@
 	z-index: 7;
 }
 
-.window:active > .menubar, .window:focus > .menubar, .window.focus > .menubar {
+.window:active > .titlebar, .window:focus > .titlebar, .window.focus > .titlebar {
 	z-index: 8;
 	color: white;
 }
 
-/* menubar */
-.window > .menubar {
+/* title bar */
+.window > .titlebar {
 	z-index: 6;
 	
 	background: #2e2e2e;
@@ -60,16 +60,16 @@
 }
 
 /*
-.window > .menubar > * {
+.window > .titlebar > * {
   float: left;
 }
 
-.window > .menubar > .window-controls {
+.window > .titlebar > .window-controls {
   width: 25%;
 }
 */
 
-.window > .menubar > .window-controls {
+.window > .titlebar > .window-controls {
 	position: absolute;
 	right: 0;
 	z-index: 9;
@@ -80,7 +80,7 @@
 	padding-right: 2px;
 }
 
-.window > .menubar > .window-controls .window-control {
+.window > .titlebar > .window-controls .window-control {
   margin-top: 4px;
   height: 12px;
   width: 12px;
@@ -89,38 +89,38 @@
   display: inline-block;
 }
 
-.window > .menubar > .window-controls .window-control.close {
+.window > .titlebar > .window-controls .window-control.close {
 	background: var(--accent);
 }
 
-.window > .menubar > .window-controls .window-control.close:hover {
+.window > .titlebar > .window-controls .window-control.close:hover {
 	background: hsl(var(--accent-darker));
 }
 
-.window > .menubar > .window-controls .window-control.minimize {
+.window > .titlebar > .window-controls .window-control.minimize {
 /* 	background: yellow; */
 	background: #fdd800;
 }
 
-.window > .menubar > .window-controls .window-control.minimize:hover {
+.window > .titlebar > .window-controls .window-control.minimize:hover {
 	background: #e3c200;
 }
 
-.window > .menubar > .window-controls .window-control.maximize {
+.window > .titlebar > .window-controls .window-control.maximize {
 /* 	background: greenyellow; */
 	background: #5ac05a;
 }
 
-.window > .menubar > .window-controls .window-control.maximize:hover {
+.window > .titlebar > .window-controls .window-control.maximize:hover {
 	background: #51ac51;
 }
 
-.window > .menubar > .title {
+.window > .titlebar > .title {
 /*   width: 60%; */
 	width: 100%;
 }
 
-.window > .menubar > .title span {
+.window > .titlebar > .title span {
 	width: 100%;
 	display: flex;
 	justify-content: center;
@@ -128,12 +128,76 @@
 }
 
 /*
-.window > .menubar::after {
+.window > .titlebar::after {
   content: '';
   display: table;
   clear: both;
 }
 */
+
+/* menubar */
+.window > .menubar {
+	border-bottom: 1px solid lightgrey;
+	display: flex;
+	flex-direction: row;
+	padding-block: 4px;
+}
+
+.window > .menubar > .menu {
+	position: relative;
+	display: inline-block;
+}
+
+.window > .menubar > .menu > .menu-title {
+	color: black;
+	padding: 4px;
+}
+
+.window > .menubar > .menu:hover > .menu-title {
+	background-color: var(--accent);
+}
+
+.window > .menubar > .menu > .menu-content {
+	display: none;
+	position: absolute;
+	background-color: white;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0 0 0 / 0.2);
+	z-index: 9;
+
+	border-radius: 4px;
+
+	padding: 4px;
+
+	flex-direction: column;
+	gap: 2px;
+	top: 24px;
+}
+
+.window > .menubar > .menu:hover > .menu-content {
+	display: flex;
+}
+
+.window > .menubar > .menu > .menu-content > span:not(.seperator) {
+	color: black;
+	padding: 4px;
+	display: block;
+	border-radius: 4px;
+}
+
+.window > .menubar > .menu > .menu-content > span:not(.seperator):hover {
+	outline: 1px solid var(--accent);
+	background-color: var(--highlight);
+}
+
+.window > .menubar > .menu > .menu-content > span.seperator {
+	display: block;
+	position: relative;
+	left: 0;
+	right: 0;
+	background: lightgrey;
+	height: 1px;
+}
 
 /* content */
 .window > .content {

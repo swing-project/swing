@@ -1,9 +1,9 @@
 /*
  * z-index 05 is reserved for inactive windows
- * z-index 06 is reserved for inactive window menubars
+ * z-index 06 is reserved for inactive window titlebars
  * z-index 07 is reserved for the active window
- * z-index 08 is reserved for the active window menubar
- * z-index 09 is reserved for the dock, system menu, and window controls
+ * z-index 08 is reserved for the active window titlebar
+ * z-index 09 is reserved for the dock, system menu, window controls, and all menubars
  * z-index 10 is reserved for the system menu popups and notifications
  * z-index 11 is reserved for dialog(ue) dimming
  * z-index 12 is reserved for dialog(ue)s
