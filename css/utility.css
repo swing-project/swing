@@ -1,0 +1,406 @@
+/* utility classes */
+:root {
+    /* spacers */
+	--spacer-0: 0px;
+    --spacer-1: 4px;
+    --spacer-2: 8px;
+    --spacer-3: 16px;
+    --spacer-4: 24px;
+    --spacer-5: 32px;
+    --spacer-6: 40px;
+
+    /* colours */
+	--color-black: hsl(0, 0%, 0%);
+    --color-default: hsl(0, 0%, 75%);
+    --color-muted: hsl(0, 0%, 85%);
+    --color-white: hsl(0, 0%, 100%);
+}
+
+.fs-8 {
+    font-size: 8px;
+}
+
+.fs-10 {
+    font-size: 10px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-1r {
+    font-size: 1rem;
+}
+
+.fs-2r {
+    font-size: 1rem;
+}
+
+.fs-4rem {
+    font-size: 4rem;
+}
+
+.d-block {
+    display: block;
+}
+
+.flex, .d-flex {
+    display: flex;
+}
+
+.inline-flex, .d-inline-flex {
+    display: inline-flex;
+}
+
+.gap-0 {
+    gap: var(--spacer-0);
+}
+
+.gap-1 {
+    gap: var(--spacer-1);
+}
+
+.gap-2 {
+    gap: var(--spacer-2);
+}
+
+.gap-3 {
+    gap: var(--spacer-3);
+}
+
+.gap-4 {
+    gap: var(--spacer-4);
+}
+
+.gap-5 {
+    gap: var(--spacer-5);
+}
+
+.flexdir-col {
+    flex-direction: column;
+}
+
+.flexdir-row {
+    flex-direction: row;
+}
+
+.ai-start {
+    align-items: start;
+}
+
+.ai-center {
+    align-items: center;
+}
+
+.ai-end {
+    align-items: end;
+}
+
+.jc-left {
+    justify-content: left;	
+}
+
+.jc-center {
+    justify-content: center;
+}
+
+.jc-right {
+    justify-content: right;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-3 {
+    flex: 3;
+}
+
+.flex-4 {
+    flex: 4;
+}
+
+.radii-4 {
+    border-radius: 4px;
+}
+
+.radii-8 {
+    border-radius: 8px;
+}
+
+.fg-black {
+    color: var(--color-black);
+}
+
+.fg-default {
+    color: var(--color-default);
+}
+
+.fg-muted {
+    color: var(--color-muted);
+}
+
+.fg-white {
+    color: var(--color-white);
+}
+
+.fg-accent {
+    color: var(--accent);
+}
+
+.bg-accent,
+.accent-bg {
+    background-color: var(--accent);
+}
+
+/* `padding` */
+.p-0 {
+    padding: var(--spacer-0);
+}
+
+.p-1 {
+    padding: var(--spacer-1);
+}
+
+.p-2 {
+    padding: var(--spacer-2);
+}
+
+.p-3 {
+    padding: var(--spacer-3);
+}
+
+.p-4 {
+    padding: var(--spacer-4);
+}
+
+.p-5 {
+    padding: var(--spacer-5);
+}
+
+.p-6 {
+    padding: var(--spacer-6);
+}
+
+.p-bot-0 {
+    padding-bottom: 0;
+}
+
+.p-bot-4 {
+    padding-bottom: 4px;
+}
+
+.p-bot-8 {
+    padding-bottom: 8px;
+}
+
+.p-bot-12 {
+    padding-bottom: 12px;
+}
+
+.p-bot-14 {
+    padding-bottom: 14px;
+}
+
+.p-bot-16 {
+    padding-bottom: 16px;
+}
+
+.p-bot-32 {
+    padding-bottom: 32px;
+}
+
+.p-bot-64 {
+    padding-bottom: 64px;
+}
+
+/* `margin` */
+.m-auto {
+    margin: auto;
+}
+
+.m-0 {
+    margin: var(--spacer-0);
+}
+
+.m-1 {
+    margin: var(--spacer-1);
+}
+
+.m-2 {
+    margin: var(--spacer-2);
+}
+
+.m-3 {
+    margin: var(--spacer-3);
+}
+
+.m-4 {
+    margin: var(--spacer-4);
+}
+
+.m-5 {
+    margin: var(--spacer-5);
+}
+
+.m-6 {
+    margin: var(--spacer-6);
+}
+
+/* `text-align` */
+.ta-left {
+    text-align: left;
+}
+
+.ta-center {
+    text-align: center;
+}
+
+.ta-right {
+    text-align: right;
+}
+
+.ta-justify {
+    text-align: justify;
+}
+
+/* `max-width` */
+.mw-600 {
+    max-width: 600px;
+}
+
+.mw-1000 {
+    max-width: 1000px;
+}
+
+/* `width` */
+.w-100-pc {
+    width: 100%;
+}
+
+.w-75-pc {
+    width: 75%;
+}
+
+.w-50-pc {
+    width: 50%;
+}
+
+.w-25-pc {
+    width: 25%;
+}
+
+.w-15-pc {
+    width: 15%;
+}
+
+.w-10-pc {
+    width: 10%;
+}
+
+/* `height` */
+.h-100-pc {
+    height: 100%;
+}
+
+.h-75-pc {
+    height: 75%;
+}
+
+.h-50-pc {
+    height: 50%;
+}
+
+.h-25-pc {
+    height: 25%;
+}
+
+.h-10-pc {
+    height: 10%;
+}
+
+/* `position` */
+.pos-rel {
+    position: relative;
+}
+
+.pos-abs {
+    position: absolute;
+}
+
+.pos-fix {
+    position: fixed;
+}
+
+.pos-sti {
+    position: sticky;
+}
+
+/* borders */
+.border {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-default);
+}
+
+.border-none {
+    border: none;
+}
+
+/* `border-style` */
+.border-s-sol {
+    border-style: solid;
+}
+
+.border-s-das {
+    border-style: dashed;
+}
+
+.border-s-dot {
+    border-style: dotted;
+}
+
+.border-s-dou {
+    border-style: double;
+}
+
+/* `bottom` */
+.b-0 {
+    bottom: var(--spacer-0);
+}
+
+.b-1 {
+    bottom: var(--spacer-1);
+}
+
+.b-2 {
+    bottom: var(--spacer-2);
+}
+
+.b-3 {
+    bottom: var(--spacer-3);
+}
+
+.b-4 {
+    bottom: var(--spacer-4);
+}
+
+.b-5 {
+    bottom: var(--spacer-5);
+}
+
+.b-6 {
+    bottom: var(--spacer-6);
+}

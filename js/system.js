@@ -135,7 +135,7 @@ const settingsList = {
 		}
 	},
 	'setting-wallpaper-location': {
-		'default': `url('/wallpapers/unsplash-collection/photo-1458501534264-7d326fa0ca04.jpeg')`,
+		'default': `url('/media/resources/wallpapers/photo-1458501534264-7d326fa0ca04.jpeg')`,
 		'settingInput': {
 			'name': 'input-wallpaper-location',
 			'type': 'text'
@@ -174,43 +174,43 @@ const settingsList = {
 const wallpaperList = [
     {
         name: 'Night',
-        path: '/wallpapers/unsplash-collection/benjamin-voros-phIFdC6lA4E-unsplash.jpg',
+        path: '/media/resources/wallpapers/benjamin-voros-phIFdC6lA4E-unsplash.jpg',
     },
     {
         name: 'Road',
-        path: '/wallpapers/unsplash-collection/cristina-gottardi-84RNIdh3EwU-unsplash.jpg',
+        path: '/media/resources/wallpapers/cristina-gottardi-84RNIdh3EwU-unsplash.jpg',
     },
     {
         name: 'Beach',
-        path: '/wallpapers/unsplash-collection/iswanto-arif-OJ74pFtrYi0-unsplash.jpg',
+        path: '/media/resources/wallpapers/iswanto-arif-OJ74pFtrYi0-unsplash.jpg',
     },
     {
         name: 'Wave',
-        path: '/wallpapers/unsplash-collection/jeremy-bishop-cEeEtjedNls-unsplash.jpg',
+        path: '/media/resources/wallpapers/jeremy-bishop-cEeEtjedNls-unsplash.jpg',
     },
     {
         name: 'Terrain',
-        path: '/wallpapers/unsplash-collection/kai-oberhauser-BKAaLmT0tIs-unsplash.jpg',
+        path: '/media/resources/wallpapers/kai-oberhauser-BKAaLmT0tIs-unsplash.jpg',
     },
     {
         name: 'Maple',
-        path: '/wallpapers/unsplash-collection/lyndon-li-zrT1tjnxJKQ-unsplash.jpg',
+        path: '/media/resources/wallpapers/lyndon-li-zrT1tjnxJKQ-unsplash.jpg',
     },
     {
         name: 'Lavender',
-        path: '/wallpapers/unsplash-collection/photo-1544892504-5a42d285ab6f.jpeg',
+        path: '/media/resources/wallpapers/photo-1544892504-5a42d285ab6f.jpeg',
     },
     {
         name: 'Rocks',
-        path: '/wallpapers/unsplash-collection/photo-1458501534264-7d326fa0ca04.jpeg',
+        path: '/media/resources/wallpapers/photo-1458501534264-7d326fa0ca04.jpeg',
     },
     {
         name: 'Mountain',
-        path: '/wallpapers/unsplash-collection/photo-1472396961693-142e6e269027.jpeg',
+        path: '/media/resources/wallpapers/photo-1472396961693-142e6e269027.jpeg',
     },
     {
         name: 'Peak',
-        path: '/wallpapers/unsplash-collection/photo-1489619243109-4e0ea59cfe10.jpeg',
+        path: '/media/resources/wallpapers/photo-1489619243109-4e0ea59cfe10.jpeg',
     },
 	{
 		name: 'Reflection',
@@ -363,6 +363,18 @@ function characterControl(e)
 	if (metaPressed && e.key == '\\')
 	{
 		createWindow(bugman)
+	}
+}
+
+// find a path
+function findPath(path) {
+	patharr = path.split(`:`)
+	if (path.length === 2) {
+		if (patharr[0] === 'Resources') {
+			return `/media/resources` + patharr[1]
+		}
+	} else {
+		return 'Devices:INVALID_PATH'
 	}
 }
 
@@ -744,7 +756,7 @@ function focusWindow(windowId)
 
 function playInternalSound(name)
 {
-	let audio = new Audio(`/sounds/${name}`)
+	let audio = new Audio(`/media/resources/sounds/${name}`)
   	audio.play()
 }
 
@@ -1194,7 +1206,7 @@ const settingsWindow = {
 	<!--<div id="%human%-sidebar" onclick="settingsShowSection('%human%', event)" class="flex flexdir-col gap-1">
 
 	</div>-->
-	<div id="%human%-content" class="flex flexdir-col gap-16 m-auto mw-600 p-16 p-bot-64">
+	<div id="%human%-content" class="flex flexdir-col gap-16 m-auto mw-600 p-3 p-bot-64">
 		<div id="%human%-s-configured-apps">
 			<h2 class="flex flexdir-row gap-1 ai-center jc-center"><ion-icon name="apps-outline"></ion-icon> Configured Apps</h2>
 

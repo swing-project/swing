@@ -50,7 +50,7 @@ export const client = {
             <span class="gmt"></span>
             <span class="local fg-darkgrey"></span>
         </div>
-        <p class="tag ta-center fg-white p-4 radii-4"></p>
+        <p class="tag ta-center fg-white p-1 radii-4"></p>
     </div>
     `,
     'onload': function (clientId, _api) {

@@ -158,14 +158,6 @@
 	user-select: none;
 }
 
-.window > .content .accent:not(.override) {
-	color: var(--accent);
-}
-
-.window > .content .accent-bg:not(.override) {
-	background-color: var(--accent);
-}
-
 .window > .content .writing:not(.override) {
 	display: flex;
 	flex-direction: column;
@@ -187,35 +179,6 @@
 .window > .content .list > *:not(br):not(.override)::before {
 	content: '\2022  ';
 }
-
-/* keys (styles may or may not be taken from Stack Exchange) */
-kbd:not(.override) {
-	display: inline-block;
-	margin: 0 .1em;
-	padding: .1em .6em;
-	line-height: 1.4;
-	font-size: 11px;
-	color: hsl(210, 8%, 15%);
-	text-shadow: 0 1px 0 hsl(0, 0%, 100%);
-	background-color: hsl(210, 8%, 90%);
-	border: 1px solid hsl(210, 8%, 5%);
-	border-radius: 3px;
-	box-shadow: 0 1px 1px hsla(210, 8%, 5%, 0.15), inset 0 1px 0 0 hsl(0, 0%, 100%);
-	white-space: nowrap;
-}
-
-/* different kbd (style may or may not be taken from the haiku website this time)
-kbd {
-	border: 1px solid #c7c7c7;
-	border-bottom: 1px solid #aaa;
-	border-right: 1px solid #aaa;
-	border-radius: 3px;
-	padding: 1px 15px 1px 15px;
-	background-color: #e8e8e8;
-	font-size: 0.9em;
-	margin: 0 3px 0 3px;
-}
-*/
 
 /* anchors */
 .window > .content a {
