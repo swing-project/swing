@@ -1,6 +1,8 @@
 # TODO
 
 - Do random wallpaper on system creation, not just that one hardcoded one (code example 3)
+- Make the app list editable just like the app grid
+- Make it possible to completely edit the app grid
 - Create a wallpaper switcher that uses the built-in Unsplash wallpapers
   - Since I'm not too good at making galleries like you'd expect here, do dropdowns where the value is the CSS `url()` value to the wallpaper (just like right now) and custom will just read from a text box instead (code example 1)
 - Figure out a way to completely capture user input until they press some button
