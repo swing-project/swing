@@ -23,17 +23,17 @@ export const client = {
                 // but because everything is executed in one place
                 // it's hard to define functions that work properly
                 // isolation needed!
-                { name: 'Image 1', command: function (clientId, api) {
+                { name: 'Image 1', command: function (clientId, _api) {
                     const container = document.getElementById(clientId).querySelector('.content > .container')
                     container.querySelectorAll('img').forEach((element) => element.style.display = 'none')
                     container.querySelector('img.one').style.display = 'block'
                 }},
-                { name: 'Image 2', command: function (clientId, api) {
+                { name: 'Image 2', command: function (clientId, _api) {
                     const container = document.getElementById(clientId).querySelector('.content > .container')
                     container.querySelectorAll('img').forEach((element) => element.style.display = 'none')
                     container.querySelector('img.two').style.display = 'block'
                 }},
-                { name: 'Image 3', command: function (clientId, api) {
+                { name: 'Image 3', command: function (clientId, _api) {
                     const container = document.getElementById(clientId).querySelector('.content > .container')
                     container.querySelectorAll('img').forEach((element) => element.style.display = 'none')
                     container.querySelector('img.three').style.display = 'block'
@@ -41,4 +41,10 @@ export const client = {
             ]
         }
     ]
+}
+
+function switchImage(className, clientId) {
+    const container = document.getElementById(clientId).querySelector('.content > .container')
+    
+    container.querySelectorAll(`img.${className}`).style.display = 'block'
 }

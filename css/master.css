@@ -1,4 +1,5 @@
 /*
+ * z-index 00 is reserved for body
  * z-index 05 is reserved for inactive windows
  * z-index 06 is reserved for inactive window titlebars
  * z-index 07 is reserved for the active window
@@ -15,7 +16,7 @@
 @import url('https://code.cdn.mozilla.net/fonts/zilla-slab.css');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Sofia+Sans:ital,wght@0,1;0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,1;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Carrois+Gothic&family=Comme:wght@400;700&family=Oxygen:wght@400;700&family=Share:ital,wght@0,400;0,700;1,400;1,700&display=swap'); /* 656 columns is probably a world record */
 
-@import url('/media/resources/fonts/switer-font-web/switzer.css');
+@import url('/media/resources/fonts/switzer-font-web/switzer.css');
 
 @import url('desktop.css');
 @import url('window.css');
@@ -54,6 +55,8 @@
 }
 
 body {
+	z-index: 0;
+
 	overflow: hidden;
 	background-image: var(--wallpaper-location);
 	background-size: cover;
@@ -107,7 +110,6 @@ iframe {
 	border: none;
 	resize: both;
 	overflow: auto;
-	position: auto;
 }
 
 /* fancy headings for fancy people */

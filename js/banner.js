@@ -26,7 +26,7 @@ function createDialog(object) {
     descriptionObject.innerHTML = object.description
     contentObject.appendChild(descriptionObject)
 
-    if (object.type == 'button-options') {
+    if (object.type === 'button-options') {
         const optionsObject = document.createElement('div')
         optionsObject.className = 'button-options'
 

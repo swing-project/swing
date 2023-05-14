@@ -2,7 +2,7 @@ function desktopNotification(object)
 {
     const title = object['title'], description = object['description']
     const action = object['action'] ? object['action'] : function(){}
-    const playSound = (object['playSound'] != (null || undefined)) ? object['playSound'] : true
+    const playSound = (object['playSound'] !== undefined) ? object['playSound'] : true
 
     const notification = document.createElement('div')
     notification.className = 'desktop-notification'

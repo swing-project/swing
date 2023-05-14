@@ -1111,26 +1111,13 @@ const externalLoaderWindow = {
 	]
 }
 
-class HApp
-{
-	constructor(objectDefinition)
-	{
-		this.id = objectDefinition.id
-		this.title = objectDefinition.title
-		this.size = objectDefinition.size
-		this.icon = objectDefinition.icon
-		this.content = objectDefinition.content
-		this.options = objectDefinition.options
-	}
-}
-
 const shownApps = [
     async () => await loadExternalObject('/apps/docs/main.js'),
     async () => await settingsWindow,
+	async () => await loadExternalObject('/apps/write/write.js'),
     async () => await loadExternalObject('/apps/shortcut-cheat-sheet.js'),
     async () => await loadExternalObject('/apps/welcomeApp/main.js'),
     async () => await loadExternalObject('/apps/learnHuman.js'),
-    async () => await loadExternalObject('/apps/notificationEngine.js'),
     async () => await runWindow,
 	async () => await swingConsoleWindow,
     async () => await bugman
