@@ -1,5 +1,5 @@
 export const client = {
-    id: 'ivy:docs',
+    id: 'ivy--docs',
     title: 'humanOS Docs',
     size: {
         width: '1200px',

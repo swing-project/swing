@@ -16,7 +16,12 @@
 
 	filter: drop-shadow(4px 10px 4px rgba(0, 0, 0, 25%));
 
-	animation: window-opacity 100ms;
+	animation: flick-opacity 100ms;
+}
+
+.window.has-message-box {
+	transition: filter 100ms;
+	filter: drop-shadow(4px 10px 4px rgba(0, 0, 0, 25%)) brightness(50%);
 }
 
 .window.rigid {
@@ -32,7 +37,7 @@
 	border-radius: 8px;
 }
 
-@keyframes window-opacity {
+@keyframes flick-opacity {
 	from { opacity: 0; }
 	to   { opacity: 1; }
 }
@@ -162,16 +167,16 @@
 	position: absolute;
 	background-color: white;
 	min-width: 160px;
-	box-shadow: 0px 8px 16px 0px rgba(0 0 0 / 0.2);
+	box-shadow: 0 8px 16px 0 rgba(0 0 0 / 0.2);
 	z-index: 9;
 
-	border-radius: 4px;
+	border-radius: 0 0 4px 4px;
 
 	padding: 4px;
 
 	flex-direction: column;
 	gap: 2px;
-	top: 24px;
+	top: 22px;
 }
 
 .window > .menubar > .menu:hover > .menu-content {
@@ -329,7 +334,7 @@ input {
 	box-shadow: none;
 }
 
-.window > .content input[type='text'] {
+input[type='text'] {
 	border-radius: 4px;
 	padding: 4px;
 	width: 100%;
@@ -338,8 +343,12 @@ input {
 	outline: none;
 }
 
-.window > .content input[type='text']:focus {
+input[type='text']:focus {
 	box-shadow: inset 0 0 5px rgba(0 0 0 / 15%);
+}
+
+.window > .content input[type='text'] {
+	width: 100%;
 }
 
 .window > .content input[type='text'].no-width-100 {
@@ -358,6 +367,7 @@ input[type='button'] {
 	gap: 4px;
 	align-items: center;
 	justify-content: center;
+	min-width: 4rem;
 	/* background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.10)); */
 }
 
@@ -496,10 +506,4 @@ button.new:active {
 	justify-content: right;
 	padding: 4px;
 	gap: 4px;
-}
-
-.window > .options button,
-#dialog > .wrapper > .content > .button-options > button {
-	min-width: 4rem;
-	/* all other styling is applied with the content buttons */
 }

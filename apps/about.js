@@ -1,5 +1,5 @@
 export const client = {
-	'id': 'ivy:about-window',
+	'id': 'ivy--about-window',
 	'title': 'About humanOS',
 	'size': {
 		'preset': 'small'

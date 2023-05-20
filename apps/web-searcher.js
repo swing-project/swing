@@ -1,5 +1,5 @@
 export const client = {
-    id: 'ivy:web-searcher',
+    id: 'ivy--web-searcher',
     title: 'Web Searcher',
     icon: 'search-outline',
     size: {

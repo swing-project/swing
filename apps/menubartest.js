@@ -10,14 +10,14 @@ export const client = {
         {
             name: 'File',
             items: [
-                { name: 'Import', command: function (clientId, api) {
+                { name: 'Import', command: function (clientId, api, _args) {
                     alert('import')
                 }},
-                { name: 'Export', command: function (clientId, api) {
+                { name: 'Export', command: function (clientId, api, _args) {
                     alert('export')
                 }},
                 { name: 'SWING_SEPERATOR' },
-                { name: 'Reset', command: function (clientId, api) {
+                { name: 'Reset', command: function (clientId, api, _args) {
                     alert('reset')
                 }}
             ]

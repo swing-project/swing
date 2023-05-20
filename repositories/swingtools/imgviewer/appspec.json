@@ -1,0 +1,7 @@
+{
+    "id":          "swingtools--imgviewer",
+    "name":        "Image Viewer",
+    "description": "A basic image viewer.",
+    "start":       "main.js",
+    "include":     [ "main.js" ]
+}

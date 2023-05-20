@@ -44,7 +44,7 @@
         <h2>Desktop</h2>
         <p>This section contains information about the desktop and features on it.</p>
     
-        <h3>System Menu</h2>
+        <h3>System Menu</h3>
         <p>At the top of the screen is the system menu. It contains information, which when clicked on show dropdowns.</p>
         <p>Here is some information about each of these.</p>
 
@@ -77,15 +77,17 @@
         <h2>Windows</h2>
         <p>This section contains information about the window system humanOS uses.</p>
     
-        <h3>Menubar</h3>
-        <p>The menubar shows the title given to the window and a close button on the right.</p>
+        <h3>Title bar</h3>
+        <p>The title bar shows the title given to the window and a close button on the right.</p>
         <p>Clicking on the close button closes the window.</p>
-        <p>Double-clicking on the menubar folds the window. This is the main way to hide windows currently since there is no
+        <p>Double-clicking on the title bar folds the window. This is the main way to hide windows currently since there is no
             minimize feature yet.</p>
+
+        <h3>Menubar</h3>
+        <p>The menubar is a way to interact with the app, and it contains a bunch of dropdowns with options.</p>
     
         <h3>Options bar</h3>
-        <p>Some applications, such as Settings, contain a bar of buttons at the bottom that do actions related to the task.
-        </p>
+        <p>Some applications, such as Run, contain a bar of buttons at the bottom that do actions related to the task.</p>
         <p>These buttons will have text labels which will explain the purpose of the button.</p>
     </div>
     
@@ -108,7 +110,7 @@
         
         <p>Of course, this does come with the issue of security. Because of the way humanOS apps work, any configured app will
             have access to your entire system. Because of this, make sure you trust the authour of the code, and if you're a
-            little more tech savvy than most people, look through the code since these apps have to be open source.</p>
+            little more tech savvy than most people, look through the code since these apps are forced to be open source.</p>
         
         <h3>How to</h3>
 
@@ -154,10 +156,10 @@
 }</pre>
 
         <p>Please try to keep the ID unique to your website or username, as ID conflicts in humanOS can be horrible.</p>
-        <p>humanOS tries to keep this very simple, using <code>[websitename]:[taskname]</code>,
+        <p>humanOS tries to keep this very simple, using <code>[websitename]--[taskname]</code>,
             where <code>[websitename]</code> can be replaced with the domain name of your website, e.g. example.com,
             and <code>[taskname]</code> can be replaced with the filename minus '.js'.</p>
-        <p>You are allowed to do whatever you want, but please try your best to keep it unique.</p>
+        <p>You are allowed to do whatever you want and you don't have to follow this naming scheme, but please try your best to keep it unique.</p>
 
         <p>Now, back on track, the title is what is shown to the human behind the system as the window title.</p>
         <p>The content value is inline HTML. Yes, it's horrible, I am working on making a way to use external files.
@@ -180,7 +182,7 @@
     'content': `
     &lt;p&gt;You should have recieved a notification. Isn't that cool?&lt;/p&gt;
     `,
-    'onload': function (_clientId, api) {
+    'onload': function (_clientId, api, _args) {
         return function () {
             api.create.notification({
                 'title': 'Wow cool',
@@ -212,11 +214,12 @@
         <h4><code>onload</code></h4>
         <p>humanOS gives developers access to run some JavaScript code as soon as the task is done being processed.</p>
         <p>This property will be a function which returns the function to be run on load.</p>
-        <p>The property itself will take parameters <code>clientId</code> and <code>api</code>, which respectively:</p>
+        <p>The property itself will take parameters <code>clientId</code>, <code>api</code>, and <code>args</code>, which respectively:</p>
 
         <ul>
             <li>Contain the window ID given to the window for the text, useful for modifying the window itself</li>
-            <li>Contain a bunch of functions to operate with the system, which include</li>
+            <li>Contain a bunch of functions to operate with the system, which include <code>api.create.notification</code> which is described just below this.</li>
+            <li>Contains the list of arguments passed to the window on creation.</li>
         </ul>
 
         <h4><code>api.create.notification</code></h4>

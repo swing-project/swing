@@ -10,16 +10,15 @@
     - <https://www.w3schools.com/tags/ref_keyboardshortcuts.asp>
 - Create a system to read HTML contents from external sources to split up the process for larger applications.
   This will be part of the API. (code example 2) This will also create the need for a client path template, since just putting in a relative path will actually be relative to the humanOS path.
-- Finish creating a dialogue for every type of input, not just buttons.
-  - [ ] File Upload
-  - [ ] Text Input
 - Make it so that only windows with an option bar have the extra padding at the bottom.
 - Create a Welcome app somewhat like KDE's
   - [openSUSE Welcome App](etc/kde_opensuse_welcome.png)
 - In-built web browser (ionicon 'globe-outline')
 - Create a window playground
-- Create a way to pass in parameters on app open
 - Context system
+  - Remove access to everything else by resetting window. This can be done by removing the wrapping from the definition, and instead wrapping on creation.
+    - Here's how onload would work in this new system: `windowObject.onload = () => { let window = {}; object.onload(windowId, api, args) }`
+    - However, this will be hard to do since the API doesn't currently give access to everything needed, and it will need a major refactoring of basically all current built-in apps (settings!)
   - `%url%` template
   - Create a way to style stuff inside of `#window > .content` (code example 4)
   - Reduce template typing so that class names aren't too long (this is the problem with directly injecting html into the page)

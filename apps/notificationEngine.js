@@ -1,5 +1,5 @@
 export const client = {
-	'id': 'ivy:notification-engine',
+	'id': 'ivy--notification-engine',
 	'title': 'Notification Engine',
 	'size': {
 		'height': '128px',

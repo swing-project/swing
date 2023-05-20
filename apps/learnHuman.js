@@ -1,5 +1,5 @@
 export const client = {
-	'id': 'ivy:learn-human',
+	'id': 'ivy--learn-human',
 	'title': 'Learn humanOS',
 	'size': {
 		'preset': 'medium'
@@ -8,7 +8,7 @@ export const client = {
 	'content': `
  	<h1 align="center">Learn <span class="accent">humanOS</span></h1>
 	<p align="center">Welcome to humanOS! Here are some quick tips to get you started with using humanOS.</p>
-	<p align="center">For more information, see the <a href="javascript:createExternalWindow('/apps/docs/main.js')">docs</a> app.</p>
+	<p align="center">For more information, see the <a href="javascript:createExternalWindow('/apps/docs/main.js', { '@fromLearn': true })">docs</a> app.</p>
 	
 	<div class="writing">
  		<h2>The System Menu</h2>

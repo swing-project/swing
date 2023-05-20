@@ -234,6 +234,7 @@
 	border: 1px solid rgba(0 0 0 / 25%);
 	padding: 4px;
 	transition: 100ms ease-out;
+	min-width: initial;
 	/* background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.10)); */
 }
 

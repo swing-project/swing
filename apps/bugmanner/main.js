@@ -31,7 +31,7 @@ const record = {
 
 export const client = {
     'title': 'Bugmanner',
-    'id': 'ivy:bugmanner',
+    'id': 'ivy--bugmanner',
     'icon': 'build-outline',
     'size': {
         'preset': 'small'
@@ -53,7 +53,7 @@ export const client = {
         <p class="tag ta-center fg-white p-1 radii-4"></p>
     </div>
     `,
-    'onload': function (clientId, _api) {
+    'onload': function (clientId, _api, _args) {
         return function () {
             const button = document.getElementById(`${clientId}-search-button`)
             button.addEventListener('click', function () {

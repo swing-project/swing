@@ -1,0 +1,85 @@
+.message-box {
+    position: absolute;
+    z-index: 8;
+    
+    border-radius: 8px 8px 0 0;
+    
+    background: white;
+    color: black;
+    outline: 2px solid #2e2e2e;
+    
+    overflow: hidden;
+    
+    height: 200px;
+    width: 300px;
+    
+    animation: flick-opacity 100ms;
+}
+
+.message-box > .titlebar {
+    background: #2e2e2e;
+    color: #fff;
+    width: 100%;
+    padding: 2px;
+}
+
+.message-box > .titlebar > .title {
+    width: 100%;
+}
+
+.message-box > .titlebar > .title > span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.message-box > .content {
+    height: 100%;
+    padding: 8px;
+    
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.message-box > .content > .icon-row {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: right;
+    align-items: end;
+}
+
+.message-box > .content > .icon-row > ion-icon {
+    font-size: 1.5rem;
+}
+
+.message-box > .content > .message {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 10;
+    justify-content: left;
+    align-items: start;
+    
+    gap: 4px;
+}
+
+.message-box > .content > .message > .heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.message-box > .options {
+    position: absolute;
+    bottom: 0;
+    background-color: #f0f0f0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    padding: 4px;
+    gap: 4px;
+}

@@ -1,6 +1,6 @@
 // welcome!
 export const client = {
-    id: 'ivy:welcome',
+    id: 'ivy--welcome',
     title: 'Welcome',
     size: {
         height: '500px',

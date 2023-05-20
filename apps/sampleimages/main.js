@@ -10,34 +10,18 @@ export const client = {
     },
     content: `
     <div class="container d-flex ai-center jc-center">
-        <img class="one"   src="/media/resources/sample-images/roonz-nl-ATgfRqpFfFI-unsplash.jpg"        style="display: block" />
-        <img class="two"   src="/media/resources/sample-images/steven-kamenar-MMJx78V7xS8-unsplash.jpg"  style="display: none"  />
-        <img class="three" src="/media/resources/sample-images/thomas-vimare-IZ01rjX0XQA-unsplash.jpg"   style="display: none"  />
+        <img alt="Sample Image 1" class="one"   src="/media/resources/sample-images/roonz-nl-ATgfRqpFfFI-unsplash.jpg"        style="display: block" />
+        <img alt="Sample Image 2" class="two"   src="/media/resources/sample-images/steven-kamenar-MMJx78V7xS8-unsplash.jpg"  style="display: none"  />
+        <img alt="Sample Image 3" class="three" src="/media/resources/sample-images/thomas-vimare-IZ01rjX0XQA-unsplash.jpg"   style="display: none"  />
     </div>
     `,
     menubar: [
         {
             name: 'Images',
             items: [
-                // need to figure out a way to DRY this,
-                // but because everything is executed in one place
-                // it's hard to define functions that work properly
-                // isolation needed!
-                { name: 'Image 1', command: function (clientId, _api) {
-                    const container = document.getElementById(clientId).querySelector('.content > .container')
-                    container.querySelectorAll('img').forEach((element) => element.style.display = 'none')
-                    container.querySelector('img.one').style.display = 'block'
-                }},
-                { name: 'Image 2', command: function (clientId, _api) {
-                    const container = document.getElementById(clientId).querySelector('.content > .container')
-                    container.querySelectorAll('img').forEach((element) => element.style.display = 'none')
-                    container.querySelector('img.two').style.display = 'block'
-                }},
-                { name: 'Image 3', command: function (clientId, _api) {
-                    const container = document.getElementById(clientId).querySelector('.content > .container')
-                    container.querySelectorAll('img').forEach((element) => element.style.display = 'none')
-                    container.querySelector('img.three').style.display = 'block'
-                }}
+                { name: 'Image 1', command: (clientId, _api, _args) => switchImage('one',   clientId) },
+                { name: 'Image 2', command: (clientId, _api, _args) => switchImage('two',   clientId) },
+                { name: 'Image 3', command: (clientId, _api, _args) => switchImage('three', clientId) }
             ]
         }
     ]
@@ -45,6 +29,6 @@ export const client = {
 
 function switchImage(className, clientId) {
     const container = document.getElementById(clientId).querySelector('.content > .container')
-    
-    container.querySelectorAll(`img.${className}`).style.display = 'block'
+    container.querySelectorAll('img').forEach((element) => element.style.display = 'none')
+    container.querySelectorAll(`img.${className}`)[0].style.display = 'block'
 }

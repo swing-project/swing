@@ -103,6 +103,7 @@ export const client = function (api) {
         // i personally haven't used Qt, but this seems similar based on samples i've seen
         // the `api.element` part is there because people will be able to define their own
         // componenets, just like React or Svelte i guess
+        // api.element is just the built-in library of elements
         content: [
             {
                 type: api.element['Label'],

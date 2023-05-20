@@ -3,7 +3,7 @@
  * z-index 05 is reserved for inactive windows
  * z-index 06 is reserved for inactive window titlebars
  * z-index 07 is reserved for the active window
- * z-index 08 is reserved for the active window titlebar
+ * z-index 08 is reserved for the active window titlebar and messageboxes
  * z-index 09 is reserved for the dock, system menu, window controls, and all menubars
  * z-index 10 is reserved for the system menu popups and notifications
  * z-index 11 is reserved for dialog(ue) dimming
@@ -22,6 +22,7 @@
 @import url('window.css');
 @import url('utility.css');
 @import url('controls.css');
+@import url('message-box.css');
 
 :root {
 	--fontselection: 'FiraGO', 'Fira Sans', 'Noto Sans', sans-serif;

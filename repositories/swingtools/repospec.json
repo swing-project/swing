@@ -1,0 +1,13 @@
+{
+    "version": "1",
+    "name": "Tools",
+    "description": "A set of basic tools for Swing.",
+    "apps": {
+        "swingtools--imgviewer": {
+            "name": "Image Viewer",
+            "icon": "image-outline",
+            "description": "A basic image viewer.",
+            "spec": "imgviewer/main.js"
+        }
+    }
+}

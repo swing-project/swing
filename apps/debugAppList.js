@@ -1,5 +1,5 @@
 export const client = {
-	'id': 'ivy:debug-app-list',
+	'id': 'ivy--debug-app-list',
 	'title': 'Debugging App List',
 	'size': {
 		'preset': 'small'

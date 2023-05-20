@@ -1,17 +1,28 @@
-const hver = {
-	'id': 'hver',
-	'title': 'hver',
-	'size': {
-		'preset': 'mini'
+const swingver = {
+	id:    'swingver',
+	title: 'swingver',
+	size: {
+		rigid:  true,
+		height: '75px',
+		width:  '330px'
 	},
-	'icon': 'cog-outline',
-	'content': `
-	humanOS-frontend 2023.5a
+	icon:    'cog-outline',
+	content: `
+	<div class="d-flex ai-center jc-center flexdir-col">
+		<span>
+			swing unstable;
+			last updated 2023-05-19
+		</span>
+		<span>copyright &copy; 2023 samrland and swing-project</span>
+	</div>
 	`
 }
 
 window.onload = function() {
-	if (localStorage.getItem('not-first-time') != 'true') {
+	console.clear()
+	console.info('Swing is still a work in progress. Some things may not work properly yet.')
+
+	if (localStorage.getItem('not-first-time') !== 'true') {
 		localStorage.setItem('not-first-time', 'true')
 
 		// set settings to defaults
@@ -21,7 +32,7 @@ window.onload = function() {
 		desktopNotification({
 			'title': 'Welcome to humanOS!',
 			'description': 'humanOS is an online operating system designed for productivity and effeciency.<br />Click on this notification bubble to learn more!',
-			'action': () => createExternalWindow('/apps/learnHuman.js'),
+			'action': () => createExternalWindow('/apps/learnHuman.js', { '@fromFirstStart': true }),
 			'playSound': false
 		})
 	}
@@ -31,7 +42,7 @@ window.onload = function() {
 	repopulateAppGrid()
 
 	if (localStorage.getItem('setting-behavior-startup-open-bugman') === 'true') {
-		createWindow(bugman)
+		createWindow(bugman, { '@fromStartup': true })
 	}
 }
 
@@ -47,7 +58,7 @@ const swingConsole = {
 }
 
 const swingConsoleWindow = {
-	id: 'ivy|console',
+	id: 'ivy--console',
 	title: 'Swing Console',
 	icon: 'terminal-outline',
 	size: {
@@ -109,13 +120,6 @@ const settingsList = {
 		'default': `[]`,
 		'settingInput': {
 			'name': 'configured-apps',
-			'type': 'text'
-		}
-	},
-	'custom-styles': {
-		'default': ``,
-		'settingInput': {
-			'name': 'custom-styles',
 			'type': 'text'
 		}
 	},
@@ -245,6 +249,10 @@ function findNewSettings()
 			}
 		}
 	}
+
+	if (localStorage['files/config/custom.css'] === null) {
+		localStorage['files/config/custom.css'] = `/* config/custom.css: Put any custom CSS imports or rules in here. To apply changes, restart the system. */`
+	}
 }
 
 // Reset all settings to their defaults
@@ -258,18 +266,24 @@ function resetSettings()
 			localStorage.setItem(settingName, settingAttributes.default)
 		}
 	}
+	localStorage['files/config/custom.css'] = `/* config/custom.css: Put any custom CSS imports or rules in here. To apply changes, restart the system. */`
 }
 
 // set styles
 function refresh()
 {
-	document.body.style = localStorage.getItem('custom-styles')
+	document.body.style.setProperty('--accent',             localStorage.getItem("setting-color-accent")       )
+	document.body.style.setProperty('--highlight',          localStorage.getItem("setting-color-accent-light") )
+	document.body.style.setProperty("--fontselection",      localStorage.getItem("setting-font-selection")     )
+	document.body.style.setProperty("--font-monospace",     localStorage.getItem("setting-font-monospace")     )
+	document.body.style.setProperty("--wallpaper-location", localStorage.getItem("setting-wallpaper-location") )
 
-	document.body.style.setProperty('--accent', localStorage.getItem("setting-color-accent"))
-	document.body.style.setProperty('--highlight', localStorage.getItem("setting-color-accent-light"))
-	document.body.style.setProperty("--fontselection", localStorage.getItem("setting-font-selection"))
-	document.body.style.setProperty("--font-monospace", localStorage.getItem("setting-font-monospace"))
-	document.body.style.setProperty("--wallpaper-location", localStorage.getItem("setting-wallpaper-location"))
+	// custom css
+	const customCSS         = getUserFile('config/custom.css')
+	const customCSSElement  = document.createElement('style')
+	const customCSSTextNode = document.createTextNode(customCSS)
+	customCSSElement.appendChild(customCSSTextNode)
+	document.body.appendChild(customCSSElement)
 }
 
 async function repopulateAppGrid()
@@ -285,7 +299,7 @@ async function repopulateAppGrid()
 		icon.className = 'icon'
 		icon.title = element.id
 		icon.onclick = () => {
-			createWindow(element)
+			createWindow(element, { '@fromAppGrid': true })
 			closeAppGrid()
 		}
 
@@ -325,84 +339,116 @@ setSystemMenuDate()
 function characterControl(e)
 {
 	const metaPressed = (
-		(localStorage.getItem('meta-key') == 'altopt' && e.altKey) ||
-		(localStorage.getItem('meta-key') == 'ctrl' && e.ctrlKey)
+		(localStorage.getItem('meta-key') === 'altopt' && e.altKey) ||
+		(localStorage.getItem('meta-key') === 'ctrl' && e.ctrlKey)
 	)
 	const menuPressed = (
-		(localStorage.getItem('meta-key') == 'altopt' && e.ctrlKey) ||
-		(localStorage.getItem('meta-key') == 'ctrl' && e.altKey)
+		(localStorage.getItem('meta-key') === 'altopt' && e.ctrlKey) ||
+		(localStorage.getItem('meta-key') === 'ctrl' && e.altKey)
 	)
 
 	// if (e.altKey) {
 	// 	console.log('meta key pressed')
 	// }
 
-	if (metaPressed && e.key == '/')
+	if (metaPressed && e.key === '/')
 	{
 		openShortcutCheatSheet()
 	}
 
-	if (metaPressed && e.key == 'a')
+	if (metaPressed && e.key === 'a')
 	{
 		openApps()
 	}
 
 	// note to self: modified combinations need to be before parent
-	if (metaPressed && menuPressed && e.key == 'q')
+	if (metaPressed && menuPressed && e.key === 'q')
 	{
 		deleteAll()
 	}
 
-	if (metaPressed && e.key == 'q')
+	if (metaPressed && e.key === 'q')
 	{
 		deleteFocus()
 	}
 
-	if (metaPressed && e.key == 'r')
+	if (metaPressed && e.key === 'r')
 	{
 		openRun()
 	}
 
-	if (metaPressed && e.key == 'n')
+	if (metaPressed && e.key === 'n')
 	{
 		notificationDismissAll()
 	}
 
-	if (metaPressed && e.key == 'i')
+	if (metaPressed && e.key === 'i')
 	{
-		createWindow(settingsWindow)
+		createWindow(settingsWindow, { '@fromShortcut': true })
 	}
 
-	if (metaPressed && e.key == '\\')
+	if (metaPressed && e.key === '\\')
 	{
-		createWindow(bugman)
+		createWindow(bugman, { '@fromShortcut': true })
 	}
 }
 
 // the api that will be given to scripts
 const api = {
 	create: {
-		window: createWindow,
+		window:         createWindow,
 		externalWindow: createExternalWindow,
-		dialog: createDialog,
-		notification: desktopNotification,
-		sound: playInternalSound,
+		dialog:         createDialog,
+		notification:   desktopNotification,
+		sound:          playInternalSound,
+		messageBox:     createMessageBox,
 	},
-	refresh: refresh,
-	removeWindow: removeWindow,
+	system: {
+		refresh:      refresh,
+		removeWindow: removeWindow
+	},
+	fs: {
+		getUserFile:  getUserFile,
+		saveUserFile: saveUserFile,
+		userFileType: userFileType
+	},
 	exportFile: exportFile,
-	readOut: readOutExternalResource,
+	readOut:    readOutExternalResource
 }
 
-// find a path
-function findPath(path) {
-	patharr = path.split(`:`)
-	if (path.length === 2) {
-		if (patharr[0] === 'Resources') {
-			return `/media/resources` + patharr[1]
-		}
+// do something with the contents of a file
+//function useFile(path, action) {
+//	let patharr = path.split(`:`)
+//	if (path.length === 2) {
+//		if (patharr[0] === 'Resources') {
+//      	fetch(`/media/resources` + patharr[1]).then(action)
+//		} else if (patharr[0] === 'User') {
+//			action(localStorage[`files` + patharr[1]])
+//		}
+//	} else {
+//		action('%{swing::NULL}%')
+//	}
+//}
+
+// get user file
+function getUserFile(path) {
+	return localStorage[`files/${path}`]
+}
+
+function saveUserFile(path, contents) {
+	return localStorage[`files/${path}`] = contents
+}
+
+function userFileType(path) {
+	let object = localStorage[`files/${path}`]
+	if (object) {
+		return 'file' // simple enough
 	} else {
-		return 'Devices:INVALID_PATH'
+		if (Object.keys(localStorage.some((k) => ~k.indexOf(`files/${path}/`)))) { // some files exist in this directory. this does create the predicament that empty directories can't exist, but that doesn't matter
+			return 'directory'
+		} else {
+			return 'null'
+		}
 	}
 }
 
@@ -450,7 +496,7 @@ async function loadExternalObject(objectLocation)
 {
 	try
 	{
-		const module = await import(objectLocation)
+		const  module = await import(objectLocation)
 		return module.client
 	}
 	catch (e)
@@ -462,26 +508,27 @@ async function loadExternalObject(objectLocation)
 /**
  * Used to create a window from a window config - see `loadExternalObject`
  */
-async function createExternalWindow(objectLocation)
+async function createExternalWindow(objectLocation, args)
 {
+	args = args || {}
 	const object = await loadExternalObject(objectLocation)
-	createWindow(object)
+	createWindow(object, args)
 }
 
 function openShortcutCheatSheet()
 {
-	createWindow(shortcutCheatSheet)
+	createWindow(shortcutCheatSheet, {})
 }
 
 function openApps()
 {
-	if (localStorage.getItem('setting-behavior-menu-applications') == 'app-menu')
+	if (localStorage.getItem('setting-behavior-menu-applications') === 'app-menu')
 	{
 		switchAppGrid()
 	}
-	else if (localStorage.getItem('setting-behavior-menu-applications') == 'app-list')
+	else if (localStorage.getItem('setting-behavior-menu-applications') === 'app-list')
 	{
-		createWindow(clientAppList)
+		createWindow(clientAppList, {})
 	}
 	else
 	{
@@ -491,7 +538,7 @@ function openApps()
 
 function openRun()
 {
-	createWindow(runWindow)
+	createWindow(runWindow, {})
 }
 
 /**
@@ -499,7 +546,7 @@ function openRun()
  */
 function switchAppGrid()
 {
-	if (document.getElementById('app-grid').style.display == 'flex')
+	if (document.getElementById('app-grid').style.display === 'flex')
 	{
 		closeAppGrid()
 	}
@@ -516,7 +563,7 @@ function switchAppGrid()
 function closeAppGrid()
 {
 	document.getElementById('app-grid').style.display = 'none'
-	document.querySelector('body > #system-menu').setAttribute('popup-open', false)
+	document.querySelector('body > #system-menu').setAttribute('popup-open', 'false')
 }
 
 /**
@@ -526,7 +573,7 @@ function closeAppGrid()
 function openAppGrid()
 {
 	document.getElementById('app-grid').style.display = 'flex'
-	document.querySelector('body > #system-menu').setAttribute('popup-open', true)
+	document.querySelector('body > #system-menu').setAttribute('popup-open', 'true')
 	onClickOutsideRemoveAfterDone(document.getElementById('app-grid'), function(_element) {
 		closeAppGrid()
 	}, [
@@ -551,7 +598,7 @@ function exportFile(type, name, blobarray) {
 	else
 	{
         downloadLink.href          = window.URL.createObjectURL(fileAsBlob)
-        downloadLink.onclick       = destroyClickedElement
+        downloadLink.onclick       = downloadLink.remove
         downloadLink.style.display = 'none'
 
         document.body.appendChild(downloadLink)
@@ -584,9 +631,9 @@ const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight ||
 function onClickOutside(element, removeAfterDone, action, omitted)
 {
     const outsideClickListener = event => {
-		if (!element.contains(event.target) &&  !omitted.includes(event.target.id) && isVisible(element))
+		if (!element.contains(event.target) && !omitted.includes(event.target.id) && isVisible(element))
 		{
-			if (action === undefined && action === null)
+			if (!action)
 			{
 				action = (element) => element.style.display = 'none'
 			}
@@ -610,7 +657,7 @@ function onClickOutsideRemoveAfterDone(element, action, omitted)
     const outsideClickListener = event => {
 		if (!element.contains(event.target) && /* !Array(document.querySelectorAll(ommited)).includes(event.target) */ !omitted.includes(event.target.id) && isVisible(element))
 		{
-			if (action === undefined && action === null)
+			if (!action)
 			{
 				action = (element) => element.style.display = 'none'
 			}
@@ -656,20 +703,21 @@ if (windowObject.querySelector('.options > button.default-option')) {
 }
 */
 const runWindow = {
-	'id': 'ivy:run',
-	'title': 'Run',
-	'size': {
-		'height': '92px',
-		'width': '200px',
-		'rigid': 'true'
+	id:    'ivy--run',
+	title: 'Run',
+	size: {
+		height: '92px',
+		width:  '200px',
+		rigid:  true
 	},
-	'icon': 'terminal-outline',
-	'content': `
- 	<input type="text" id="%human-id%-input-value" placeholder="What is your intention?" />
+	noOptionsPadding: true,
+	icon:             'terminal-outline',
+	content:          `
+ 	<input type="text" id="%human%-input" placeholder="What is your intention?" class="monospace" />
  	`,
 	'options': [
 		{
-			'name': 'Cancel',
+			'name':    'Cancel',
 			'message': 'closeSelf'
 		},
 		{
@@ -683,7 +731,7 @@ const runWindow = {
 						'playSound': true
 					}
 
-					const input = document.getElementById(`${clientId}-input-value`).value
+					const input = document.getElementById(`${clientId}-input`).value
 					let workedUntilProvenBroken = true
 					try {
 						if (input.indexOf('/') > -1) {
@@ -692,9 +740,9 @@ const runWindow = {
 								// contains .js extension, most likely a client config
                             	api.create.externalWindow(input)
 							}
-						} else if (eval(input)?.id !== undefined) {
+						} else if (eval(input).id !== undefined) {
 							// is a value, most likely an internal client config
-							api.create.window(eval(input))
+							api.create.window(eval(input), { '@fromRun': true })
 						}
 					} catch (_) {
                         api.create.notification(errorNotification)
@@ -702,7 +750,7 @@ const runWindow = {
 					}
 
 					if (workedUntilProvenBroken) {
-						api.removeWindow(clientId)
+						api.system.removeWindow(clientId)
 					}
 				}
 			}
@@ -710,9 +758,9 @@ const runWindow = {
 	]
 }
 
-// bugmantime (special shortcut because sometimes i don't want to use symbol search and my mind is just stuck to using find)
+// // bugmantime (special shortcut because sometimes i don't want to use symbol search and my mind is just stuck to using find) // i use fleet now, ctrl+k good
 const bugman = {
-	'id': 'ivy:bugman',
+	'id': 'ivy--bugman',
 	'title': 'Bugman',
 	'size': {
 		'preset': 'small'
@@ -725,24 +773,23 @@ const bugman = {
 	<p id="%human-id%-info-ua">User agent string: </p>
 
 	<h2>WIP Features</h2>
-	<p>Some of the features (marked <code>testwin</code>) require <a href="javascript:createExternalWindow('/apps/testwin.js')">testwin</a> to be open.</p>
+	<p>Some of the features (marked <code>testwin</code>) require <a href="javascript:createExternalWindow('/apps/testwin.js', {})">testwin</a> to be open.</p>
 
 	<div class="list">
-		<p><a href="javascript:toggleMaximize('ivy:testwin')">Toggle maximize</a> (testwin)</p>
+		<p><a href="javascript:toggleMaximize('ivy--testwin')">Toggle maximize</a> (testwin)</p>
 	</div>
 
 	<h2>Hidden Apps</h2>
 	<div class="list">
-		<p><a href="javascript:createWindow(hver)">hver</a></p>
+		<p><a href="javascript:createWindow(swingver)">swingver</a></p>
 		<p><a href="javascript:createWindow(clientAppList)">Client App List</a></p>
-		<p><a href="javascript:createExternalWindow('/apps/debugAppList.js')">Debugging App List</a></p>
+		<p><a href="javascript:createExternalWindow('/apps/debugAppList.js', {})">Debugging App List</a></p>
 		<p><a href="javascript:createWindow(externalLoaderWindow)">External Loader</a></p>
 	</div>
 
 	<h2>WIP Apps</h2>
 	<div class="list">
-		<p><a href="javascript:createExternalWindow('/apps/write.js')">Write</a></p>
-		<p><a href="javascript:createExternalWindow('/apps/web-searcher.js')">Web Searcher</a></p>
+		<p><a href="javascript:createExternalWindow('/apps/web-searcher.js', {})">Web Searcher</a></p>
 	</div>
 
 	<h2>New Button</h2>
@@ -750,7 +797,7 @@ const bugman = {
 		<button class="new">Test Button</button>
 	</div>
 	`,
-	'onload': function (clientId) {
+	'onload': function (clientId, _api, _args) {
 		return function () {
 			// set information
 			document.getElementById(`${clientId}-info-ua`).innerText = `User agent string: ${window.navigator.userAgent}`
@@ -759,7 +806,7 @@ const bugman = {
 }
 
 function settingsShowSection(cid, e) {
-	Array(document.querySelectorAll(`[id='${cid}-sidebar']`)).forEach((element) => {
+	Array(document.querySelectorAll(`[id='${cid}-sidebar']`)).forEach((_element) => {
 		e.target.style.backgroundColor = 'transparent'
 	})
 	e.target.style.backgroundColor = 'rgba(127, 127, 127, 0.25)'
@@ -785,7 +832,7 @@ const settingsWindow = {
 	<!--<div id="%human%-sidebar" onclick="settingsShowSection('%human%', event)" class="flex flexdir-col gap-1">
 
 	</div>-->
-	<div id="%human%-content" class="flex flexdir-col gap-16 m-auto mw-600 p-3 p-bot-64">
+	<div id="%human%-content" class="flex flexdir-col gap-16 m-auto mw-600 p-3" style="margin-bottom: 72px;">
 		<div id="%human%-s-configured-apps">
 			<h2 class="flex flexdir-row gap-1 ai-center jc-center"><ion-icon name="apps-outline"></ion-icon> Configured Apps</h2>
 
@@ -794,10 +841,10 @@ const settingsWindow = {
 					Write a list of URLs to load apps from.
 					<button class="tooltip-button"
 							style="--width: 300px"
-							data-tooltip-bottom="humanOS allows you to load apps from external URLs.&#xa;These will end in a '.js' extension.&#xa;Be careful, as these apps will have full access to your humanOS system.&#xa;Remember to use double quotes, not single quotes, since this is parsed as JSON.">
+							data-tooltip-bottom="humanOS allows you to load apps from external URLs.&#xa;These will end in a '.js' extension.&#xa;Be careful, as these apps will have full access to your humanOS system.&#xa;Use double quotes, not single quotes, as this is parsed as JSON.&#xa;If you need more help, take a look at the 'Adding Apps' section of humanOS Docs.">
 						<ion-icon name="help-circle-outline"></ion-icon></button>
 				</label>
-				<input type="text" id="%human%-configured-apps" class="monospace"></input>
+				<input type="text" id="%human%-configured-apps" class="monospace" />
 			</div>
 		</div>
 
@@ -825,11 +872,11 @@ const settingsWindow = {
 				<div class="flex flexdir-col gap-1">
 					<div class="flex flexdir-row gap-2 ai-center">
 						<label for="%human-id%-input-font-selection" class="flex-2 ta-right">Sans Font Family</label>
-						<input type="text" id="%human-id%-input-font-selection" class="monospace no-width-100 flex-4"></input>
+						<input type="text" id="%human-id%-input-font-selection" class="monospace no-width-100 flex-4" />
 					</div>
 					<div class="flex flexdir-row gap-2 ai-center">
 						<label for="%human-id%-input-font-monospace" class="flex-2 ta-right">Monospace Font Family</label>
-						<input type="text" id="%human-id%-input-font-monospace" class="monospace no-width-100 flex-4"></input>
+						<input type="text" id="%human-id%-input-font-monospace" class="monospace no-width-100 flex-4" />
 					</div>
 				</div>
 			</div>
@@ -876,8 +923,8 @@ const settingsWindow = {
 			<h2 class="flex flexdir-row gap-1 ai-center jc-center"><ion-icon name="build-outline"></ion-icon> Advanced</h2>
 
 			<div class="flex flexdir-col gap-1">
-				<label for="%human%-custom-styles">Custom Styling (applied to body inline)</label>
-				<input type="text" id="%human%-custom-styles" class="monospace"></input>
+				<label for="%human%-custom-styles">Custom CSS</label>
+				<button type="button" onclick="createExternalWindow('/apps/write/write.js', { filename: 'config/custom.css' })"><ion-icon name="create-outline"></ion-icon> Open in Write</button>
 			</div>
 		</div>
 	</div>
@@ -886,9 +933,9 @@ const settingsWindow = {
 		{
 			name: 'File',
 			items: [
-				{ name: 'Import', command: function (clientId, api) {
+				{ name: 'Import', command: function (clientId, api, _args) {
 					api.create.window({
-						id: `ivy:${clientId}-import-dialogue`,
+						id: `ivy--${clientId}-import-dialogue`,
 						disallowMultiple: true,
 						title: 'Import Settings',
 						size: {
@@ -907,7 +954,7 @@ const settingsWindow = {
 								message: 'script',
 								messagescript: function (clientId, _api) {
 									return function () {
-										const files = document.getElementById(`${clientId}-input-file`).files;
+										const files = document.getElementById(`${clientId}-input-file`).files
 										if (files.length > 0) {
 											importSettings(files[0])
 											refresh()
@@ -930,13 +977,13 @@ const settingsWindow = {
 								}
 							}
 						]
-					})
+					}, {})
 				}},
-				{ name: 'Export', command: function (clientId, api) {
+				{ name: 'Export', command: function (_clientId, _api, _args) {
 					exportSettings()
 				}},
 				{ name: 'SWING_SEPERATOR' },
-				{ name: 'Reset', command: function (clientId, api) {
+				{ name: 'Reset', command: function (clientId, api, _args) {
 					api.create.dialog({
 						callerId: clientId,
 						type: 'button-options',
@@ -975,8 +1022,8 @@ const settingsWindow = {
 		{
 			name: 'Help',
 			items: [
-				{ name: 'humanOS Docs', command: function (clientId, api) {
-					createExternalWindow('/apps/docs/main.js')
+				{ name: 'humanOS Docs', command: function (_clientId, _api, _args) {
+					createExternalWindow('/apps/docs/main.js', {})
 				}}
 			]
 		}
@@ -987,15 +1034,6 @@ const settingsWindow = {
 			message: 'script',
 			messagescript: function (clientId, api) {
 				return function () {
-					// localStorage.setItem('configured-apps',                      document.getElementById(`${clientId}-configured-apps`)             .value)
-					// localStorage.setItem('custom-styles',                        document.getElementById(`${clientId}-custom-styles`)               .value)
-					// localStorage.setItem('setting-color-accent',                 document.getElementById(`${clientId}-color-accent`)                .value)
-					// localStorage.setItem('setting-font-selection',               document.getElementById(`${clientId}-input-font-selection`)        .value)
-					// localStorage.setItem('setting-font-monospace',               document.getElementById(`${clientId}-input-font-monospace`)        .value)
-					// localStorage.setItem('setting-wallpaper-location',           document.getElementById(`${clientId}-input-wallpaper-location`)    .value)
-					// localStorage.setItem('setting-behavior-menu-applications',   document.getElementById(`${clientId}-behavior-menu-applications`)  .value)
-					// localStorage.setItem('setting-behavior-startup-open-bugman', document.getElementById(`${clientId}-behavior-startup-open-bugman`).checked)
-					// localStorage.setItem('setting-behavior-close-applist',       document.getElementById(`${clientId}-behavior-close-applist`)      .checked)
 					for (const settingName in settingsList) {
 						if (Object.hasOwnProperty.call(settingsList, settingName)) {
 							const settingAttributes = settingsList[settingName]
@@ -1008,37 +1046,27 @@ const settingsWindow = {
 							}
 						}
 					}
-					api.refresh()
+					api.system.refresh()
 					repopulateAppGrid()
 				}
 			}
 		}
 	],
-	onload: function (clientId, _api) {
+	onload: function (clientId, _api, _args) {
 		return function () {
 			// Array(document.querySelectorAll(`[id='${clientId}-content'] > [id^='${clientId}-s-']`)).forEach((element) => {
 			// 	element.style.display = 'block'
 			// })
-
-			// document.getElementById(`${clientId}-configured-apps`)             .value   =  localStorage.getItem('configured-apps')
-			// document.getElementById(`${clientId}-custom-styles`)               .value   =  localStorage.getItem('custom-styles')
-			// document.getElementById(`${clientId}-color-accent`)                .value   =  localStorage.getItem('setting-color-accent')
-			// document.getElementById(`${clientId}-input-font-selection`)        .value   =  localStorage.getItem('setting-font-selection')
-			// document.getElementById(`${clientId}-input-font-monospace`)        .value   =  localStorage.getItem('setting-font-monospace')
-			// document.getElementById(`${clientId}-input-wallpaper-location`)    .value   =  localStorage.getItem('setting-wallpaper-location')
-			// document.getElementById(`${clientId}-behavior-menu-applications`)  .value   =  localStorage.getItem('setting-behavior-menu-applications')
-			// document.getElementById(`${clientId}-behavior-startup-open-bugman`).checked = (localStorage.getItem('setting-behavior-startup-open-bugman') === 'true')
-			// document.getElementById(`${clientId}-behavior-close-applist`)      .checked = (localStorage.getItem('setting-behavior-close-applist') === 'true')
 			for (const settingName in settingsList) {
 				if (Object.hasOwnProperty.call(settingsList, settingName)) {
-					const settingAttributes = settingsList[settingName];
+					const settingAttributes = settingsList[settingName]
 					const settingInput = document.getElementById(`${clientId}-${settingAttributes.settingInput.name}`)
 					if (settingAttributes.settingInput.type === 'checkbox') {
 						settingInput.checked =
-                            localStorage.getItem(settingName) == 'true';
+                            localStorage.getItem(settingName) === 'true'
 					} else {
-						settingInput.placeholder = settingAttributes.default;
-						settingInput.value = localStorage.getItem(settingName);
+						settingInput.placeholder = settingAttributes.default
+						settingInput.value = localStorage.getItem(settingName)
 					}
 				}
 			}
@@ -1061,7 +1089,7 @@ function appListOpen(windowId, external, titleOrObject) {
 */
 
 const clientAppList = {
-	'id': 'ivy:client-app-list',
+	'id': 'ivy--client-app-list',
 	'title': 'App List',
 	'size': {
 		'height': '400px',
@@ -1081,7 +1109,7 @@ const clientAppList = {
 }
 
 const externalLoaderWindow = {
-	'id': 'ivy:load-external-window',
+	'id': 'ivy--load-external-window',
 	'title': 'Load External Window',
 	'size': {
 		'height': '113px',
@@ -1100,7 +1128,7 @@ const externalLoaderWindow = {
 			'messagescript': function(clientId, api) {
 				return function() {
 					api.create.externalWindow(document.getElementById(`${clientId}-input-value`).value)
-					api.removeWindow(clientId)
+					api.system.removeWindow(clientId)
 				}
 			}
 		},

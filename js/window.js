@@ -1,5 +1,46 @@
-function createWindow(object)
+(() => {
+    // specification for windows
+    return {
+        id:    'string',
+        title: 'string',
+        icon:  'string?',
+        size: {
+            preset:    'string?',
+            width:     'string?',
+            height:    'string?',
+            minheight: 'string?',
+            minwidth:  'string?',
+            rigid:     'boolean?'
+        },
+        disallowMultiple: 'boolean?',
+        noPadding:        'boolean?',
+        noOptionsPadding: 'boolean?',
+        contentStyling:   'string?',
+        menubar: [
+            {
+                name: 'string',
+                items: [
+                    { name: 'string', command: 'swingCommand' }
+                ]
+            }
+        ],
+        content: 'string|function->string',
+        options: [
+            {
+                name:          'string',
+                message:       'string',
+                messagescript: 'swingCommandWrappedNoArgs?'
+            }
+        ],
+        onload:  'swingCommandWrapped?',
+        preload: 'swingCommandWrappedWindowObject?'
+    }
+})()
+
+function createWindow(object, args)
 {
+    args = args || {}
+
     const currentWindowAmount = document.getElementsByClassName('window').length
 
     let windowId = ''
@@ -18,7 +59,7 @@ function createWindow(object)
     const windowObject = document.createElement('div')
     windowObject.id = windowId
     windowObject.classList.add('window')
-    windowObject.onmousedown = () => { focusWindow(windowId) }
+    windowObject.onmousedown = () => focusWindow(windowId)
     windowObject.setAttribute('data-maximized', 'false')
 
     // if (prefExists && object?.pref?.noPadding) {
@@ -42,8 +83,8 @@ function createWindow(object)
         switch (object.size.preset)
 		{
             default:
-                case 'default':
-                    setHeightWidth(windowObject, '325px', '550px')
+            case 'default':
+                setHeightWidth(windowObject, '325px', '550px')
 				break
 			case 'mini':
                 setHeightWidth(windowObject, '150px', '250px')
@@ -126,7 +167,7 @@ function createWindow(object)
 						break
 					default:
                         swingMenuItem.innerText = menuItem.name
-						swingMenuItem.onclick = () => menuItem.command(windowId, api)
+						swingMenuItem.onclick = () => menuItem.command(windowId, api, args)
 						break
                 }
                 swingMenuContent.appendChild(swingMenuItem)
@@ -168,11 +209,11 @@ function createWindow(object)
             let optionObject = document.createElement('button')
             optionObject.innerText = optionData.name
 
-            if (optionData.message == 'script')
+            if (optionData.message === 'script')
             {
                 optionObject.addEventListener('click', optionData.messagescript(windowId, api))
             }
-			else if (optionData.message == 'closeSelf')
+			else if (optionData.message === 'closeSelf')
             {
                 optionObject.addEventListener('click', function() { removeWindow(windowId) })
             }
@@ -190,11 +231,11 @@ function createWindow(object)
 
     // * run preload
     if (object.preload !== undefined && object.preload !== null) {
-        object.preload(windowObject)
+        object.preload(windowObject, api, args)()
     }
 
     // * set attributes
-    windowObject.setAttribute('data-folded', 0)
+    windowObject.setAttribute('data-folded', '0')
 
     // * append to body
     document.body.appendChild(windowObject)
@@ -203,21 +244,21 @@ function createWindow(object)
     makeDraggable(windowObject)
 
     // * add icon to dock
-    const menuIcon = document.createElement('ion-icon')
+    const menuIcon     = document.createElement('ion-icon')
     menuIcon.className = 'icon'
-    menuIcon.name = object.icon || 'copy-outline'
+    menuIcon.name      = object.icon || 'copy-outline'
     menuIcon.setAttribute('data-attached-window', windowId)
-    menuIcon.onclick = () => focusWindow(windowId)
+    menuIcon.onclick    = () => focusWindow(windowId)
     menuIcon.ondblclick = () => removeWindow(windowId)
     document.getElementById('dock').appendChild(menuIcon)
 
     // * focus window
     focusWindow(windowId)
 
-    // * onload
+    // * run onload
     if (object.onload !== undefined && object.onload !== null)
     {
-        object.onload(windowId, api)()
+        object.onload(windowId, api, args)()
     }
 }
 
@@ -228,14 +269,12 @@ function makeDraggable(currentWindow)
     const currentWindowMenuBar = currentWindow.getElementsByClassName('titlebar')[0]
 
     currentWindowMenuBar.onmousedown = e => {
-        e = e || window.event
         e.preventDefault()
 
         clientXPosition = e.clientX
         clientYPosition = e.clientY
 
         document.onmousemove = e => {
-            e = e || window.event
             e.preventDefault()
 
             positionX = clientXPosition - e.clientX
@@ -259,33 +298,42 @@ function toggleFoldWindow(windowId)
 {
     const windowNode = document.getElementById(windowId)
     const optionsExist = (windowNode.getElementsByClassName('options')[0] !== undefined)
+    const menubarExists = (windowNode.getElementsByClassName('menubar')[0] !== undefined)
 
-    if (windowNode.getAttribute('data-folded') == 'true')
+    if (windowNode.getAttribute('data-folded') === 'true')
     {
-        endFoldWindow(windowNode, optionsExist)
+        endFoldWindow(windowNode, optionsExist, menubarExists)
     }
 	else
     {
-        startFoldWindow(windowNode, optionsExist)
+        startFoldWindow(windowNode, optionsExist, menubarExists)
     }
 }
 
-function startFoldWindow(windowNode, optionsExist)
+function startFoldWindow(windowNode, optionsExist, menubarExists)
 {
     windowNode.getElementsByClassName('content')[0].style.display = 'none'
     if (optionsExist) 
     {
         windowNode.getElementsByClassName('options')[0].style.display = 'none'
     }
+    if (menubarExists)
+    {
+        windowNode.getElementsByClassName('menubar')[0].style.display = 'none'
+    }
     windowNode.setAttribute('data-folded', 'true')
 }
 
-function endFoldWindow(windowNode, optionsExist)
+function endFoldWindow(windowNode, optionsExist, menubarExists)
 {
     windowNode.getElementsByClassName('content')[0].style.display = 'block'
     if (optionsExist)
     {
         windowNode.getElementsByClassName('options')[0].style.display = 'flex'
+    }
+    if (menubarExists)
+    {
+        windowNode.getElementsByClassName('menubar')[0].style.display = 'flex'
     }
     windowNode.setAttribute('data-folded', 'false')
 }
@@ -294,7 +342,7 @@ function toggleMaximize(windowId)
 {
     const windowNode = document.getElementById(windowId)
 
-    if (windowNode.getAttribute('data-maximized') == ('false' || undefined))
+    if (windowNode.getAttribute('data-maximized') === ('false' || undefined))
     {
         maximizeWindow(windowId)
     }
