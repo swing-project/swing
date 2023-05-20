@@ -6,7 +6,7 @@ export const client = {
 	},
 	'icon': 'bug-outline',
 	'content': `
- 	<p>This is a list of all apps currently available in humanOS. Some of these are not in the applications menu due to bugs and other problems.</p>
+ 	<p>This is a list of all apps currently available in Swing. Some of these are not in the applications menu due to bugs and other problems.</p>
 
  	<br />
 

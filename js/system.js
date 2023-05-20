@@ -30,8 +30,8 @@ window.onload = function() {
 
 		// first time notification
 		desktopNotification({
-			'title': 'Welcome to humanOS!',
-			'description': 'humanOS is an online operating system designed for productivity and effeciency.<br />Click on this notification bubble to learn more!',
+			'title': 'Welcome to swing!',
+			'description': 'Swing is an online operating system designed for productivity and effeciency.<br />Click on this notification bubble to learn more!',
 			'action': () => createExternalWindow('/apps/learnHuman.js', { '@fromFirstStart': true }),
 			'playSound': false
 		})
@@ -519,7 +519,7 @@ function playInternalSound(name)
 }
 
 /**
- * Load an external window in JSON format as an object. This was used when humanOS windows did not have functions. Please use `loadExternalObject` instead.
+ * Load an external window in JSON format as an object. This was used when swing windows did not have functions. Please use `loadExternalObject` instead.
  * @deprecated Do not use under ANY circumstances. This is only here for possible future reference.
  */
 function loadExternalWindowAsJson(objectLocation)
@@ -901,7 +901,7 @@ const settingsWindow = {
 					Write a list of URLs to load apps from.
 					<button class="tooltip-button"
 							style="--width: 300px"
-							data-tooltip-bottom="humanOS allows you to load apps from external URLs.&#xa;These will end in a '.js' extension.&#xa;Be careful, as these apps will have full access to your humanOS system.&#xa;Use double quotes, not single quotes, as this is parsed as JSON.&#xa;If you need more help, take a look at the 'Adding Apps' section of humanOS Docs.">
+							data-tooltip-bottom="Swing allows you to load apps from external URLs.&#xa;These will end in a '.js' extension.&#xa;Be careful, as these apps will have full access to your swing system.&#xa;Use double quotes, not single quotes, as this is parsed as JSON.&#xa;If you need more help, take a look at the 'Adding Apps' section of Swing Docs.">
 						<ion-icon name="help-circle-outline"></ion-icon></button>
 				</label>
 				<input type="text" id="%human%-configured-apps" class="monospace" />
@@ -1082,7 +1082,7 @@ const settingsWindow = {
 		{
 			name: 'Help',
 			items: [
-				{ name: 'humanOS Docs', command: function (_clientId, _api, _args) {
+				{ name: 'Swing Docs', command: function (_clientId, _api, _args) {
 					createExternalWindow('/apps/docs/main.js', {})
 				}}
 			]
@@ -1158,7 +1158,7 @@ const clientAppList = {
 	'icon': 'rocket-outline',
 	'content': `
 	<div>
- 		<a href="javascript:createExternalWindow('/apps/learnHuman.js')"><ion-icon name="accessibility-outline"></ion-icon> Learn humanOS</a><br />
+ 		<a href="javascript:createExternalWindow('/apps/learnHuman.js')"><ion-icon name="accessibility-outline"></ion-icon> Learn Swing</a><br />
  		<a href="javascript:createWindow(shortcutCheatSheet)"><ion-icon name="laptop-outline"></ion-icon> Shortcut Cheat Sheet</a><br />
  		<a href="javascript:createExternalWindow('/apps/notificationEngine.js')"><ion-icon name="notifications-outline"></ion-icon> Notifcation Engine</a><br />
 		<a href="javascript:createWindow(settingsWindow)"><ion-icon name="cog-outline"></ion-icon> Settings</a><br />

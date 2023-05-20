@@ -2,7 +2,7 @@
 // (Haiku rocks!)
 // also takes a bit from FriendOS's API
 
-// because of the 1task==1window paradigm of humanOS, this is a little hard,
+// because of the 1task==1window paradigm of swing, this is a little hard,
 // but i'll try doing something
 
 // the top-level will still be declared as `client`,
@@ -114,7 +114,7 @@ client.langMap = {
     }
 }
 
-// this is a feature special to humanOS out of Be and FriendOS, I think
+// this is a feature special to swing out of Be and FriendOS, I think
 // but it is very common in other operating systems
 // a singular docs application!
 // this is the syntax for adding to the docs application

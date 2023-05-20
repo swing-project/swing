@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>humanOS Docs</title>
+    <title>Swing Docs</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <label>
@@ -35,7 +35,7 @@
     <label for="tab9">Bugman</label>
     
     <div class="tab content1">
-        <p>Welcome to the <span class="accent">humanOS</span> docs!</p>
+        <p>Welcome to the <span class="accent">swing</span> docs!</p>
         <p>It's currently a bit rough due to the current absence of many controls, please excuse that.</p>
         <p>Use the tabs above to switch sections.</p>
     </div>
@@ -59,7 +59,7 @@
         <p>This shows the date & time.</p>
         <p>Clicking on it currently does nothing, but it is planned to pull down a basic calendar which allows
             to write events directly in the dropdown.</p>
-        <p>Due to this possible future behaviour, humanOS may not ever have a calendar app.</p>
+        <p>Due to this possible future behaviour, swing may not ever have a calendar app.</p>
 
         <h4>System Controls</h4>
         <p>The GUI was modelled off of Cosmic, so this is here even though it won't really have a use.</p>
@@ -75,7 +75,7 @@
     
     <div class="tab content3">
         <h2>Windows</h2>
-        <p>This section contains information about the window system humanOS uses.</p>
+        <p>This section contains information about the window system swing uses.</p>
     
         <h3>Title bar</h3>
         <p>The title bar shows the title given to the window and a close button on the right.</p>
@@ -93,22 +93,22 @@
     
     <div class="tab content4">
         <h2>Productivity Features</h2>
-        <p>This section contains information about the productivity features in humanOS.</p>
+        <p>This section contains information about the productivity features in swing.</p>
     
         <h3>Shorcuts</h3>
-        <p>humanOS is designed with productivity and effeciency in mind. It has plenty of shortcuts to keep this paradigm in
+        <p>swing is designed with productivity and effeciency in mind. It has plenty of shortcuts to keep this paradigm in
             mind.</p>
         <p>Try a shortcut right now! Press meta+/ (meta being Alt/Option) to open the Shortcut Cheat Sheet, a list of all
-            the shorcuts available in humanOS.</p>
+            the shorcuts available in swing.</p>
     </div>
 
     <div class="tab content5">
         <h2>Adding Apps</h2>
 
-        <p>humanOS is all about you owning your system, not the other way around. Because of this, it is extremely simple
+        <p>Swing is all about you owning your system, not the other way around. Because of this, it is extremely simple
             to add a new app from any source, not just one single app store where there are a bunch of guidelines in place.</p>
         
-        <p>Of course, this does come with the issue of security. Because of the way humanOS apps work, any configured app will
+        <p>Of course, this does come with the issue of security. Because of the way swing apps work, any configured app will
             have access to your entire system. Because of this, make sure you trust the authour of the code, and if you're a
             little more tech savvy than most people, look through the code since these apps are forced to be open source.</p>
         
@@ -122,14 +122,14 @@
         </ol>
 
         <p>If you aren't sure about that last step, take a look at this example list:</p>
-        <p><code>["http://example.com/someapp.js", "https://example.org/humanOS/app.js", "https://example.net/apps/loremipsum/main.js"]</code></p>
+        <p><code>["http://example.com/someapp.js", "https://example.org/swingapps/app.js", "https://example.net/apps/loremipsum/main.js"]</code></p>
         <p>(note: none of the above URLs are real apps. If you want a real example app, try <code>"/apps/docs/exampleapp.js"</code>!)</p>
     </div>
 
     <div class="tab content6">
         <h2>Notifications</h2>
 
-        <p>humanOS contains a built-in notification system that allows apps to notify the user of something.</p>
+        <p>Swing contains a built-in notification system that allows apps to notify the user of something.</p>
         <p>These notification bubbles will appear in the bottom left of the desktop above windows, and once clicked on will
             do some action, the default being closing the notification.</p>
         <p>Notifications can only be triggered when the application is open, as they were originally intended to be
@@ -144,7 +144,7 @@
 
     <div class="tab content8">
         <h2>Development</h2>
-        <p>humanOS is a easy and quick development experience, most usually just requiring a single JS file.</p>
+        <p>Swing is a easy and quick development experience, most usually just requiring a single JS file.</p>
 
         <h3>Basic App</h3>
         <p>Start with single .js file hosted anywhere on the web:</p>
@@ -155,15 +155,15 @@
     'content': `&lt;p&gt;Hello, World!&lt;/p&gt;`
 }</pre>
 
-        <p>Please try to keep the ID unique to your website or username, as ID conflicts in humanOS can be horrible.</p>
-        <p>humanOS tries to keep this very simple, using <code>[websitename]--[taskname]</code>,
+        <p>Please try to keep the ID unique to your website or username, as ID conflicts in swing can be horrible.</p>
+        <p>Swing tries to keep this very simple, using <code>[websitename]--[taskname]</code>,
             where <code>[websitename]</code> can be replaced with the domain name of your website, e.g. example.com,
             and <code>[taskname]</code> can be replaced with the filename minus '.js'.</p>
         <p>You are allowed to do whatever you want and you don't have to follow this naming scheme, but please try your best to keep it unique.</p>
 
         <p>Now, back on track, the title is what is shown to the human behind the system as the window title.</p>
         <p>The content value is inline HTML. Yes, it's horrible, I am working on making a way to use external files.
-            If you want ths behaviour gone already, humanOS does recognize iframes and automatically removes all the
+            If you want ths behaviour gone already, swing does recognize iframes and automatically removes all the
             unnecessary stuff on the iframe by default so that your app fits in like the native ones.
             It won't support the user-selected font or other things, but that's just how things are right now.</p>
         
@@ -212,7 +212,7 @@
         </ul>
 
         <h4><code>onload</code></h4>
-        <p>humanOS gives developers access to run some JavaScript code as soon as the task is done being processed.</p>
+        <p>Swing gives developers access to run some JavaScript code as soon as the task is done being processed.</p>
         <p>This property will be a function which returns the function to be run on load.</p>
         <p>The property itself will take parameters <code>clientId</code>, <code>api</code>, and <code>args</code>, which respectively:</p>
 
@@ -235,7 +235,7 @@
         <h5><code>playSound</code></h5>
         <p>Optional. Should the notification play a sound when the notification appears? If not, switch this to false.</p>
         <p>This was originally only created so that the first-time notification didn't create an error due to the fact that the
-            user needs to be focused on the window for the sound to be played. humanOS should be error-less, so here we are.</p>
+            user needs to be focused on the window for the sound to be played. Swing should be error-less, so here we are.</p>
         
         <h5><code>action</code></h5>
         <p>Also optional. A function that should be run when the notification is clicked.</p>
@@ -303,7 +303,7 @@
 
     <div class="tab content9">
         <h2>Bugman</h2>
-        <p>The Bugman program and more about hidden stuff in humanOS in general</p>
+        <p>The Bugman program and more about hidden stuff in Swing in general</p>
 
         <p>Bugman is a program used for testing purposes and other purposes.</p>
         <p>It gives quick access to system information, WIP features, WIP apps, hidden apps, testing apps, and WIP controls.</p>

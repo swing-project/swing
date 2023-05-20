@@ -13,7 +13,7 @@ export const client = {
     icon: 'information-circle-outline',
     content: `
     <div class="%human%-body">
-        <h2 class="%human%-title">Welcome to <span class="accent">humanOS</span></h2>
+        <h2 class="%human%-title">Welcome to <span class="accent">swing</span></h2>
 
         <div class="%human%-columns">
             <div class="%human%-column">

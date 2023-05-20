@@ -1,4 +1,4 @@
-# humanOS
+# swing
 
 An web-technologies-based operating system embracing simplicity and readability.
 

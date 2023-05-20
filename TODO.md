@@ -11,7 +11,7 @@
   - Until I figure that out, make sure to only use working shorcuts
     - <https://www.w3schools.com/tags/ref_keyboardshortcuts.asp>
 - Create a system to read HTML contents from external sources to split up the process for larger applications.
-  This will be part of the API. (code example 2) This will also create the need for a client path template, since just putting in a relative path will actually be relative to the humanOS path.
+  This will be part of the API. (code example 2) This will also create the need for a client path template, since just putting in a relative path will actually be relative to the swing path.
 - Make it so that only windows with an option bar have the extra padding at the bottom.
 - Create a Welcome app somewhat like KDE's
   - [openSUSE Welcome App](etc/kde_opensuse_welcome.png)
@@ -40,8 +40,7 @@
 - Tab control
   - <https://jsfiddle.net/samrland/s17bv0t9/11/> (see implementation in docs)
   - <https://www.w3schools.com/howto/howto_js_tabs.asp>
-- Create a proper API rather than just stuffing inline HTML without even supporting JSX due to the front-end nature of humanOS
-  - The Be API is a good role-model here, not just because it's actually fun to use, but also because Haiku rules!
+- Create a proper API rather than just stuffing inline HTML without even supporting JSX due to the front-end nature of swing
 
 ## Code Examples
 

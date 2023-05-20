@@ -1,13 +1,13 @@
 export const client = {
 	'id': 'ivy--learn-human',
-	'title': 'Learn humanOS',
+	'title': 'Learn Swing',
 	'size': {
 		'preset': 'medium'
 	},
 	'icon': 'accessibility-outline',
 	'content': `
- 	<h1 align="center">Learn <span class="accent">humanOS</span></h1>
-	<p align="center">Welcome to humanOS! Here are some quick tips to get you started with using humanOS.</p>
+ 	<h1 align="center">Learn <span class="accent">Swing</span></h1>
+	<p align="center">Welcome to swing! Here are some quick tips to get you started with using swing.</p>
 	<p align="center">For more information, see the <a href="javascript:createExternalWindow('/apps/docs/main.js', { '@fromLearn': true })">docs</a> app.</p>
 	
 	<div class="writing">
@@ -34,8 +34,8 @@ export const client = {
  		<p>You can click an icon in the dock to close the related window.</p>
 
  		<h2>Shortcuts</h2>
-		<p>humanOS is designed with productivity and effeciency in mind. It has plenty of shortcuts to keep this paradigm in mind.</p>
- 		<p>Try a shortcut right now! Press meta+/ (meta being Alt/Option) to open the Shortcut Cheat Sheet, a list of all the shorcuts available in humanOS.</p>
+		<p>Swing is designed with productivity and effeciency in mind. It has plenty of shortcuts to keep this paradigm in mind.</p>
+ 		<p>Try a shortcut right now! Press meta+/ (meta being Alt/Option) to open the Shortcut Cheat Sheet, a list of all the shorcuts available in swing.</p>
 	</div>
 	`
 }
