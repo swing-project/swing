@@ -29,7 +29,7 @@ export const client = {
     </div>
     
     <style>
-    [class="%human%-body"] {
+    .%human%-body {
         padding-left: 32px;
         padding-right: 32px;
         padding-top: 16px;
@@ -37,26 +37,26 @@ export const client = {
         height: 100%;
     }
 
-    [class="%human%-body"] > [class="%human%-title"] {
+    .%human%-body > .%human% {
         font-size: 4rem;
     }
 
-    [class="%human%-body"] > [class="%human-columns"] {
+    .%human%-body > .%human%-columns {
         display: flex;
         flex-direction: row;
         gap: 16px;
     }
 
-    [class="%human%-body"] > [class="%human%-columns"] > [class="%human%-column"] {
+    .%human%-body > .%human%-columns > .%human%-column {
         flex: 1;
         height: 100%;
     }
 
-    [class="%human%-body"] > [class="%human%-columns"] > [class="%human%-column"] > h3 {
+    .%human%-body > .%human%-columns > .%human%-column > h3 {
         font-size: 2rem;
     }
 
-    [class="%human%-body"] > [class="%human%-columns"] > [class="%human%-column"] button {
+    .%human%-body > .%human%-columns > .%human%-column button {
         font-size: 1rem;
         border: none !important;
         width: 100%;
@@ -69,11 +69,11 @@ export const client = {
         background-color: rgba(var(--bg-color) / 100%) !important;
     }
 
-    [class="%human%-body"] > [class="%human%-columns"] > [class="%human%-column"] button:hover {
+    .%human%-body > .%human%-columns > .%human%-column button:hover {
         background-color: rgba(var(--bg-color) / 85%) !important;
     }
 
-    [class="%human%-bottom-bar"] {
+    .%human%-bottom-bar {
         position: absolute;
         bottom: 0;
         background-color: rgba(0 0 0 / 10%);
@@ -83,7 +83,7 @@ export const client = {
         flex-direction: row-reverse;
     }
 
-    [class="%human%-closebutton"] {
+    .%human%-closebutton {
         background-color: rgba(210 50 0 / 100%) !important;
         color: white;
         display: inline-flex;
@@ -95,7 +95,7 @@ export const client = {
         font-size: 1rem;
     }
 
-    [class="%human%-closebutton"]:hover {
+    .%human%-closebutton:hover {
         background-color: rgba(210 50 0 / 85%) !important;
     }
     </style>
