@@ -249,6 +249,7 @@
 #app-grid > .grid {
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
+	overflow: auto;
 }
 
 #app-grid > .grid > .icon {

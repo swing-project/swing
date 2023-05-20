@@ -7,22 +7,24 @@ export const client = {
 	icon: 'create-outline',
 	noPadding: true,
 	content: `
-	<textarea style="width: 100%; height: 100%; outline: none; border: none; position: absolute; padding: 8px;" class="writebox" placeholder="start writing!"></textarea>
+	<textarea style="width: 100%; height: 100%; outline: none; border: none; position: absolute; padding: 8px; padding-bottom: 16px;" class="writebox" placeholder="start writing!"></textarea>
  	`,
 	menubar: [
 		{
 			name: 'File',
 			items: [
-				{ name: 'Open...',    command: openToWritebox },
-				{ name: 'Save',       command: quickSave },
-				{ name: 'Save as...', command: saveWriteboxContents }
+				{ name: 'Open...',    command: openToWritebox       },
+				{ name: 'Save',       command: quickSave            },
+				{ name: 'Save as...', command: saveWriteboxContents },
 			]
 		},
 		{
 			name: 'Format',
 			items: [
 				{ name: 'Typeface Monospace', command: (clientId, _api, _args) => setTypeFace('monospace', clientId) },
-				{ name: 'Typeface Sans',      command: (clientId, _api, _args) => setTypeFace('sans',      clientId) }
+				{ name: 'Typeface Sans',      command: (clientId, _api, _args) => setTypeFace('sans',      clientId) },
+				{ name: 'SWING_SEPERATOR' },
+				{ name: 'Toggle Word Wrap',   command: toggleWordWrap                                                },
 			]
 		},
 		{
@@ -32,7 +34,7 @@ export const client = {
 				{ name: 'Neither', command: (clientId, _api, _args) => setTheme('neither', clientId) },
 				{ name: 'SWING_SEPERATOR' },
 				{ name: 'Dark',    command: (clientId, _api, _args) => setTheme('dark',    clientId) },
-				{ name: 'Black',   command: (clientId, _api, _args) => setTheme('black',   clientId) }
+				{ name: 'Black',   command: (clientId, _api, _args) => setTheme('black',   clientId) },
 			]
 		}
 	],
@@ -52,12 +54,42 @@ export const client = {
 				loadTheme(clientId)
 			}
 
+			const wordwrap = localStorage['app-config/ivy--write/wordwrap']
+			if (wordwrap === undefined) {
+				localStorage['app-config/ivy--write/wordwrap'] = 'true'
+			}
+			loadWordWrap(clientId)
+
 			const writebox = document.getElementById(clientId).querySelector('.writebox')
 			if (args['filename'] !== undefined) {
 				writebox.value = api.fs.getUserFile(args['filename'])
 				writebox.setAttribute('data-open-file', args['filename'])
 			}
 		}
+	}
+}
+
+// word wrap
+function toggleWordWrap(clientId, _api, _args) {
+	if (localStorage['app-config/ivy--write/wordwrap'] == 'true') {
+		localStorage['app-config/ivy--write/wordwrap'] = 'false'
+	} else {
+		localStorage['app-config/ivy--write/wordwrap'] = 'true'
+	}
+	loadWordWrap(clientId)
+}
+
+function loadWordWrap(clientId) {
+	const wordwrap = localStorage['app-config/ivy--write/wordwrap']
+	const writebox = document.getElementById(clientId).querySelector('.writebox')
+	if (wordwrap == 'true') {
+		writebox.style.overflowWrap = 'initial'
+		writebox.style.overflowX    = 'initial'
+		writebox.style.whiteSpace   = 'initial'
+	} else {
+		writebox.style.overflowWrap = 'normal'
+		writebox.style.overflowX    = 'scroll'
+		writebox.style.whiteSpace   = 'pre'
 	}
 }
 
@@ -74,19 +106,23 @@ function loadTheme(clientId) {
 		case 'dark':
 			writebox.style.backgroundColor = '#111'
 			writebox.style.color = '#fefefe'
+			writebox.setAttribute('data-darkbg', 'true')
 			break
 		case 'black':
 			writebox.style.backgroundColor = '#000'
 			writebox.style.color = '#fff'
+			writebox.setAttribute('data-darkbg', 'true')
 			break
 		case 'neither':
 			writebox.style.backgroundColor = '#eee'
 			writebox.style.color = '#222'
+			writebox.setAttribute('data-darkbg', 'false')
 			break
 		default:
 		case 'light':
 			writebox.style.backgroundColor = '#fff'
 			writebox.style.color = '#000'
+			writebox.setAttribute('data-darkbg', 'false')
 			break
 	}
 }

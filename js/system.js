@@ -152,7 +152,7 @@ const settingsList = {
 		}
 	},
 	'setting-wallpaper-location': {
-		'default': `url('/media/resources/wallpapers/photo-1458501534264-7d326fa0ca04.jpeg')`,
+		'default': `url('/media/resources/wallpapers/vruyr-martirosyan-EzJNmh6y848-unsplash.jpg')`,
 		'settingInput': {
 			'name': 'input-wallpaper-location',
 			'type': 'text'
@@ -189,6 +189,14 @@ const settingsList = {
 }
 
 const wallpaperList = [
+	{
+		name: 'Swing',
+		path: '/media/resources/wallpapers/vruyr-martirosyan-EzJNmh6y848-unsplash.jpg',
+	},
+	{
+		name: 'Horizon',
+		path: '/media/resources/wallpapers/aleks-dahlberg-s5eCOoAWSaE-unsplash.jpg',
+	},
     {
         name: 'Night',
         path: '/media/resources/wallpapers/benjamin-voros-phIFdC6lA4E-unsplash.jpg',
@@ -225,6 +233,10 @@ const wallpaperList = [
         name: 'Mountain',
         path: '/media/resources/wallpapers/photo-1472396961693-142e6e269027.jpeg',
     },
+	{
+		name: 'Grey',
+		path: '/media/resources/wallpapers/v2osk--LRuNvY8W7Q-unsplash.jpg',
+	},
     {
         name: 'Peak',
         path: '/media/resources/wallpapers/photo-1489619243109-4e0ea59cfe10.jpeg',
@@ -430,7 +442,7 @@ class WindowAPI {
 		})
 
 		this.window = {
-			select: function (selector) {
+			select:         function (selector) {
 				let object = document.querySelectorAll(`${this.clientId} > .content > ${selector}`)
 				if (object.length === 1) {
 					return object[0]
@@ -439,7 +451,7 @@ class WindowAPI {
 				}
 			},
 
-			quit: function () {
+			quit:           function () {
 				removeWindow(clientId)
 			}
 		}
@@ -1191,6 +1203,7 @@ const shownApps = [
     async () => await loadExternalObject('/apps/docs/main.js'),
     async () => await settingsWindow,
 	async () => await loadExternalObject('/apps/write/write.js'),
+	async () => await loadExternalObject('/apps/markrender.js'),
     async () => await loadExternalObject('/apps/shortcut-cheat-sheet.js'),
     async () => await loadExternalObject('/apps/welcomeApp/main.js'),
     async () => await loadExternalObject('/apps/learnHuman.js'),

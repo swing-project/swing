@@ -24,7 +24,7 @@
 :root {
 	--fontselection: 'FiraGO', 'Fira Sans', 'Noto Sans', sans-serif;
 	--font-monospace: 'Fira Mono', 'Menlo', 'Consolas', monospace;
-	--wallpaper-location: url('/media/resources/wallpapers/photo-1458501534264-7d326fa0ca04.jpeg');
+	--wallpaper-location: url('/media/resources/wallpapers/vruyr-martirosyan-EzJNmh6y848-unsplash.jpg');
 
 	--accent: #ff7800;
 	--highlight: #ffc999;
@@ -50,6 +50,11 @@
 	-webkit-user-select: none;
 	user-select: none;
 	scrollbar-width: thin;
+	scrollbar-color: #ddd transparent;
+}
+
+*[data-darkbg='true'] {
+	scrollbar-color: #444 transparent;
 }
 
 body {
