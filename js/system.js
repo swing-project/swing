@@ -393,7 +393,7 @@ function characterControl(e)
 	}
 }
 
-// the api that will be given to scripts
+// the api that will be given to windows
 const api = {
 	create: {
 		window:         createWindow,
@@ -416,6 +416,54 @@ const api = {
 	readOut:    readOutExternalResource
 }
 
+// a possibly safer way of implementing apis that will aid in the process of switching over to sandboxed windows
+class WindowAPI {
+	constructor(clientId, args) {
+		Object.defineProperty(this, 'clientId', {
+			value:    clientId,
+			writable: false
+		})
+
+		Object.defineProperty(this, 'args', {
+			value:    args,
+			writable: false
+		})
+
+		this.window = {
+			select: function (selector) {
+				let object = document.querySelectorAll(`${this.clientId} > .content > ${selector}`)
+				if (object.length === 1) {
+					return object[0]
+				} else {
+					return object
+				}
+			},
+
+			quit: function () {
+				removeWindow(clientId)
+			}
+		}
+
+		this.create = {
+			dialog:         createDialog,
+			notification:   desktopNotification,
+			sound:          playInternalSound,
+			messageBox:     createMessageBox
+		}
+
+		this.system = {
+			refresh:        refresh
+		},
+
+		this.fs = {
+			getUserFile:    getUserFile,
+			saveUserFile:   saveUserFile,
+			userFileType:   userFileType,
+			exportFile:     exportFile
+		}
+	}
+}
+
 // do something with the contents of a file
 //function useFile(path, action) {
 //	let patharr = path.split(`:`)
@@ -436,7 +484,7 @@ function getUserFile(path) {
 }
 
 function saveUserFile(path, contents) {
-	return localStorage[`files/${path}`] = contents
+	localStorage[`files/${path}`] = contents
 }
 
 function userFileType(path) {

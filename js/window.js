@@ -1,5 +1,5 @@
 (() => {
-    // specification for windows
+    // specification for windows (does not include the new WindowAPI changes)
     return {
         id:    'string',
         title: 'string',
@@ -52,6 +52,16 @@ function createWindow(object, args)
         }
     } else {
         windowId = 'w--' + currentWindowAmount + '--' + object.id
+    }
+
+    const windowapi = new WindowAPI(windowId, args)
+
+    let passedapi = {}
+
+    if (object.testingNew) {
+        passedapi = windowapi
+    } else {
+        passedapi = api
     }
 
     // const prefExists = true ? object?.pref !== null : false
@@ -167,7 +177,11 @@ function createWindow(object, args)
 						break
 					default:
                         swingMenuItem.innerText = menuItem.name
-						swingMenuItem.onclick = () => menuItem.command(windowId, api, args)
+                        if (object.testingNew) {
+                            swingMenuItem.onclick = () => basket(['<script>var window = {}</script>', passedapi, () => menuItem.command(passedapi)], () => {})
+                        } else {
+                            swingMenuItem.onclick = () => menuItem.command(windowId, passedapi, args)
+                        }
 						break
                 }
                 swingMenuContent.appendChild(swingMenuItem)
@@ -185,12 +199,17 @@ function createWindow(object, args)
     // * content
     const contentObject = document.createElement('div')
     contentObject.className = 'content'
-    if (typeof object.content === 'string') {
-        contentObject.innerHTML = object.content.replace(/%human-id%/g, windowId).replace(/%human%/g, windowId).replace(/%\\human%/g, '%human%').replace(/%\\human-id%/g, '%human-id%')
-    } else if (typeof object.content === 'function') {
-        contentObject.innerHTML = object.content(windowId, api)
+    if (object.testingNew) {
+        // basket(['<script>var window = {}</script>', passedapi, () => object.content(passedapi)], () => {})
+        contentObject.innerHTML = object.content(passedapi)
     } else {
-        console.error("no content given for window declaration")
+        if (typeof object.content === 'string') {
+            contentObject.innerHTML = object.content.replace(/%human-id%/g, windowId).replace(/%human%/g, windowId).replace(/%\\human%/g, '%human%').replace(/%\\human-id%/g, '%human-id%')
+        } else if (typeof object.content === 'function') {
+            contentObject.innerHTML = object.content(windowId, passedapi, args)
+        } else {
+            console.error("no content given for window declaration")
+        }
     }
     if (object?.contentStyling !== null && object?.contentStyling !== undefined && object.contentStyling)
     {
@@ -211,7 +230,7 @@ function createWindow(object, args)
 
             if (optionData.message === 'script')
             {
-                optionObject.addEventListener('click', optionData.messagescript(windowId, api))
+                optionObject.addEventListener('click', optionData.messagescript(windowId, passedapi))
             }
 			else if (optionData.message === 'closeSelf')
             {
@@ -231,7 +250,7 @@ function createWindow(object, args)
 
     // * run preload
     if (object.preload !== undefined && object.preload !== null) {
-        object.preload(windowObject, api, args)()
+        object.preload(windowObject, passedapi, args)()
     }
 
     // * set attributes
@@ -258,7 +277,7 @@ function createWindow(object, args)
     // * run onload
     if (object.onload !== undefined && object.onload !== null)
     {
-        object.onload(windowId, api, args)()
+        object.onload(windowId, passedapi, args)()
     }
 }
 
