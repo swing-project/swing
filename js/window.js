@@ -1,39 +1,42 @@
 (() => {
     // specification for windows (does not include the new WindowAPI changes)
     return {
-        id:    'string',
-        title: 'string',
-        icon:  'string?',
-        size: {
-            preset:    'string?',
-            width:     'string?',
-            height:    'string?',
-            minheight: 'string?',
-            minwidth:  'string?',
-            rigid:     'boolean?'
+        id:    'string',                         // the id for the window. has to be unique from all other windows. try using [namespace]--[appname]. required.
+        title: 'string',                         // the title shown to the user. required.
+        icon:  'string?',                        // the icon from the ionicons library used to represent the app. optional, default is 'document-outline'.
+        size: {                                  // information about the size of the window. required.
+            preset:    'string?',                // choose a preset for startup size. this overrides all the other options in this size object.
+            width:     'string?',                // width of window on startup. optional, but has to be defined alongside height, and has no effect is preset is defined.
+            height:    'string?',                // height of window on startup. optional, but has to be defined alongside width, and has no effect if preset is defined.
+            minheight: 'string?',                // minimum height of window allowed. optional, but has to be defined alongside minwidth, and only applies if height and width are defined.
+            minwidth:  'string?',                // minimum width of window allowed. optional, but has to be defined alongside minheight, and only applies if height and width are defined.
+            rigid:     'boolean?'                // turn on rigid mode, which essentially turns off resizing and allows any startup size with no minimum. optional, but only applies if height and width are defined.
         },
-        disallowMultiple: 'boolean?',
-        noPadding:        'boolean?',
-        noOptionsPadding: 'boolean?',
-        contentStyling:   'string?',
-        menubar: [
-            {
-                name: 'string',
-                items: [
-                    { name: 'string', command: 'swingCommand' }
+        disallowMultiple: 'boolean?',            // do not allow multiple windows of the same task. optional.
+        noPadding:        'boolean?',            // no padding on content at all. optional.
+        noOptionsPadding: 'boolean?',            // no 64px padding at the bottom of content for windows with an options bar. optional.
+        contentStyling:   'string?',             // custom css styling for content. optional.
+        menubar: [                               // information for the menubar. different menus are defined as objects in this array. optional.
+            {                                    // a menu. optional, but why would anyone want a menubar with no menus?
+                name: 'string',                  // the title for the menu. required.
+                items: [                         // the items in the menu. required. items appear as objects inside this array.
+                    {                            // an item. optional, but what use is a menu if there are no items?
+                        name: 'string',          // item name. required. can be `SWING_SEPERATOR`, which shows a menu seperator rather than a menu item.
+                        command: 'swingCommand'  // command on click. required, unless name is `SWING_SEPERATOR`, since you can't really expect a user to know to click on a seperator for an action to occur.
+                    }
                 ]
             }
         ],
-        content: 'string|function->string',
-        options: [
-            {
-                name:          'string',
-                message:       'string',
-                messagescript: 'swingCommand?'
+        content: 'string|function->string',      // the content to the window as inline HTML or a function that returns inline HTML. required.
+        options: [                               // the bar of buttons at the bottom. different buttons are defined as object in this array. optional.
+            {                                    // a button. optional, but again, why have an options bar with no options?
+                name:          'string',         // the label for the button. required.
+                message:       'string',         // the action for the button. can either be 'closeSelf', which closes the window attached, or 'script', which runs messagescript defined just underneath.
+                messagescript: 'swingCommand?'   // the function called if the button is pressed and message is set to 'script'. optional, but required if message is set to 'script'.
             }
         ],
-        onload:  'swingCommand?',
-        preload: 'swingCommandWindowObject?'
+        onload:  'swingCommand?',                // a function to run when the window is appended to the DOM. optional.
+        preload: 'swingCommandWindowObject?'     // a function to run just before the window is appended to the DOM. rather than taking in clientID as it's first argument, it takes in the window object. optional.
     }
 })()
 

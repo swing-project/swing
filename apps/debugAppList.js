@@ -10,26 +10,25 @@ export const client = {
 	<p>This is not as up to date as possible, so some of the things in here may be removed or changed names.</p>
 	<p>Use Run to open these.</p>
 
- 	<br />
-
-	<h2>Hardcoded</h2>
+	<br />
 
 	<div class="list">
 		<p>swingver</p>
 		<p>clientAppList</p>
-		<p>shorctutCheatSheet</p>
 		<p>runWindow</p>
  		<p>settingsWindow</p>
-	</div>
 
-	<h2>External</h2>
-
-	<div class="list">
-	    <p>/apps/write.js</p>
+	    <p>/apps/write/write.js</p>
+		<p>/apps/markrender.js</pp>
+		<p>/apps/shortcut-cheat-sheet.js</p>
 		<p>/apps/learnHuman.js</p>
 	    <p>/apps/notificationEngine.js</p>
-		<p>/apps/about.js</p>
 		<p>/apps/debugAppList.js</p>
+		<p>/apps/testwin.js</p>
+		<p>/apps/web-searcher.js</p>
+		<p>/apps/sampleimages/main.js</p>
+		<p>/apps/welcomeApp/main.js</p>
+		<p>/apps/WindowAPITest.js</p>
 	</div>
  	`
 }

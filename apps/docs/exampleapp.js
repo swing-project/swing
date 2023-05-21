@@ -3,9 +3,11 @@ export const client = {
     title: 'Example App',
     icon: 'build-outline',
     size: {
-        'preset': 'mini'
+        preset: 'mini'
     },
-    content: `
-    <p>Hello from some random app on the internet!</p>
-    `
+    content: `<p>Hello from some random app on the internet!</p>`,
+    options: [
+        { name: 'Cancel', message: 'closeSelf' },
+        { name: 'OK',     message: 'closeSelf' },
+    ]
 }
