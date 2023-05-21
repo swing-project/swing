@@ -25,12 +25,12 @@ ivy.onload = function (api) {
 ivy.apps = {}
 
 ivy.apps.basic = {
-    'id': 'basic-app',
-    'title': 'Basic App',
-    'size': {
-        'preset': 'mini'
+    id: 'basic-app',
+    title: 'Basic App',
+    size: {
+        preset: 'mini'
     },
-    'content': `
+    content: `
     <p>This app was imported from the example-plugin plugin.</p>
     `
 }

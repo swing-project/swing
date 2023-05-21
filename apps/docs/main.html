@@ -6,33 +6,30 @@
     <title>Swing Docs</title>
     <link rel="stylesheet" href="style.css" />
 </head>
-<label>
-    <input id="tab1" type="radio" name="tabs" checked />
+<body>
+    <input id= "tab1" type="radio" name="tabs" checked />
     <label for="tab1">Home</label>
     
-    <input id="tab2" type="radio" name="tabs" />
+    <input id= "tab2" type="radio" name="tabs" />
     <label for="tab2">Desktop</label>
     
-    <input id="tab3" type="radio" name="tabs" />
+    <input id= "tab3" type="radio" name="tabs" />
     <label for="tab3">Windows</label>
     
-    <input id="tab4" type="radio" name="tabs" />
+    <input id= "tab4" type="radio" name="tabs" />
     <label for="tab4">Productivity Features</label>
 
-    <input id="tab5" type="radio" name="tabs" />
+    <input id= "tab5" type="radio" name="tabs" />
     <label for="tab5">Adding Apps</label>
 
-    <input id="tab6" type="radio" name="tabs" />
+    <input id= "tab6" type="radio" name="tabs" />
     <label for="tab6">Notifications</label>
 
-    <input id="tab7" type="radio" name="tabs" />
-    <label for="tab7">Dialogues</label>
+    <input id= "tab7" type="radio" name="tabs" />
+    <label for="tab7">Development</label>
 
-    <input id="tab8" type="radio" name="tabs" />
-    <label for="tab8">Development</label>
-
-    <input id="tab9" type="radio" name="tabs" />
-    <label for="tab9">Bugman</label>
+    <input id= "tab8" type="radio" name="tabs" />
+    <label for="tab8">Bugman</label>
     
     <div class="tab content1">
         <p>Welcome to the <span class="accent">swing</span> docs!</p>
@@ -139,10 +136,6 @@
     </div>
 
     <div class="tab content7">
-        <h2>Dialogues</h2>
-    </div>
-
-    <div class="tab content8">
         <h2>Development</h2>
         <p>Swing is a easy and quick development experience, most usually just requiring a single JS file.</p>
 
@@ -156,8 +149,8 @@
 }</pre>
 
         <p>Please try to keep the ID unique to your website or username, as ID conflicts in swing can be horrible.</p>
-        <p>Swing tries to keep this very simple, using <code>[websitename]--[taskname]</code>,
-            where <code>[websitename]</code> can be replaced with the domain name of your website, e.g. example.com,
+        <p>Swing tries to keep this very simple, using <code>[namespace]--[taskname]</code>,
+            where <code>[namespace]</code> can be replaced with the domain name of your website, e.g. example.com,
             and <code>[taskname]</code> can be replaced with the filename minus '.js'.</p>
         <p>You are allowed to do whatever you want and you don't have to follow this naming scheme, but please try your best to keep it unique.</p>
 
@@ -183,12 +176,10 @@
     &lt;p&gt;You should have recieved a notification. Isn't that cool?&lt;/p&gt;
     `,
     'onload': function (_clientId, api, _args) {
-        return function () {
-            api.create.notification({
-                'title': 'Wow cool',
-                'description': 'You got this notification from the cool app!'
-            })
-        }
+        api.create.notification({
+            'title': 'Wow cool',
+            'description': 'You got this notification from the cool app!'
+        })
     }
 }</pre>
 
@@ -265,12 +256,10 @@
         {
             'name': 'Search',
             'message': 'script',
-            'messagescript': function (clientId, _api) {
-                return function () {
-                    const searchQuery = document.getElementById(`${clientId}-input`).value
-                    if (searchQuery !== '' && searchQuery !== null && searchQuery !== undefined && /\S/.test(searchQuery)) {
-                        window.open(`https://duckduckgo.com/?q=${searchQuery}`)
-                    }
+            'messagescript': function (clientId, _api, _args) {
+                const searchQuery = document.getElementById(`${clientId}-input`).value
+                if (searchQuery !== '' && searchQuery !== null && searchQuery !== undefined && /\S/.test(searchQuery)) {
+                    window.open(`https://duckduckgo.com/?q=${searchQuery}`)
                 }
             }
         }
@@ -301,7 +290,7 @@
         <p>These use the same syntax as the <code>onload</code> function-returns-function things we saw earlier.</p>
     </div>
 
-    <div class="tab content9">
+    <div class="tab content8">
         <h2>Bugman</h2>
         <p>The Bugman program and more about hidden stuff in Swing in general</p>
 
@@ -314,6 +303,13 @@
             for this purpose.</p>
     </div>
 
-    <script type="module" src="/apps/docs/script.js"></script>
+    <script>
+        function setUserPreferences(userPreferences) {
+            document.body.style.setProperty('--accent-color', userPreferences.accent)
+            document.body.style.setProperty('--accent-light', userPreferences.highlight)
+            document.body.style.setProperty('--font-family',  userPreferences.fontFamily)
+            document.body.style.setProperty('--font-mono',    userPreferences.fontMono)
+        }
+    </script>
 </body>
 </html>

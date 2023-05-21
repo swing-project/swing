@@ -39,32 +39,30 @@ export const client = {
 		}
 	],
 	onload: function (clientId, api, args) {
-		return function () {
-			const typeface = localStorage['app-config/ivy--write/typeface']
-			if (typeface === undefined) {
-				setTypeFace('sans', clientId)
-			} else {
-				loadTypeFace(clientId)
-			}
+		const typeface = localStorage['app-config/ivy--write/typeface']
+		if (typeface === undefined) {
+			setTypeFace('sans', clientId)
+		} else {
+			loadTypeFace(clientId)
+		}
 
-			const theme = localStorage['app-config/ivy--write/theme']
-			if (theme === undefined) {
-				setTheme('light', clientId)
-			} else {
-				loadTheme(clientId)
-			}
+		const theme = localStorage['app-config/ivy--write/theme']
+		if (theme === undefined) {
+			setTheme('light', clientId)
+		} else {
+			loadTheme(clientId)
+		}
 
-			const wordwrap = localStorage['app-config/ivy--write/wordwrap']
-			if (wordwrap === undefined) {
-				localStorage['app-config/ivy--write/wordwrap'] = 'true'
-			}
-			loadWordWrap(clientId)
+		const wordwrap = localStorage['app-config/ivy--write/wordwrap']
+		if (wordwrap === undefined) {
+			localStorage['app-config/ivy--write/wordwrap'] = 'true'
+		}
+		loadWordWrap(clientId)
 
-			const writebox = document.getElementById(clientId).querySelector('.writebox')
-			if (args['filename'] !== undefined) {
-				writebox.value = api.fs.getUserFile(args['filename'])
-				writebox.setAttribute('data-open-file', args['filename'])
-			}
+		const writebox = document.getElementById(clientId).querySelector('.writebox')
+		if (args['filename'] !== undefined) {
+			writebox.value = api.fs.getUserFile(args['filename'])
+			writebox.setAttribute('data-open-file', args['filename'])
 		}
 	}
 }

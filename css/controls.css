@@ -25,6 +25,8 @@
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+
+    min-width: 0;
 }
 
 .tooltip-button:hover,

@@ -577,7 +577,7 @@ async function createExternalWindow(objectLocation, args)
 
 function openShortcutCheatSheet()
 {
-	createWindow(shortcutCheatSheet, {})
+	createExternalWindow('/apps/shortcut-cheat-sheet.js', {})
 }
 
 function openApps()
@@ -784,34 +784,32 @@ const runWindow = {
 			'name': 'OK',
 			'message': 'script',
 			'messagescript': function(clientId, api) {
-				return function() {
-					const errorNotification = {
-						'title': 'Run Error',
-						'description': 'Could not find resource.',
-						'playSound': true
-					}
+				const errorNotification = {
+					'title': 'Run Error',
+					'description': 'Could not find resource.',
+					'playSound': true
+				}
 
-					const input = document.getElementById(`${clientId}-input`).value
-					let workedUntilProvenBroken = true
-					try {
-						if (input.indexOf('/') > -1) {
-							// contains slash, is most likely a path
-							if (input.indexOf('.js') > -1) {
-								// contains .js extension, most likely a client config
-                            	api.create.externalWindow(input)
-							}
-						} else if (eval(input).id !== undefined) {
-							// is a value, most likely an internal client config
-							api.create.window(eval(input), { '@fromRun': true })
+				const input = document.getElementById(`${clientId}-input`).value
+				let workedUntilProvenBroken = true
+				try {
+					if (input.indexOf('/') > -1) {
+						// contains slash, is most likely a path
+						if (input.indexOf('.js') > -1) {
+							// contains .js extension, most likely a client config
+                            api.create.externalWindow(input, { '@fromRun': true })
 						}
-					} catch (_) {
-                        api.create.notification(errorNotification)
-						workedUntilProvenBroken = false
+					} else if (eval(input).id !== undefined) {
+						// is a value, most likely an internal client config
+						api.create.window(eval(input), { '@fromRun': true })
 					}
+				} catch (_) {
+					api.create.notification(errorNotification)
+					workedUntilProvenBroken = false
+				}
 
-					if (workedUntilProvenBroken) {
-						api.system.removeWindow(clientId)
-					}
+				if (workedUntilProvenBroken) {
+					api.system.removeWindow(clientId)
 				}
 			}
 		}
@@ -830,7 +828,7 @@ const bugman = {
 	<p>(This operating system is an accessibility nightmare)</p>
 
 	<h2>Information</h2>
-	<p id="%human-id%-info-ua">User agent string: </p>
+	<p id="%human-id%-info-ua" class="monospace">User agent string: </p>
 
 	<h2>WIP Features</h2>
 	<p>Some of the features (marked <code>testwin</code>) require <a href="javascript:createExternalWindow('/apps/testwin.js', {})">testwin</a> to be open.</p>
@@ -841,10 +839,9 @@ const bugman = {
 
 	<h2>Hidden Apps</h2>
 	<div class="list">
-		<p><a href="javascript:createWindow(swingver)">swingver</a></p>
-		<p><a href="javascript:createWindow(clientAppList)">Client App List</a></p>
+		<p><a href="javascript:createWindow(swingver, {})">swingver</a></p>
+		<p><a href="javascript:createWindow(clientAppList, {})">Client App List</a></p>
 		<p><a href="javascript:createExternalWindow('/apps/debugAppList.js', {})">Debugging App List</a></p>
-		<p><a href="javascript:createWindow(externalLoaderWindow)">External Loader</a></p>
 	</div>
 
 	<h2>WIP Apps</h2>
@@ -858,10 +855,8 @@ const bugman = {
 	</div>
 	`,
 	'onload': function (clientId, _api, _args) {
-		return function () {
-			// set information
-			document.getElementById(`${clientId}-info-ua`).innerText = `User agent string: ${window.navigator.userAgent}`
-		}
+		// set information
+		document.getElementById(`${clientId}-info-ua`).innerText = `User agent string: ${window.navigator.userAgent}`
 	}
 }
 
@@ -1012,27 +1007,25 @@ const settingsWindow = {
 							{
 								name: 'Upload',
 								message: 'script',
-								messagescript: function (clientId, _api) {
-									return function () {
-										const files = document.getElementById(`${clientId}-input-file`).files
-										if (files.length > 0) {
-											importSettings(files[0])
-											refresh()
-											removeWindow(clientId)
-											api.create.notification({
-												title: 'Restart System',
-												description: 'Refresh page to load new settings.',
-												playSound: true,
-												action: () => window.location.reload()
-											})
-										} else {
-											api.create.notification({
-												title: 'Uploading file error',
-												description: 'No file was selected.',
-												playSound: true,
-												action: () => window.location.reload()
-											})
-										}
+								messagescript: function (clientId, _api, _args) {
+									const files = document.getElementById(`${clientId}-input-file`).files
+									if (files.length > 0) {
+										importSettings(files[0])
+										refresh()
+										removeWindow(clientId)
+										api.create.notification({
+											title: 'Restart System',
+											description: 'Refresh page to load new settings.',
+											playSound: true,
+											action: () => window.location.reload()
+										})
+									} else {
+										api.create.notification({
+											title: 'Uploading file error',
+											description: 'No file was selected.',
+											playSound: true,
+											action: () => window.location.reload()
+										})
 									}
 								}
 							}
@@ -1092,42 +1085,38 @@ const settingsWindow = {
 		{
 			name: 'Apply',
 			message: 'script',
-			messagescript: function (clientId, api) {
-				return function () {
-					for (const settingName in settingsList) {
-						if (Object.hasOwnProperty.call(settingsList, settingName)) {
-							const settingAttributes = settingsList[settingName]
-							const settingInput = document.getElementById(`${clientId}-${settingAttributes.settingInput.name}`)
+			messagescript: function (clientId, api, _args) {
+				for (const settingName in settingsList) {
+					if (Object.hasOwnProperty.call(settingsList, settingName)) {
+						const settingAttributes = settingsList[settingName]
+						const settingInput = document.getElementById(`${clientId}-${settingAttributes.settingInput.name}`)
 
-							if (settingAttributes.settingInput.type === 'checkbox') {
-								localStorage.setItem(settingName, settingInput.checked)
-							} else {
-								localStorage.setItem(settingName, settingInput.value)
-							}
+						if (settingAttributes.settingInput.type === 'checkbox') {
+							localStorage.setItem(settingName, settingInput.checked)
+						} else {
+							localStorage.setItem(settingName, settingInput.value)
 						}
 					}
-					api.system.refresh()
-					repopulateAppGrid()
 				}
+				api.system.refresh()
+				repopulateAppGrid()
 			}
 		}
 	],
 	onload: function (clientId, _api, _args) {
-		return function () {
-			// Array(document.querySelectorAll(`[id='${clientId}-content'] > [id^='${clientId}-s-']`)).forEach((element) => {
-			// 	element.style.display = 'block'
-			// })
-			for (const settingName in settingsList) {
-				if (Object.hasOwnProperty.call(settingsList, settingName)) {
-					const settingAttributes = settingsList[settingName]
-					const settingInput = document.getElementById(`${clientId}-${settingAttributes.settingInput.name}`)
-					if (settingAttributes.settingInput.type === 'checkbox') {
-						settingInput.checked =
-                            localStorage.getItem(settingName) === 'true'
-					} else {
-						settingInput.placeholder = settingAttributes.default
-						settingInput.value = localStorage.getItem(settingName)
-					}
+		// Array(document.querySelectorAll(`[id='${clientId}-content'] > [id^='${clientId}-s-']`)).forEach((element) => {
+		// 	element.style.display = 'block'
+		// })
+		for (const settingName in settingsList) {
+			if (Object.hasOwnProperty.call(settingsList, settingName)) {
+				const settingAttributes = settingsList[settingName]
+				const settingInput = document.getElementById(`${clientId}-${settingAttributes.settingInput.name}`)
+				if (settingAttributes.settingInput.type === 'checkbox') {
+					settingInput.checked =
+					    localStorage.getItem(settingName) === 'true'
+				} else {
+					settingInput.placeholder = settingAttributes.default
+					settingInput.value = localStorage.getItem(settingName)
 				}
 			}
 		}
@@ -1166,37 +1155,6 @@ const clientAppList = {
 		<a href="javascript:createWindow(bugman)"><ion-icon name="bug-outline"></ion-icon> Bugman</a><br />
 	</div>
  	`
-}
-
-const externalLoaderWindow = {
-	'id': 'ivy--load-external-window',
-	'title': 'Load External Window',
-	'size': {
-		'height': '113px',
-		'width': '500px',
-		'rigid': true
-	},
-	'icon': 'bug-outline',
-	'content': 	`
-	<label for="%human-id%-input-value">External Object URL:</label>
-	<input type="text" id="%human-id%-input-value" />
-	`,
-	'options': [
-		{
-			'name': 'OK',
-			'message': 'script',
-			'messagescript': function(clientId, api) {
-				return function() {
-					api.create.externalWindow(document.getElementById(`${clientId}-input-value`).value)
-					api.system.removeWindow(clientId)
-				}
-			}
-		},
-		{
-			'name': 'Cancel',
-			'message': 'closeSelf'
-		}
-	]
 }
 
 const shownApps = [

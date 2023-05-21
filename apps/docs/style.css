@@ -5,8 +5,8 @@
 body {
     --accent-color: #ff7800;
     --accent-light: #ffc999;
-    --font-family: FiraGO, 'Fira Sans', 'Noto Sans', sans-serif;
-    --font-mono: 'Fira Code', Menlo, Consolas, monospace;
+    --font-family:  FiraGO, 'Fira Sans', 'Noto Sans', sans-serif;
+    --font-mono:    'Fira Code', Menlo, Consolas, monospace;
 
     font-family: var(--font-family);
     padding: 0;

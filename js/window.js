@@ -29,11 +29,11 @@
             {
                 name:          'string',
                 message:       'string',
-                messagescript: 'swingCommandWrappedNoArgs?'
+                messagescript: 'swingCommand?'
             }
         ],
-        onload:  'swingCommandWrapped?',
-        preload: 'swingCommandWrappedWindowObject?'
+        onload:  'swingCommand?',
+        preload: 'swingCommandWindowObject?'
     }
 })()
 
@@ -230,11 +230,11 @@ function createWindow(object, args)
 
             if (optionData.message === 'script')
             {
-                optionObject.addEventListener('click', optionData.messagescript(windowId, passedapi))
+                optionObject.addEventListener('click', () => optionData.messagescript(windowId, passedapi))
             }
 			else if (optionData.message === 'closeSelf')
             {
-                optionObject.addEventListener('click', function() { removeWindow(windowId) })
+                optionObject.addEventListener('click', () => removeWindow(windowId))
             }
 
             optionsObject.appendChild(optionObject)
@@ -250,7 +250,7 @@ function createWindow(object, args)
 
     // * run preload
     if (object.preload !== undefined && object.preload !== null) {
-        object.preload(windowObject, passedapi, args)()
+        object.preload(windowObject, passedapi, args)
     }
 
     // * set attributes
@@ -277,7 +277,7 @@ function createWindow(object, args)
     // * run onload
     if (object.onload !== undefined && object.onload !== null)
     {
-        object.onload(windowId, passedapi, args)()
+        object.onload(windowId, passedapi, args)
     }
 }
 

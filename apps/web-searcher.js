@@ -18,12 +18,10 @@ export const client = {
         {
             name: 'Search',
             message: 'script',
-            messagescript: function (clientId, _api) {
-                return function () {
-                    const searchQuery = document.getElementById(`${clientId}-input`).value
-                    if (searchQuery !== '' && searchQuery !== null && searchQuery !== undefined && /\S/.test(searchQuery)) {
-                        window.open(`https://duckduckgo.com/?q=${searchQuery}`)
-                    }
+            messagescript: function (clientId, _api, _args) {
+                const searchQuery = document.getElementById(`${clientId}-input`).value
+                if (searchQuery !== '' && searchQuery !== null && searchQuery !== undefined && /\S/.test(searchQuery)) {
+                    window.open(`https://duckduckgo.com/?q=${searchQuery}`)
                 }
             }
         }

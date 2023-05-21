@@ -1,12 +1,12 @@
 export const client = {
-	'id': 'ivy--learn-human',
-	'title': 'Learn Swing',
-	'size': {
+	id: 'ivy--learn-human',
+	title: 'Learn Swing',
+	size: {
 		'preset': 'medium'
 	},
-	'icon': 'accessibility-outline',
-	'content': `
- 	<h1 align="center">Learn <span class="accent">Swing</span></h1>
+	icon: 'accessibility-outline',
+	content: `
+ 	<h1 class="d-flex flexdir-row gap-1 ai-center jc-center"><ion-icon src="/media/resources/swing-icon.svg"></ion-icon> <span>Learn <span class="fg-accent">Swing</span></span></h1>
 	<p align="center">Welcome to swing! Here are some quick tips to get you started with using swing.</p>
 	<p align="center">For more information, see the <a href="javascript:createExternalWindow('/apps/docs/main.js', { '@fromLearn': true })">docs</a> app.</p>
 	

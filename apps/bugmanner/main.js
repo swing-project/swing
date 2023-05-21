@@ -54,27 +54,25 @@ export const client = {
     </div>
     `,
     'onload': function (clientId, _api, _args) {
-        return function () {
-            const button = document.getElementById(`${clientId}-search-button`)
-            button.addEventListener('click', function () {
-                const bugobject = record[document.getElementById(`${clientId}-search`).value]
+        const button = document.getElementById(`${clientId}-search-button`)
+        button.addEventListener('click', function () {
+            const bugobject = record[document.getElementById(`${clientId}-search`).value]
 
-                const content = document.getElementById(`${clientId}-content`)
-                content.querySelector('.title')          .innerText = bugobject.title
-                content.querySelector('.description')    .innerText = bugobject.description
-                content.querySelector('.function > code').innerText = bugobject.function
-                content.querySelector('.date > .gmt')    .innerText = bugobject.gmtdate
-                content.querySelector('.date > .local')  .innerText = bugobject.localdate
+            const content = document.getElementById(`${clientId}-content`)
+            content.querySelector('.title')          .innerText = bugobject.title
+            content.querySelector('.description')    .innerText = bugobject.description
+            content.querySelector('.function > code').innerText = bugobject.function
+            content.querySelector('.date > .gmt')    .innerText = bugobject.gmtdate
+            content.querySelector('.date > .local')  .innerText = bugobject.localdate
 
-                const tag = content.querySelector('.tag')
-                if (bugobject.solved) {
-                    tag.innerText = 'solved'
-                    tag.style.backgroundColor = 'limegreen'
-                } else {
-                    tag.innerText = 'unsolved'
-                    tag.style.backgroundColor = 'red'
-                }
-            })
-        }
+            const tag = content.querySelector('.tag')
+            if (bugobject.solved) {
+                tag.innerText = 'solved'
+                tag.style.backgroundColor = 'limegreen'
+            } else {
+                tag.innerText = 'unsolved'
+                tag.style.backgroundColor = 'red'
+            }
+        })
     }
 }
