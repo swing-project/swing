@@ -11,7 +11,7 @@ const swingver = {
 	<div class="d-flex ai-center jc-center flexdir-col">
 		<span>
 			swing unstable;
-			last updated 2023-05-19
+			last updated 2023-05-25
 		</span>
 		<span>copyright &copy; 2023 samrland and swing-project</span>
 	</div>
@@ -359,9 +359,10 @@ function characterControl(e)
 		(localStorage.getItem('meta-key') === 'ctrl' && e.altKey)
 	)
 
-	// if (e.altKey) {
-	// 	console.log('meta key pressed')
-	// }
+	if (metaPressed)
+	{
+		e.preventDefault()
+	}
 
 	if (metaPressed && e.key === '/')
 	{
