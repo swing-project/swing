@@ -46,36 +46,194 @@ window.onload = function() {
 	}
 }
 
+/* window.oncontextmenu = (e) => { e.preventDefault(); alert("This should work") }  */
+
+// s-expression tree maker
+// """"borrowed"""" from https://rosettacode.org/wiki/S-expressions#Procedural
+String.prototype.parseAsSS = function() {
+	var t = this.match(/\s*("[^"]*"|\(|\)|"|[^\s()"]+)/g)
+	for (var o, c=0, i=t.length-1; i>=0; i--) {
+		var n, ti = t[i].trim()
+		if (ti == '"') return
+		else if (ti == '(') t[i]='[', c+=1
+		else if (ti == ')') t[i]=']', c-=1
+		else if ((n=+ti) == ti) t[i]=n
+		else t[i] = '\'' + ti.replace('\'', '\\\'') + '\''
+		if (i>0 && ti!=']' && t[i-1].trim()!='(' ) t.splice(i,0, ',')
+		if (!c) if (!o) o=true; else return
+	}
+	return c ? undefined : eval(t.join(''))
+}
+
 // swing console
 const swingConsole = {
+	// the array containing all entries
+	text: [],
+
+	// write to console. recommended for most uses.
 	write: function (error, text) {
-		swingConsole.text.push({
+		const object = {
 			isError: error,
 			text: text
-		})
+		}
+
+		swingConsole.text.push(object)
+
+		if (document.querySelector('#ivy--console') !== null) {
+			swingConsole.consoleWrite(object)
+		}
 	},
-	text: []
+
+	// write to the console window. does not add an entry to swingConsole.text, so should not be used externally for most things.
+	consoleWrite: function (object) {
+		const console = document.querySelector('#ivy--console > .content > .wrapper > .console')
+
+		const entry = document.createElement('span')
+		entry.innerText = object.text
+		entry.classList.add('entry')
+		entry.classList.add(object.isError ? 'error' : 'information')
+
+		console.appendChild(entry)
+	},
+
+	// apply consoleWrite on all swingConsole.text entries, used to update the console window on reopen
+	reloadConsole: function () {
+		if (document.querySelector('#ivy--console') !== null) {
+			const console = document.querySelector('#ivy--console > .content > .wrapper > .console')
+			console.innerHTML = ''
+			for (const object of swingConsole.text) {
+				swingConsole.consoleWrite(object)
+			}
+		}
+	}
 }
 
 const swingConsoleWindow = {
 	id: 'ivy--console',
-	title: 'Swing Console',
+	title: 'Console',
 	icon: 'terminal-outline',
 	size: {
 		preset: 'default'
 	},
 	disallowMultiple: true,
 	content: `
-	<div class="wrapper w-100-pc d-flex flexdir-col">
-		<div class="console">
-		</div>
-		<div class="input-wrapper w-100-pc d-flex flexdir-row gap-1 ai-center b-0">
+	<div class="wrapper w-100-pc d-flex flexdir-col" style="height: calc(100% - 1rem - 8px);">
+		<div class="console w-100-pc d-flex flexdir-col h-100-pc" style="overflow-y: auto;"></div>
+		<div class="input-wrapper w-100-pc d-flex flexdir-row gap-1 ai-center b-0" style="border-top: 1px solid #ccc; padding-top: 4px;">
 			<label for="%human%-input">Execute: </label>
-			<input type="text" id="%human%-input" />
+			<input type="text" id="%human%-input" class="monospace" />
 			<button type="button" id="%human%-button">OK</button>
 		</div>
 	</div>
+
+	<style>
+	#%human% > .content > .wrapper > .console > .entry {
+		padding: 4px;
+		width: 100%;
+		border-bottom: 1px solid #ddd;
+		font-family: var(--font-monospace);
+	}
+
+	#%human% > .content > .wrapper > .console > .entry.error {
+		background-color: #fdd;
+		color: #f00;
+		border-bottom-color: #f00;
+	}
+	</style>
 	`,
+	onload: function (clientId, api, args) {
+		const input    = document.getElementById(clientId).querySelector(`.content > .wrapper > .input-wrapper > #${clientId}-input`)
+		const okButton = document.getElementById(clientId).querySelector(`.content > .wrapper > .input-wrapper > #${clientId}-button`)
+		okButton.addEventListener('click', function (_e) {
+			const inputParsed = input.value.parseAsSS()
+			if (inputParsed !== undefined) {
+				switch (inputParsed[0]) {
+					case 'load':
+						swingConsole.write(false, `Loading ${inputParsed[1]}...`)
+						try {
+							api.create.externalWindow(String(eval(inputParsed[1])), { '@fromConsole': true })
+						} catch {
+							swingConsole.write(true, 'Failed to load client.')
+						}
+						break
+					case 'read':
+						let givenPath = String(eval(inputParsed[1]))
+						let givenPathArray = givenPath.split('/')
+						if (givenPathArray[1] === 'home') {
+							swingConsole.write(false, api.fs.getUserFile(givenPath.slice(6))) // "/home/".length === 6
+						} else if (givenPathArray[1] === 'system') {
+							if (givenPathArray[2] === 'resources') {
+								// "/system/resources/".length === 18
+								fetch(givenPath.slice(18))
+									.then((contents) => swingConsole.write(false, contents))
+							} else {
+								swingConsole.write(true, 'Path does not exist.')
+							}
+						} else {
+							swingConsole.write(true, 'Path does not exist.')
+						}
+						break
+					case 'echo':
+						try {
+							swingConsole.write(false, String(eval(inputParsed.slice(1).join(' + '))))
+						} catch {
+							swingConsole.write(true, 'Error parsing string. Make sure you are using a string.')
+						}
+						break
+					case 'error':
+						try {
+							swingConsole.write(true, String(eval(inputParsed.slice(1).join(' + '))))
+						} catch {
+							swingConsole.write(true, 'Error parsing string. Make sure you are using a string.')
+						}
+						break
+					case '+':
+						try {
+							let value = inputParsed[1] + inputParsed[2]
+							swingConsole.write(false, String(value))
+						} catch {
+							swingConsole.write(true, 'Arithmetic error.')
+						}
+						break
+					case '-':
+						try {
+							let value = inputParsed[1] + inputParsed[2]
+							swingConsole.write(false, String(value))
+						} catch {
+							swingConsole.write(true, 'Arithmetic error.')
+						}
+						break
+					case '*':
+						try {
+							let value = inputParsed[1] * inputParsed[2]
+							swingConsole.write(false, String(value))
+						} catch {
+							swingConsole.write(true, 'Arithmetic error.')
+						}
+						break
+					case '/':
+						try {
+							let value = inputParsed[1] / inputParsed[2]
+							swingConsole.write(false, String(value))
+						} catch {
+							swingConsole.write(true, 'Arithmetic error.')
+						}
+						break
+					case '%':
+						try {
+							let value = inputParsed[1] % inputParsed[2]
+							swingConsole.write(false, String(value))
+						} catch {
+							swingConsole.write(true, 'Arithmetic error.')
+						}
+						break
+				}
+			} else {
+				swingConsole.write(true, 'Error in S-Expression.')
+			}
+		})
+		swingConsole.reloadConsole()
+	},
 	styles: [
 		{
 			selector: '.console',
@@ -505,7 +663,7 @@ function userFileType(path) {
 	if (object) {
 		return 'file' // simple enough
 	} else {
-		if (Object.keys(localStorage.some((k) => ~k.indexOf(`files/${path}/`)))) { // some files exist in this directory. this does create the predicament that empty directories can't exist, but that doesn't matter
+		if (Object.keys(localStorage.some((k) => ~k.indexOf(`files/${path}/`)))) { // some files exist in this directory. this does create the predicament that empty directories can't exist, but that doesn't matter... oh wait, directories can have contents
 			return 'directory'
 		} else {
 			return 'null'
@@ -1137,6 +1295,27 @@ function appListOpen(windowId, external, titleOrObject) {
 	}
 }
 */
+
+const fileListApp = {
+	id: 'ivy--file-list',
+	title: 'File List',
+	size: {
+		preset: 'default'
+	},
+	icon: 'rocket-outline',
+	content: `
+	<p>I am not making an entire file manager (yet)</p>
+
+	<div class="container">
+	</div>
+	`,
+	onload: function (clientId, api, _args) {
+		const files = Object.keys(localStorage.some((k) => ~k.indexOf(`files/`)))
+		for (const file of files) {
+			console.log(`${clientId}: ${file}`)
+		}
+	}
+}
 
 const clientAppList = {
 	'id': 'ivy--client-app-list',
