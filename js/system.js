@@ -827,7 +827,7 @@ function exportFile(type, name, blobarray) {
 }
 
 function exportSettings() {
-	exportFile('text/plain', 'human-settings.json', [ JSON.stringify(localStorage) ])
+	exportFile('text/plain', 'swing-settings.json', [ JSON.stringify(localStorage) ])
 }
 
 function importSettings(file) {
@@ -1157,7 +1157,7 @@ const settingsWindow = {
 						},
 						icon: 'cloud-upload-outline',
 						content: `
-						<label for="%human-id%-input-file">Upload a human-settings.json file:</label>
+						<label for="%human-id%-input-file">Upload a swing-settings.json file:</label>
 						<input type="file" id="%human-id%-input-file" />
 
 						<p>Note: This will override your current settings.</p>
