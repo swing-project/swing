@@ -1,5 +1,7 @@
 # The Swing Filesystem
 
+> Ignore this. I'm pretty sure we're going to end up with "everything's a file".
+
 NOTE: Most of this isn't implemented yet. The notes directory is just for future stuff and stuff.
 
 ## File Structure

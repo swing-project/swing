@@ -1,5 +1,5 @@
 export const client = {
-    id: 'ivy--testwin',
+    id: 'swing-testwin',
     title: 'testwin',
     size: {
         'preset': 'mini'

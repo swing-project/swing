@@ -8,7 +8,11 @@
       {
         "ignore": [
           "scrollbar-width",
-          "min-height: auto"
+          "min-height: auto",
+          "scrollbar-color",
+          "backdrop-filter",
+          "accent-color",
+          "height: fit-content"
         ]
       }
     ]

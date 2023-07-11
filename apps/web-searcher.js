@@ -1,5 +1,5 @@
 export const client = {
-    id: 'ivy--web-searcher',
+    id: 'swing-WebSearcher',
     title: 'Web Searcher',
     icon: 'search-outline',
     size: {

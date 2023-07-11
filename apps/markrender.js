@@ -1,5 +1,5 @@
 export const client = {
-    id:    'ivy--markrender',
+    id:    'swing-MarkRender',
     title: 'MarkRender',
     icon:  'logo-markdown',
     size:  { preset: 'default' },
@@ -21,7 +21,7 @@ function setOutput(clientId, filename) {
     outputBox.setAttribute('data-open-file-name', filename)
 }
 
-function openFile(clientId, _api, _args) {
+function openFile(clientId, api, _args) {
     api.create.messageBox(clientId, {
         type: 'ask',
         title: 'Open file...',

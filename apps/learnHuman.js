@@ -1,5 +1,5 @@
 export const client = {
-	id: 'ivy--learn-human',
+	id: 'swing-LearnHuman',
 	title: 'Learn Swing',
 	size: {
 		'preset': 'medium'

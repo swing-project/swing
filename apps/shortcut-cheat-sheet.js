@@ -1,5 +1,5 @@
 export const client = {
-    id: 'shortcut-cheat-sheet',
+    id: 'swing-ShortcutCheatSheet',
     title: 'Shortcut Cheat Sheet',
     size: {
         preset: 'small',

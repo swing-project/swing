@@ -1,6 +1,6 @@
 export const client = {
     testingNew: true,
-    id:         'samrland--WindowAPITest',
+    id:         'samrland-WindowAPITest',
     title:      'WindowAPI Test',
     size:       {
         preset: 'small'

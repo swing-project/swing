@@ -11,7 +11,7 @@ const swingver = {
 	<div class="d-flex ai-center jc-center flexdir-col">
 		<span>
 			swing unstable;
-			last updated 2023-05-25
+			last updated 2023-07-10
 		</span>
 		<span>copyright &copy; 2023 samrland and swing-project</span>
 	</div>
@@ -27,6 +27,9 @@ window.onload = function() {
 
 		// set settings to defaults
 		resetSettings()
+
+		// set random wallpaper
+		localStorage.setItem('setting-wallpaper-location', wallpaperList[Math.floor(Math.random() * wallpaperList.length)].path)
 
 		// first time notification
 		desktopNotification({
@@ -164,8 +167,8 @@ const swingConsoleWindow = {
 						} else if (givenPathArray[1] === 'system') {
 							if (givenPathArray[2] === 'resources') {
 								// "/system/resources/".length === 18
-								fetch(givenPath.slice(18))
-									.then((contents) => swingConsole.write(false, contents))
+								fetch(`/media/resources/${givenPath.slice(18)}`)
+									.then((contents) => swingConsole.write(false, contents.text()))
 							} else {
 								swingConsole.write(true, 'Path does not exist.')
 							}
@@ -226,6 +229,9 @@ const swingConsoleWindow = {
 						} catch {
 							swingConsole.write(true, 'Arithmetic error.')
 						}
+						break
+					default:
+						swingConsole.write(true, "Command does not exist.")
 						break
 				}
 			} else {
@@ -347,14 +353,14 @@ const settingsList = {
 }
 
 const wallpaperList = [
-	{
-		name: 'Swing',
-		path: '/media/resources/wallpapers/vruyr-martirosyan-EzJNmh6y848-unsplash.jpg',
-	},
-	{
-		name: 'Horizon',
-		path: '/media/resources/wallpapers/aleks-dahlberg-s5eCOoAWSaE-unsplash.jpg',
-	},
+    {
+        name: 'Swing',
+        path: '/media/resources/wallpapers/vruyr-martirosyan-EzJNmh6y848-unsplash.jpg',
+    },
+    {
+        name: 'Horizon',
+        path: '/media/resources/wallpapers/aleks-dahlberg-s5eCOoAWSaE-unsplash.jpg',
+    },
     {
         name: 'Night',
         path: '/media/resources/wallpapers/benjamin-voros-phIFdC6lA4E-unsplash.jpg',
@@ -378,7 +384,7 @@ const wallpaperList = [
     {
         name: 'Maple',
         path: '/media/resources/wallpapers/lyndon-li-zrT1tjnxJKQ-unsplash.jpg',
-    },
+    }, // end of named ones
     {
         name: 'Lavender',
         path: '/media/resources/wallpapers/photo-1544892504-5a42d285ab6f.jpeg',
@@ -388,21 +394,45 @@ const wallpaperList = [
         path: '/media/resources/wallpapers/photo-1458501534264-7d326fa0ca04.jpeg',
     },
     {
+        name: 'Poppy',
+        path: '/media/resources/wallpapers/photo-1465147264724-326b45c3c59b.jpeg',
+    },
+    {
+        name: 'Dew',
+        path: '/media/resources/wallpapers/photo-1470137430626-983a37b8ea46.jpeg',
+    },
+    {
         name: 'Mountain',
         path: '/media/resources/wallpapers/photo-1472396961693-142e6e269027.jpeg',
     },
-	{
-		name: 'Grey',
-		path: '/media/resources/wallpapers/v2osk--LRuNvY8W7Q-unsplash.jpg',
-	},
     {
+        name: 'Leaves',
+        path: '/media/resources/wallpapers/photo-1473081556163-2a17de81fc97.jpeg',
+    },
+    /* {
         name: 'Peak',
         path: '/media/resources/wallpapers/photo-1489619243109-4e0ea59cfe10.jpeg',
+    }, */
+    {
+        name: 'Hills',
+        path: '/media/resources/wallpapers/photo-1500534314209-a25ddb2bd429.jpeg',
     },
-	{
-		name: 'Reflection',
-		path: 'https://malwarewatch.org/images/wallpapers/Reflection.jpg',
-	}
+    {
+        name: 'Forest',
+        path: '/media/resources/wallpapers/photo-1542273917363-3b1817f69a2d.jpeg',
+    },
+    {
+        name: 'Lake',
+        path: '/media/resources/wallpapers/photo-1580137189272-c9379f8864fd.jpeg',
+    },
+    {
+        name: 'Grey',
+        path: '/media/resources/wallpapers/v2osk--LRuNvY8W7Q-unsplash.jpg',
+    },
+    {
+        name: 'Reflection',
+        path: 'https://malwarewatch.org/images/wallpapers/Reflection.jpg',
+    },
 ]
 
 // See if a setting entry is missing, and if so, create it with the default value
@@ -648,6 +678,33 @@ class WindowAPI {
 //		action('%{swing::NULL}%')
 //	}
 //}
+
+// get file
+async function getFileContent(path) {
+	const pathArray = path.split('/')
+	if (pathArray[1] === 'home') {
+		return {
+			success: true,
+			content: localStorage[path.slice(6)]
+		}
+	} else if (pathArray[1] === 'system') {
+		if (pathArray[2] === 'resources') {
+			const farOffFile = (await fetch(`/media/resources/${path.slice(18)}`)).text()
+			return {
+				success: true,
+				content: farOffFile
+			}
+		} else {
+			return {
+				success: false
+			}
+		}
+	} else {
+		return {
+			success: false
+		}
+	}
+}
 
 // get user file
 function getUserFile(path) {

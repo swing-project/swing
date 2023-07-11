@@ -4,9 +4,9 @@ local information = {}
 information.title = "SomeApp"
 information.author = "samr"
 information.size = "800x500"
-information.permissions = [
+information.permissions = {
     "screen.filter"
-]
+}
 
 local function main(window)
     swing.setMenuOptions(window, {
@@ -16,14 +16,12 @@ local function main(window)
             ["Quit"] = "SWING_QUIT_APP"
         };
         ["Colors"] = {
-            
         }
     })
 end
 
 local function reciever(message)
     if (message == "openAboutDialog") then
-        
     end
 end
 

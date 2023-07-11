@@ -1,46 +1,50 @@
 # TODO
 
-- Do random wallpaper on system creation, not just that one hardcoded one (code example 3)
-- Make it possible to completely edit the app grid
-- Make the search bar in the app grid actually do something
+- [x] Do random wallpaper on system creation, not just that one hardcoded one (code example 3)
+- [ ] Make it possible to completely edit the app grid, rather than get the order based off of how people write their setting array
+- [ ] Figure out why Write does that weird thing while scrolling
+- [ ] Make the search bar in the app grid actually do something
   - <https://jsfiddle.net/samrland/jLha4xr6/>
-- Create an app list which appears mostly the same as the app grid (same part of the screen, same search bar), but uses a scrolling list rather than a grid of icons
-- Create a wallpaper switcher that uses the built-in Unsplash wallpapers
+- [ ] Create an app list which appears mostly the same as the app grid (same part of the screen, same search bar), but uses a scrolling list rather than a grid of icons
+- [ ] Create a wallpaper switcher that uses the built-in Unsplash wallpapers
   - Since I'm not too good at making galleries like you'd expect here, do dropdowns where the value is the CSS `url()` value to the wallpaper (just like right now) and custom will just read from a text box instead (code example 1)
-- Figure out a way to completely capture user input until they press some button
+- [ ] Figure out a way to completely capture user input until they press some button
   - Until I figure that out, make sure to only use working shorcuts
     - <https://www.w3schools.com/tags/ref_keyboardshortcuts.asp>
-- Create a system to read HTML contents from external sources to split up the process for larger applications.
-  This will be part of the API. (code example 2) This will also create the need for a client path template, since just putting in a relative path will actually be relative to the swing path.
-- Make it so that only windows with an option bar have the extra padding at the bottom.
-- Create a Welcome app somewhat like KDE's
+- [ ] Create a system to read HTML contents from external sources to split up the process for larger applications.
+      This will be part of the API. (code example 2) This will also create the need for a client path template, since just putting in a relative path will actually be relative to the swing path.
+- [ ] Make it so that only windows with an option bar have the extra padding at the bottom.
+- [ ] Create a Welcome app somewhat like KDE's
   - [openSUSE Welcome App](etc/kde_opensuse_welcome.png)
-- In-built web browser (ionicon 'globe-outline')
-- Create a window playground
-- Context system
-  - Remove access to everything else by resetting window. This can be done by removing the wrapping from the definition, and instead wrapping on creation.
+- [ ] In-built web browser (ionicon 'globe-outline')
+- [ ] Create a window playground
+- [ ] Context system
+  - [ ] Remove access to everything else by resetting window. This can be done by removing the wrapping from the definition, and instead wrapping on creation.
     - Here's how onload would work in this new system: `windowObject.onload = () => { let window = {}; object.onload(windowId, api, args) }`
     - However, this will be hard to do since the API doesn't currently give access to everything needed, and it will need a major refactoring of basically all current built-in apps (settings!)
-  - `%url%` template
-  - Create a way to style stuff inside of `#window > .content` (code example 4)
-  - Reduce template typing so that class names aren't too long (this is the problem with directly injecting html into the page)
+  - [ ] `%url%` template
+  - [ ] Create a way to style stuff inside of `#window > .content` (code example 4)
+  - [ ] Reduce template typing so that class names aren't too long (this is the problem with directly injecting html into the page)
     - `object.content.replace(/id="--/g, 'id="' + windowId)` will probably do the trick, along with a handler for single-quotes
-- More versatile storage system with IndexedDB
+- [ ] More versatile storage system with IndexedDB
   - <https://javascript.info/indexeddb>
   - <https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB>
-- Custom context menu
+- [ ] Custom context menu
   - <https://stackoverflow.com/questions/4909167/how-to-add-a-custom-right-click-menu-to-a-webpage>
   - <https://developer.mozilla.org/en-US/docs/Web/API/Element/contextmenu_event>
   - <https://www.jqueryscript.net/demo/Simple-jQuery-Right-Click-Context-Menu-Plugin/demo/>
-- Try best to remove "Apply" buttons wherever possible
+- [ ] Try best to remove "Apply" buttons wherever possible
   - Use non-text input options as often as possible, like `onclick` on a checkbox or select menu will automatically apply the settings.
     Only use text input options when necessary and include the necessary Apply buttons there, but these will be behind advanced options
     - <https://stackoverflow.com/questions/6159837/how-to-call-a-javascript-function-onchange-of-a-select-tag>
-- Compact mode (reduces padding and gap size)
-- Tab control
+- [ ] Compact mode (reduces padding and gap size)
+- [ ] Tab control
   - <https://jsfiddle.net/samrland/s17bv0t9/11/> (see implementation in docs)
   - <https://www.w3schools.com/howto/howto_js_tabs.asp>
-- Create a proper API rather than just stuffing inline HTML without even supporting JSX due to the front-end nature of swing
+- [ ] Create a proper API rather than just stuffing inline HTML without even supporting JSX due to the front-end nature of swing
+- [ ] Add a way to reload in MarkRender for changes
+- [ ] Create a files app
+- [ ] Scripts with Swing Console
 
 ## Code Examples
 
@@ -48,7 +52,7 @@
 
 ```html
 <select id="%human%-wallpaper-selector">
-  <option value="url('/wallpapers/unsplash-collection/....jpg')">Wallpaper Description</option>
+  <option value="url('/media/resources/wallpapers/....jpg')">Wallpaper Description</option>
   <!-- ... -->
   <option value="custom" onclick="ivySettingsToggleCustom('%human%')">Custom</option>
 </select>
@@ -107,7 +111,6 @@ const builtInWallpaperCollection = [
 ```
 
 ### Code Example 4
-
 
 ```js
 const windowObject = {
