@@ -19,7 +19,7 @@ const swingver = {
 }
 
 window.onload = function() {
-	console.clear()
+	// console.clear()
 	console.info('Swing is still a work in progress. Some things may not work properly yet.')
 
 	if (localStorage.getItem('not-first-time') !== 'true') {
