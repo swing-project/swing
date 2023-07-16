@@ -42,7 +42,7 @@
   - <https://jsfiddle.net/samrland/s17bv0t9/11/> (see implementation in docs)
   - <https://www.w3schools.com/howto/howto_js_tabs.asp>
 - [ ] Create a proper API rather than just stuffing inline HTML without even supporting JSX due to the front-end nature of swing
-- [ ] Add a way to reload in MarkRender for changes
+- [x] Add a way to reload in MarkRender for changes
 - [ ] Create a files app
 - [ ] Scripts with Swing Console
 

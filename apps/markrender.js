@@ -3,12 +3,13 @@ export const client = {
     title: 'MarkRender',
     icon:  'logo-markdown',
     size:  { preset: 'default' },
-    content: `<div class="output" style="height: 100%; width: 100%; position: absolute;">No file open. Use the options above to open a file.</div>`,
+    content: `<div class="output" style="height: 100%; width: 100%; position: absolute;" data-open-file-name="">No file open. Use the options above to open a file.</div>`,
     menubar: [
         {
             name: 'File',
             items: [
                 { name: 'Open...',       command: openFile    },
+                { name: 'Reload',        command: (cid, _pi, _rgs) => setOutput(cid, document.getElementById(cid).querySelector('.output').getAttribute('data-open-file-name')) },
                 { name: 'Open in Write', command: openInWrite },
             ]
         }
