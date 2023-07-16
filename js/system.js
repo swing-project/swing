@@ -11,7 +11,7 @@ const swingver = {
 	<div class="d-flex ai-center jc-center flexdir-col">
 		<span>
 			swing unstable;
-			last updated 2023-07-10
+			last updated 2023-07-16
 		</span>
 		<span>copyright &copy; 2023 samrland and swing-project</span>
 	</div>
@@ -49,7 +49,7 @@ window.onload = function() {
 	}
 }
 
-/* window.oncontextmenu = (e) => { e.preventDefault(); alert("This should work") }  */
+// window.oncontextmenu = (e) => { e.preventDefault(); alert("This should work") }
 
 // s-expression tree maker
 // """"borrowed"""" from https://rosettacode.org/wiki/S-expressions#Procedural
@@ -73,6 +73,11 @@ const swingConsole = {
 	// the array containing all entries
 	text: [],
 
+	// the array containing all inputted stuffs
+	input: [''],
+	// and the index of text in the input array that we're on
+	currentItem: 0,
+
 	// write to console. recommended for most uses.
 	write: function (error, text) {
 		const object = {
@@ -82,14 +87,14 @@ const swingConsole = {
 
 		swingConsole.text.push(object)
 
-		if (document.querySelector('#ivy--console') !== null) {
+		if (document.querySelector('#swing-Console') !== null) {
 			swingConsole.consoleWrite(object)
 		}
 	},
 
 	// write to the console window. does not add an entry to swingConsole.text, so should not be used externally for most things.
 	consoleWrite: function (object) {
-		const console = document.querySelector('#ivy--console > .content > .wrapper > .console')
+		const console = document.querySelector('#swing-Console > .content > .wrapper > .console')
 
 		const entry = document.createElement('span')
 		entry.innerText = object.text
@@ -101,18 +106,29 @@ const swingConsole = {
 
 	// apply consoleWrite on all swingConsole.text entries, used to update the console window on reopen
 	reloadConsole: function () {
-		if (document.querySelector('#ivy--console') !== null) {
-			const console = document.querySelector('#ivy--console > .content > .wrapper > .console')
+		if (document.querySelector('#swing-Console') !== null) {
+			const console = document.querySelector('#swing-Console > .content > .wrapper > .console')
 			console.innerHTML = ''
 			for (const object of swingConsole.text) {
 				swingConsole.consoleWrite(object)
 			}
 		}
+	},
+
+	// add to input array. used by the console to log inputs
+	logInput: function (input) {
+		swingConsole.input.push(input)
+		swingConsole.currentItem++
+	},
+
+	// unlog everything. used by the user to clear the log in case there is any sensetive information in there.
+	clearLog: function () {
+		swingConsole.input = ['']
 	}
 }
 
 const swingConsoleWindow = {
-	id: 'ivy--console',
+	id: 'swing-Console',
 	title: 'Console',
 	icon: 'terminal-outline',
 	size: {
@@ -144,13 +160,55 @@ const swingConsoleWindow = {
 	}
 	</style>
 	`,
-	onload: function (clientId, api, args) {
+	onload: function (clientId, api, _args) {
 		const input    = document.getElementById(clientId).querySelector(`.content > .wrapper > .input-wrapper > #${clientId}-input`)
 		const okButton = document.getElementById(clientId).querySelector(`.content > .wrapper > .input-wrapper > #${clientId}-button`)
+
+		input.addEventListener('keydown', function (e) {
+			if (e.key === 'Enter')
+				okButton.click()
+			
+			if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+				e.preventDefault()
+
+				if ((e.key === 'ArrowUp' && swingConsole.currentItem > 0) || (e.key === 'ArrowDown' && swingConsole.currentItem < swingConsole.input.length)) {
+					if (e.key === 'ArrowUp')
+						swingConsole.currentItem--
+					else if (e.key === 'ArrowDown')
+						swingConsole.currentItem++
+					
+					input.value = swingConsole.input[swingConsole.currentItem]
+				}
+			}
+		})
+
 		okButton.addEventListener('click', function (_e) {
+			swingConsole.logInput(input.value)
+			swingConsole.currentItem = swingConsole.input.length - 1
 			const inputParsed = input.value.parseAsSS()
 			if (inputParsed !== undefined) {
 				switch (inputParsed[0]) {
+					case 'help':
+						swingConsole.write(false,
+					   	`Swing Console & Quilt Scripting Language
+						Swing Console uses its own scripting language called Quilt. Quilt uses S-expressions to parse code.
+						Here are some commands available in the Console.
+						
+						> \`(help)\`
+						Output this help text.
+						> \`(load [uri])\`
+						Load an external window using its URI.
+						> \`(read [filename])\`
+						Read a file, either from /home or /system/resources. The latter is being worked on.
+						> \`(echo [string...])\`
+						Echo a string to standard output.
+						> \`(error [string...])\`
+						Echo a string to standard error.
+						> \`(clearlog)\`
+						Clears the console log.
+						> \`({+ | - | * | / | %} [leftside] [rightside])\`
+						Do the corresponding operation on the numbers.`)
+						break
 					case 'load':
 						swingConsole.write(false, `Loading ${inputParsed[1]}...`)
 						try {
@@ -189,6 +247,9 @@ const swingConsoleWindow = {
 						} catch {
 							swingConsole.write(true, 'Error parsing string. Make sure you are using a string.')
 						}
+						break
+					case 'clearlog':
+						swingConsole.clearLog()
 						break
 					case '+':
 						try {
@@ -1167,7 +1228,7 @@ const settingsWindow = {
 				<label for="%human%-behavior-meta-key">Select special keys:</label>
 				<select id="%human%-behavior-meta-key">
 					<option value="altopt">meta = Alt/Option, menu = Control</option>
-					<option value="ctrl">meta = Control, menu = Alt/Option (buggy)</option>
+					<option value="ctrl">meta = Control, menu = Alt/Option</option>
 				</select>
 			</div>
 

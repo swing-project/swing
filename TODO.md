@@ -45,6 +45,7 @@
 - [x] Add a way to reload in MarkRender for changes
 - [ ] Create a files app
 - [ ] Scripts with Swing Console
+- [ ] Until I finish a full API, start by adding in a component tree thingy (code example 5)
 
 ## Code Examples
 
@@ -136,6 +137,35 @@ const windowObject = {
       }
     }
   ]
+}
+```
+
+### Code Example 5
+
+```js
+const windowObject = {
+  // ...
+  componentTree: true,
+  content: (clientId, api, args) => { return [
+    {
+      type: api.element["VBox"],
+      padding: 4,
+      gap: 6,
+
+      children: [
+        {
+          type: api.element["ImageView"],
+          source: "https://samrland.github.io/one.png",
+          fit: true
+        },
+        {
+          type: api.element["Label"],
+          content: "The image of a flower that represents samr."
+        }
+      ]
+    }
+  ]}
+  // ...
 }
 ```
 
